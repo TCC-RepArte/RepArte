@@ -20,7 +20,6 @@ body{
     position: relative;
     padding-top: 0;
 }
-
 .interface{
     max-width: 1280px;
     margin: 0 auto;
@@ -32,7 +31,7 @@ header{
     height: 60px;
     background: #181828;
     border-radius: 24px;
-    box-shadow: 0 4px 32px rgba(76, 72, 72, 0.667);
+    box-shadow: 0 8px 32px rgba(123, 24, 173, 0.667);
     padding: 18px 4% 18px 4%;
     margin: 12px 2% 0 2%;
     display: flex;
@@ -65,43 +64,7 @@ header{
   align-items: center;
   flex-direction: column;
 }
-.btns-logins > h1{
-  color: #fd4f0a;
-   font-family: "Baloo 2", sans-serif;
 
-}
-
-.right-login{
-  width: 35vw;
-  height: 60vh;
-  background-color: #130922;
-  display: flex;
-  border-radius: 20px;
-  justify-content: center;
-  align-items: center;
-}
-
-.card-login > h1{
-  color: #fd4f0a;
-  font-family: "Hammersmith One", sans-serif;
-}
-
-.card-login{
-  padding: 30px;
-}
-.textfield{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-items: center;
-  margin: 20px 0px;
-}
-.btns-logins{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-items: center;
-}
 .btns-logins button{
   display: flex;
   margin: 5%;
@@ -120,18 +83,52 @@ header{
   transition: background 0.2s, color 0.2s;
 }
 
+.btns-logins > h1{
+  color: #fd4f0a;
+   font-family: "Baloo 2", sans-serif;
+
+}
+
+.right-login{
+  width: 35vw;
+  height: 60vh;
+  background-color: #130922;
+  display: flex;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+}
+.card-login > h1{
+  color: #fd4f0a;
+  font-family: "Hammersmith One", sans-serif;
+}
+
+.card-login{
+  padding: 30px;
+}
+.btns-logins{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-items: center;
+}
+.textfield{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-items: center;
+  margin: 20px 0px;
+}
 .textfield > input{
   width: 100%;
   border: none;
   border-radius: 5px;
   padding: 15px;
-  background-color: #838fff77;
+  background-color: #838fff50;
   color: white;
   font-size: 12pt;
   outline: none;
 }
-
 .textfield > input::placeholder{
   color: white;
 }
-
