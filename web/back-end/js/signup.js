@@ -1,13 +1,41 @@
-function criarID(tamanho) 
-{
-    let tamanho = 8
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let resultado = "";
-    for (let i = 0; i < tamanho; i++) 
+async function criarID(tamanho) {
+
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let resultado = "";
+
+  for (let i = 0; i < tamanho; i++) 
+  {
+
+    resultado += chars.charAt(Math.floor(Math.random() * chars.length));
+
+    if (resultado.length == tamanho - 3) 
     {
-      resultado += chars.charAt(Math.floor(Math.random() * chars.length));
+
+      resultado += "-";
+
     }
-    return resulto;
-    document.write(resultado);
+
+  }
+
+  if (resultado.length = tamanho + 1) 
+  {
+
+    document.write(resultado)
+
+  }
+
+  id = resultado;
+
+  fetch('../../html/login1.php',{
+
+    method: POST,
+    headers: {
+      "Content-Type": "application/json",
+    }
+
+  })
+
+  
+
 
 }
