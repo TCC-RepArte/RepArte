@@ -26,12 +26,24 @@ async function criarID(tamanho) {
 
   id = resultado;
 
+
+
   fetch('../../html/login1.php',{
 
     method: POST,
     headers: {
       "Content-Type": "application/json",
     }
+
+    .then(response =>
+    {
+      response.json()
+    })
+    .then(r =>
+      {
+        id = r;
+        console.log(id);
+      })
 
   })
 

@@ -16,9 +16,10 @@
         <button type="submit">Enviar</button>
     </form>
 
+    <button onclick="criarID()"></button>
+
 </body>
 </html>
 
-<script
-
 <?php include '../back-end/signup.php'; ?>
+<script src="../back-end/js/signup.js"></script>
