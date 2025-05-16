@@ -214,6 +214,7 @@ section.topo-do-site .flex{
     display: flex;
     align-items: center;
     gap: 18px;
+    
 }
 .seta {
     background: #181828;
