@@ -20,9 +20,7 @@ body{
     position: relative;
     padding-top: 0;
 }
-body::before {
-    content: none;
-}
+
 .interface{
     max-width: 1280px;
     margin: 0 auto;
@@ -52,8 +50,46 @@ header > .interface{
     align-items: center;
     justify-content: space-between;
 }
-.interface ::nav.menu{
-  width: 300px;
-  height: 100%;
- 
+.logo{
+  margin-left: 90px;
 }
+.search-box-custom {
+    background: #181828;
+    border-radius: 25px;
+    height: 45px;
+    width: 500px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    box-shadow: 0 2px 8px #0008;
+    border: 2px solid #ff6600;
+   
+}
+.search-icon {
+    color: #1e90ff;
+    font-size: 22px;
+    margin-right: 10px;
+}
+.search-text {
+    color: #fff;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    width: 100%;
+    font-family: 'Hammersmith One', sans-serif;
+}
+.search-text::placeholder {
+    color: #b0b0b0;
+    opacity: 1;
+}
+.lista{
+    padding-left: 10px;
+    margin-top: 5px;
+}
+.lista > i{
+    color: white;
+    font-size: 60px;
+    cursor: pointer;
+}
+
