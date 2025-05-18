@@ -1,137 +1,202 @@
-*{
-    
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    .hammersmith-one-regular {
-  font-family: "Hammersmith One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
+ 
+body {
+  background: linear-gradient(to right, #4603bb, #331560, #a24807e3, #ff6a00),
+              linear-gradient(to top, #000 0%, #000000 45%, transparent 100%);
+  background-blend-mode: overlay;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+  padding-top: 0;
 }
-
-body{
-           background: linear-gradient(to right, #4603bb, #331560, #a24807e3, #ff6a00),
-                linear-gradient(to top, #000 0%, #000000 60%, transparent 100%);
-    background-blend-mode: overlay;
-    min-height: 100vh;
-    font-family: 'Arial', sans-serif;
-    position: relative;
-    padding-top: 0;
+ 
+.interface {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
-
-.interface{
-    max-width: 1280px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
+ 
+header {
+  height: 60px;
+  background: #181828;
+  border-radius: 24px;
+  box-shadow: 0 4px 32px rgba(76, 72, 72, 0.667);
+  padding: 18px 4%;
+  margin: 12px 2% 0 2%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 25%;
+  max-width: 96vw;
 }
-
-header{
-    height: 60px;
-    background: #181828;
-    border-radius: 24px;
-    box-shadow: 0 4px 32px rgba(76, 72, 72, 0.667);
-    padding: 18px 4% 18px 4%;
-    margin: 12px 2% 0 2%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    width: 25%;
-    max-width: 96vw;
-}
-
-.main-login{
+ 
+.main-login {
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 0px;
 }
-
-.left-login{
-  width: 35vw;
-  height: 60vh;
+ 
+.left-login, .right-login {
+  width: 420px;
+  border-radius: 40px;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 12px #00000066;
+}
+ 
+.left-login {
   background-color: #333062;
-  display: flex;
-  border-radius: 20px;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  width: 500px;
+  height: 28vw;
+  padding: 40px;
+  position: relative;
+  z-index: 1;
 }
-.btns-logins > h1{
-  color: #fd4f0a;
-   font-family: "Baloo 2", sans-serif;
-
-}
-
-.right-login{
-  width: 35vw;
-  height: 60vh;
+ 
+.right-login {
   background-color: #130922;
-  display: flex;
-  border-radius: 20px;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  z-index: 2;
+  margin-left: -60px;
+  width:450px;
+  padding: 40px 30px;
 }
-
-.card-login > h1{
+ 
+.btns-logins h1 {
   color: #fd4f0a;
-  font-family: "Hammersmith One", sans-serif;
+  font-family: "Baloo 2", sans-serif;
+  font-size: 35px;
+  text-align: left;
+  margin-bottom: 15px;
+  margin-top: -10px;
+ margin-right: 40px;
 }
-
-.card-login{
-  padding: 30px;
-}
-.textfield{
+ 
+.btns-logins {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-items: center;
-  margin: 20px 0px;
+  align-items: center;
+  gap: 16px;
 }
-.btns-logins{
+ 
+.btns-logins a {
+  width: 100%;
+  text-decoration: none;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-items: center;
 }
-.btns-logins button{
-  display: flex;
-  margin: 5%;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-items: center;
+ 
+.btns-logins button {
+  width: 100%;
+  max-width: 360px;
+  padding: 16px 14px;
   background: #130922;
   color: #fff;
   border: none;
-  border-radius: 12px;
-  font-weight: 700;
+  border-radius: 8px;
+  font-weight: 300;
   font-size: 18px;
-  padding: 10px 32px;
-  box-shadow: 0 2px 8px #0006;
+  font-style: italic;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.3s ease;
+  text-align: left;
+  margin-left: 20px;
 }
-
-.textfield > input{
+ 
+.btns-logins button:hover {
+  background-color: #2e1a49;
+}
+ 
+.card-login h1 {
+  color: #fd4f0a;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 28px;
+  margin-bottom: 30px;
+  text-align: left;
+  width: 100%;
+}
+ 
+.card-login {
+  width: 100%;
+}
+ 
+.textfield {
+  width: 100%;
+  margin-bottom: 20px;
+}
+ 
+.textfield input {
   width: 100%;
   border: none;
   border-radius: 5px;
-  padding: 15px;
+  padding: 14px;
   background-color: #838fff77;
   color: white;
-  font-size: 12pt;
+  font-size: 16px;
   outline: none;
 }
+ 
+.textfield input::placeholder {
+  color: rgb(255, 255, 255);
 
-.textfield > input::placeholder{
+}
+ 
+.checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-right: 0px;
+  font-size: 16px;
+  color: white;
+  width: 100%;
+}
+ 
+.checkbox input {
+  margin-right: 2px;
+}
+ 
+.btn-entrar, .btn-registrarse {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 14px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+ 
+.btn-entrar {
+  background-color: #fd4f0a;
   color: white;
 }
-
+ 
+.btn-entrar:hover {
+  background-color: #d34608;
+}
+ 
+.btn-registrarse {
+  background-color: #332d54;
+  color: white;
+}
+ 
+.btn-registrarse:hover {
+  background-color: #2c2648;
+}
+ 

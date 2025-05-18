@@ -1,382 +1,381 @@
-*{
-    
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    .hammersmith-one-regular {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.hammersmith-one-regular {
   font-family: "Hammersmith One", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
-
-}
-body{
-           background: linear-gradient(to right, #4603bb, #331560, #a24807e3, #ff6a00),
-                linear-gradient(to top, #000 0%, #000000 60%, transparent 100%);
-    background-blend-mode: overlay;
-    min-height: 100vh;
-    font-family: 'Arial', sans-serif;
-    position: relative;
-    padding-top: 0;
+body {
+  background: linear-gradient(to right, #4603bb, #331560, #a24807e3, #ff6a00),
+    linear-gradient(to top, #000 0%, #000000 65%, transparent 100%);
+  background-blend-mode: overlay;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+  padding-top: 0;
 }
 body::before {
-    content: none;
+  content: none;
 }
-
 #bg-fixo {
-    display: none;
+  display: none;
+}
+.flex {
+  display: flex;
+}
+.interface {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+header {
+  height: 80px;
+  background: #181828;
+  border-radius: 24px;
+  box-shadow: 0 4px 32px #000a;
+  padding: 18px 4%;
+  margin: 12px 2% 0 2%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 96%;
+  max-width: 96vw;
 }
 
-.flex{
-    display: flex;
+header .logo{
+  margin-left: 60px;
+  flex: 1;
 }
 
-.interface{
-    max-width: 1280px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
+header > .interface {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-header{
-    height: 80px;
-    background: #181828;
-    border-radius: 24px;
-    box-shadow: 0 4px 32px #000a;
-    padding: 18px 4% 18px 4%;
-    margin: 12px 2% 0 2%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    width: 96%;
-    max-width: 96vw;
+header nav {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  margin-left: 80px;
 }
-
-header > .interface{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+header nav ul {
+  list-style-type: none;
+  display: flex;
 }
-
-header a{
-    font-family: "Hammersmith One", sans-serif;
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    display: inline-block;
-    transition: .1s;
+header nav ul li {
+  display: inline-block;
+  padding: 0 20px;
 }
-header a:hover{
-    color: #ee4300;
-    transform: scale(1.05);
-} 
-
-header nav ul{
-    list-style-type: none;
+header a {
+  font-family: "Hammersmith One", sans-serif;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  display: inline-block;
+  transition: .1s;
 }
-
-header nav ul li{
-    display: inline-block;
-    padding: 0 40px;
+header a:hover {
+  color: #ee4300;
+  transform: scale(1.05);
 }
-
 header .menu ul li a {
-    border: 2px solid #fff;
-    border-radius: 12px;
-    padding: 8px 24px;
-    color: #fff;
-    background: transparent;
-    font-weight: 600;
-    margin: 0 8px;
-    transition: background 0.2s, color 0.2s;
+  border: 2px solid #fff;
+  border-radius: 12px;
+  padding: 8px 24px;
+  color: #fff;
+  background: transparent;
+  font-weight: 600;
+  margin: 0 8px;
+  transition: background 0.2s, color 0.2s;
 }
 header .menu ul li a:hover {
-    background: #ff6600;
-    color: #fff;
-    border-color: #ff6600;
+  background: #ff6600;
+  color: #fff;
+  border-color: #ff6600;
 }
 header .btn-Login {
-    display: flex;
-    gap: 16px;
-    align-items: center;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
 }
 .btn-login-destaque button {
-    background: #ff6600;
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 18px;
-    padding: 10px 32px;
-    box-shadow: 0 2px 8px #0006;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
+  background: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 10px 32px;
+  box-shadow: 0 2px 8px #0006;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
 }
 .btn-login-destaque button:hover {
-    background: #ff7f2a;
+  background: #ff7f2a;
 }
 .btn-cadastro-simples button {
-    background: #181828;
-    color: #ff6600;
-    border: 2px solid #ff6600;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 18px;
-    padding: 10px 32px;
-    box-shadow: none;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s, border 0.2s;
+  background: #181828;
+  color: #ff6600;
+  border: 2px solid #ff6600;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 10px 32px;
+  box-shadow: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s;
 }
 .btn-cadastro-simples button:hover {
-    background: #23233a;
-    color: #fff;
-    border-color: #ff6600;
+  background: #23233a;
+  color: #fff;
+  border-color: #ff6600;
 }
-
 section.topo-do-site {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 4%;
-    background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 4%;
+  background-size: cover;
 }
-
-section.topo-do-site .flex{
-    align-items: center;
-    justify-content: center;
-    gap: 90px;
+section.topo-do-site .flex {
+  align-items: center;
+  justify-content: center;
+  gap: 90px;
 }
-
-.topo-do-site h1{
-    color: #fff;
-    font-size: 3.2rem;
-    line-height: 1.15;
-    font-family: 'Hammersmith One', sans-serif;
-    font-weight: 900;
-    margin-bottom: 18px;
+.topo-do-site h1 {
+  color: #fff;
+  font-size: 3.2rem;
+  line-height: 1.15;
+  font-family: 'Hammersmith One', sans-serif;
+  font-weight: 900;
+  margin-bottom: 18px;
 }
-
-.topo-do-site h1 span{
-    color: #ee4300;
-    font-family: "Hammersmith One", sans-serif;
+.topo-do-site h1 span {
+  color: #ee4300;
+  font-family: "Hammersmith One", sans-serif;
 }
-
-.topo-do-site p{
-    color: #fff;
-    font-size: 1.2rem;
-    margin: 25px 0 50px 0;
-    font-family: 'Optima', sans-serif;
-    font-weight: 500;
-    max-width: 500px;
+.topo-do-site p {
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 25px 0 50px 0;
+  font-family: 'Optima', sans-serif;
+  font-weight: 500;
+  max-width: 500px;
 }
-
 .destaque {
-    color: #ff6600;
-    font-weight: bold;
+  color: #ff6600;
+  font-weight: bold;
 }
-
 .search-box-custom {
-    background: #181828;
-    border-radius: 25px;
-    height: 45px;
-    width: 500px;
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    box-shadow: 0 2px 8px #0008;
-    border: 2px solid #ff6600;
+  background: #181828;
+  border-radius: 25px;
+  height: 45px;
+  width: 500px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  box-shadow: 0 2px 8px #0008;
+  border: 2px solid #ff6600;
 }
 .search-icon {
-    color: #1e90ff;
-    font-size: 22px;
-    margin-right: 10px;
+  color: #1e90ff;
+  font-size: 22px;
+  margin-right: 10px;
 }
 .search-text {
-    color: #fff;
-    background: none;
-    border: none;
-    outline: none;
-    font-size: 18px;
-    width: 100%;
-    font-family: 'Hammersmith One', sans-serif;
+  color: #fff;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  width: 100%;
+  font-family: 'Hammersmith One', sans-serif;
 }
 .search-text::placeholder {
-    color: #b0b0b0;
-    opacity: 1;
+  color: #b0b0b0;
+  opacity: 1;
 }
-
 .carrossel-obra {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: 80px;
 }
 .seta {
-    background: #181828;
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-size: 48px;
-    width: 56px;
-    height: 56px;
-    cursor: pointer;
-    box-shadow: 0 2px 12px #000a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s, color 0.2s;
+  background: #181828;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 48px;
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+  box-shadow: 0 2px 12px #000a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
 }
 .seta:hover {
-    background: #ff6600;
-    color: #fff;
+  background: #ff6600;
+  color: #fff;
 }
 .img-obra-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .img-obra {
-    border: 8px solid #ff6600;
-    border-radius: 12px;
-    width: 270px;
-    box-shadow: 0 4px 32px #000a;
+  border: 8px solid #ff6600;
+  border-radius: 12px;
+  width: 270px;
+  box-shadow: 0 4px 32px #000a;
 }
-
-
 .img-obra-container .tag-flutuante {
-    opacity: 0;
-    transform: translateY(10px) scale(0.95);
-    transition: opacity 0.3s, transform 0.3s;
-    pointer-events: none;
+  opacity: 0;
+  transform: translateY(10px) scale(0.95);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
 }
 .img-obra-container:hover .tag-flutuante {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 .tag-flutuante {
-    position: absolute;
-    background: #ff6600;
-    color: #fff;
-    font-size: 15px;
-    font-family: 'Hammersmith One', sans-serif;
-    padding: 7px 22px;
-    border-radius: 18px;
-    box-shadow: 0 2px 16px #0007;
-    z-index: 2;
-    white-space: nowrap;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    filter: drop-shadow(0 2px 8px #0006);
+  position: absolute;
+  background: #ff6600;
+  color: #fff;
+  font-size: 15px;
+  font-family: 'Hammersmith One', sans-serif;
+  padding: 7px 22px;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px #0007;
+  z-index: 2;
+  white-space: nowrap;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  filter: drop-shadow(0 2px 8px #0006);
 }
 .tag1 {
-    top: -22px;
-    left: -22px;
-    transform: none;
+  top: -22px;
+  left: -22px;
+  transform: none;
 }
 .tag2 {
-    bottom: -22px;
-    left: -22px;
-    transform: none;
+  bottom: -22px;
+  left: -22px;
+  transform: none;
 }
 .tag3 {
-    top: 50%;
-    right: -22px;
-    transform: translateY(-50%);
+  top: 50%;
+  right: -22px;
+  transform: translateY(-50%);
 }
-
 @media (max-width: 900px) {
-    .flex {
-        flex-direction: column;
-        gap: 40px;
-    }
-    .carrossel-obra {
-        flex-direction: row;
-        justify-content: center;
-    }
-    header {
-        width: 98vw;
-        max-width: 98vw;
-        margin: 12px 1vw 0 1vw;
-        padding: 12px 2vw;
-    }
+  .flex {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .carrossel-obra {
+    flex-direction: row;
+    justify-content: center;
+  }
+  header {
+    width: 98vw;
+    max-width: 98vw;
+    margin: 12px 1vw 0 1vw;
+    padding: 12px 2vw;
+  }
+  header > .interface {
+    flex-direction: column;
+    gap: 12px;
+  }
+  header nav {
+    justify-content: center;
+  }
+  header .btn-Login {
+    justify-content: center;
+  }
 }
-
 .sobre-nos {
-    background: #030101;
-    margin-top: 0;
-    padding: 56px 0 64px 0;
-    border-radius: 0;
-    box-shadow: none;
+  background: #030101;
+  margin-top: 0;
+  padding: 56px 0 64px 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 .sobre-nos .interface {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 24px;
-    text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
 }
 .sobre-nos h2 {
-    color: #ff6600;
-    font-size: 2.6rem;
-    font-family: 'Hammersmith One', sans-serif;
-    font-weight: 900;
-    margin-bottom: 32px;
+  color: #ff6600;
+  font-size: 2.6rem;
+  font-family: 'Hammersmith One', sans-serif;
+  font-weight: 900;
+  margin-bottom: 32px;
 }
 .sobre-nos p {
-    color: #fff;
-    font-size: 1.18rem;
-    line-height: 1.7;
-    font-family: 'Hammersmith One', sans-serif;
-    font-weight: 400;
-    text-align: center;
+  color: #fff;
+  font-size: 1.18rem;
+  line-height: 1.7;
+  font-family: 'Hammersmith One', sans-serif;
+  font-weight: 400;
+  text-align: center;
 }
 .sobre-nos b {
-    color: #ff6600;
-    font-weight: 700;
-
-    
+  color: #ff6600;
+  font-weight: 700;
 }
 @media (max-width: 900px) {
-    .sobre-nos .interface {
-        padding: 0 8px;
-    }
-    .sobre-nos h2 {
-        font-size: 2rem;
-    }
+  .sobre-nos .interface {
+    padding: 0 8px;
+  }
+  .sobre-nos h2 {
+    font-size: 2rem;
+  }
 }
-
-.btn-social button{
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
-    background-color: #333062;
-    font-size: 22px;
-    cursor: pointer;
-    margin: 0 5px;
-    transition: .1s;}
-
-    footer{
-    padding: 30px 4%;
-    background-color: #160b2e;
-    }
-
-    footer .line-footer p a{
-    color: white;
-    align-items: center;
-    text-decoration: none;
+.btn-social button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background-color: #333062;
+  font-size: 22px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: .1s;
 }
-
-footer .flex{
-    justify-content: space-between;
+footer {
+  padding: 30px 4%;
+  background-color: #160b2e;
 }
-
-footer .line-footer{
-    padding: 8px 0;
+footer .line-footer p a {
+  color: white;
+  align-items: center;
+  text-decoration: none;
 }
+footer .flex {
+  justify-content: space-between;
+}
+footer .line-footer {
+  padding: 8px 0;
+}
+ 
