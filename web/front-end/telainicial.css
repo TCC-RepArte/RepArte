@@ -57,18 +57,22 @@ header > .interface{
     background: #181828;
     border-radius: 25px;
     height: 45px;
-    width: 500px;
+    width: 600px;
     display: flex;
+    position: absolute;
+    right: 350px;
     align-items: center;
     padding: 0 10px;
     box-shadow: 0 2px 8px #0008;
     border: 2px solid #ff6600;
+    
    
 }
 .search-icon {
     color: #1e90ff;
     font-size: 22px;
     margin-right: 10px;
+    
 }
 .search-text {
     color: #fff;
@@ -91,5 +95,22 @@ header > .interface{
     color: white;
     font-size: 60px;
     cursor: pointer;
+}
+
+.perfil button{
+   position: absolute;
+   right: 100px;
+   top: 5px;
+   background-color: #181828;
+   border: none;
+   margin-top: 5px;
+    
+}
+
+.perfil button > i{
+    color: white;
+    font-size: 55px;
+    cursor: pointer;
+    
 }
 
