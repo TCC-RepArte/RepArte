@@ -14,6 +14,8 @@
         <input type="text" name="nome" id="nome"><br><br>
         <label for="">envie sua foto</label><br>
         <input type="file" name="foto" id="foto"><br><br><br>
+        <label for="">digite sua descrição</label><br>
+        <input type="text" name="desc" id="desc"><br><br>
 
         <button type="submit">enviar</button>
 
