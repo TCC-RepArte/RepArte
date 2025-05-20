@@ -27,10 +27,10 @@
             </ul>
         </nav>
         <div class="btn-Login">
-            <a href="#" class="btn-login-destaque">
+            <a href="login1.php" class="btn-login-destaque">
                 <button type="button">Login</button>
             </a>
-            <a href="#" class="btn-cadastro-simples">
+            <a href="cadastro.php" class="btn-cadastro-simples">
                 <button type="button">Cadastro</button>
             </a>
         </div>

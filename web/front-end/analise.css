@@ -1,0 +1,132 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    .hammersmith-one-regular {
+  font-family: "Hammersmith One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+}
+
+body{
+    background-color: #101010;
+}
+
+.interface{
+    max-width: 1280px;
+    margin: 0 auto;
+    position:absolute ;
+    z-index: 1;
+}
+header{
+    height: 80px;
+    background: #1a0630;
+    border-radius: 24px;
+    box-shadow: 0 4px 32px #000a;
+    padding: 40px 4%;
+    margin: 12px 2% 0 2%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    width: 96%;
+    max-width: 96vw;
+}
+
+header > .interface{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo{
+  margin-left: 90px;
+}
+.search-box-custom {
+    background: #181828;
+    border-radius: 25px;
+    height: 45px;
+    width: 600px;
+    display: flex;
+    position: absolute;
+    right: 350px;
+    align-items: center;
+    padding: 0 10px;
+    box-shadow: 0 2px 8px #0008;
+    border: 2px solid #ff6600;
+    
+   
+}
+.search-icon {
+    color: #1e90ff;
+    font-size: 22px;
+    margin-right: 10px;
+    
+}
+.search-text {
+    color: #fff;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    width: 100%;
+    font-family: 'Hammersmith One', sans-serif;
+}
+.search-text::placeholder {
+    color: #b0b0b0;
+    opacity: 1;
+}
+.lista{
+    padding-left: 10px;
+    margin-top: 5px;
+}
+.lista > i{
+    color: white;
+    font-size: 60px;
+    cursor: pointer;
+}
+.caixa{
+    position: absolute;
+    top: 120px;
+    left: 550px;
+    width: 600px;
+    height: 300px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+}
+.box{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.box input{
+  position: fixed;
+  left: 550px;
+  top: 125px;
+  border: none;
+  padding: 14px;
+  background: none ;
+  color: white;
+  font-size: 25px;
+  outline: none;
+}
+.box2{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.box2 input{
+  position: fixed;
+  left: 550px;
+  top: 170px;
+  border: none;
+  padding: 14px;
+  background:none;
+  color: white;
+  font-size: 18px;
+  outline: none;
+}
