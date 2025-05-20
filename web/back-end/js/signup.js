@@ -3,7 +3,7 @@ async function criarID(tamanho) {
   //todos os carcteres que podem ser selecnados no ID
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  // vase contru pela varávelresultado
+  // id se estrutura pela variavel resultado
   let resultado = "";
 
   for (let i = 0; i < tamanho; i++) {
@@ -38,5 +38,5 @@ async function criarID(tamanho) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  criarID(10); // Ou qualquer tamanho desejado
+  criarID(10); 
 });
