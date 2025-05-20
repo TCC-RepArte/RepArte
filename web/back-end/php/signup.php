@@ -1,86 +1,83 @@
 <?php
 
-require_once '../../../confidencial/php/conexao.php';
+session_start();
+global $con;
+global $id;
+$con = new mysqli("localhost", "root", '', "reparte");
 
 $erros = [];
-session_start();
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $contentType = isset($_SERVER["CONTENT_TYPE"]) ? $_SERVER["CONTENT_TYPE"] : '';
+    $contentType = $_SERVER["CONTENT_TYPE"] ?? '';
 
-    // Processar baseado no tipo de conteúdo
     if (strpos($contentType, 'application/json') !== false) {
-
-        // Requisição JSON (do JavaScript)
+        // Requisição JSON (JavaScript)
         header('Content-Type: application/json');
         $json = file_get_contents('php://input');
         $data = json_decode($json, true);
-
-        // Executar lógica específica para JSON
         processarRequisicaoJson($data);
     } else {
-        //Executar lógica específica para formulário
+        // Requisição via formulário tradicional
         processarFormulario($_POST);
     }
 }
 
-// Funções para processar cada tipo
+// Processa requisições JSON (como a do fetch do JavaScript)
 function processarRequisicaoJson($data)
 {
-
-    global $con;
-    global $erros; 
-
     if (isset($data['id'])) {
-
+        global $id;
         $id = $data['id'];
         $id_bd = '';
+        global $con;
 
-        // Verificar se ID já existe
-        $stmt = $con->prepare("SELECT id FROM `login` WHERE id = ?");
+        var_dump($_SESSION);
+
+        // Verifica se o ID já existe no banco
+        $stmt = $con->prepare("SELECT id FROM login WHERE id = ?");
         $stmt->bind_param("s", $id);
         $stmt->execute();
         $stmt->bind_result($id_bd);
         $stmt->fetch();
+        $stmt->close();
 
-        // Se ID já existe, envia aviso pro JS refazer função
-        if ($id_bd == $id){
-
+        if ($id_bd === $id) {
             echo json_encode([
                 'success' => false,
                 'message' => 'ID já existe',
-                'duplicate' => true 
+                'duplicate' => true
             ]);
             return;
         }
 
-        try {
-
-            $_SESSION['user_id'] = $id;
-
-            echo json_encode(['success' => true, 'message' => 'ID inserido com sucesso']);
-
-        } catch (Exception $e) {
-
-            echo json_encode(['success' => false, 'message' => 'Erro: ' . $e->getMessage()]);
-        }
-
-    } 
-    
-    else {
-        echo json_encode(['success' => false, 'message' => 'ID não recebido']);
-        return;
+        echo json_encode([
+            'success' => true,
+            'message' => 'ID inserido com sucesso',
+            'id' => $id
+        ]);
+    } else {
+        echo json_encode([
+            'success' => false,
+            'message' => 'ID não recebido'
+        ]);
     }
-
 }
 
-function processarFormulario($post)
-{
 
-    global $con;
-    $idc = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+function processarFormulario($post)
+{ 
     global $erros;
+    global $con;
+    global $id;
+
+    // Obtém o ID da sessão
+    $idc = $_POST['id'] ?? null;
+
+    // Se o ID estiver ausente, exibe mensagem de erro
+    if (empty($idc)) {
+        echo "ID ausente. Tente novamente.";
+        return;
+    }
 
     // Validação e processamento do formulário
     $email = $_POST["email"];
@@ -88,20 +85,19 @@ function processarFormulario($post)
     $usuario = $_POST["usuario"];
     $senha_conf = $_POST["confsenha"];
 
-    //Validando a entrada de dados
+    // Validando a entrada de dados
     if (empty($email) || empty($senha) || empty($usuario)) {
         $erros[] = "Estão faltando dados!";
         return;
-        
     }
 
-    //Validando o email
+    // Validando o email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erros[] = "Email inválido";
         return;
     }
 
-    //Verificando se o email já existe
+    // Verificando se o email já existe
     $email_bd = '';
     $stmt = $con->prepare("SELECT email FROM login WHERE email = ?");
     $stmt->bind_param("s", $email);
@@ -116,12 +112,11 @@ function processarFormulario($post)
 
     $stmt->close();
 
-    //trazendo usuario para padrão de referência
+    // Verificando se o usuário já existe
     $usuario_def = '@' . $usuario;
-    $usuario_bd= '';
+    $usuario_bd = '';
 
-    //Verificando se o usúario já existe
-    $stmt = $con->prepare("SELECT `usuario` FROM `login` WHERE usuario = ? ");
+    $stmt = $con->prepare("SELECT `usuario` FROM `login` WHERE usuario = ?");
     $stmt->bind_param("s", $usuario_def);
     $stmt->execute();
     $stmt->bind_result($usuario_bd);
@@ -130,31 +125,28 @@ function processarFormulario($post)
     $stmt->close();
 
     if ($usuario_bd == $usuario_def) {
-        $erros[] = "Usúario já existe";
+        $erros[] = "Usuário já existe";
         return;
-    } 
+    }
 
-    if($senha_conf !== $senha){
+    // Validando as senhas
+    if ($senha_conf !== $senha) {
         $erros[] = "Senha não correspondente!";
         return;
     }
 
-    if(empty($erros)){
-
-        //Criptografando a senha e inserindo dados ao banco de dados
+    if (empty($erros)) {
+        // Criptografando a senha e inserindo dados no banco de dados
         $senha_has = password_hash($senha, PASSWORD_DEFAULT);
         $stmt = $con->prepare("INSERT INTO `login`(`usuario`, `email`, `senha`, `id`) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $usuario_def, $email, $senha_has, $idc);
 
-        //Validando entrada de dados
-        if ($stmt->execute()){
+        if ($stmt->execute()) {
             header("Location: fotono.php");
         } else {
             $erros[] = "Erro ao enviar formulário!";
         }
 
         $stmt->close();
-
     }
-
 }
