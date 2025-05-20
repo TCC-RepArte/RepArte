@@ -59,7 +59,7 @@ header {
   justify-content: center;
   align-items: center;
   position: relative;
-  box-shadow: 0 0 30px rgba(0,0,0,0.2);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
 }
  
 .left-login {
@@ -128,19 +128,20 @@ header {
   font-size: 30px;
   margin-bottom: 20px;
   margin-left: 190px;
-  margin-top: 15px;
+  margin-top: -20px;
 }
  
 .textfield {
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
 }
  
 .textfield label {
   color: white;
   margin-bottom: 6px;
   font-size: 14px;
+  margin-left: 25px;
 }
  
 .textfield input {
@@ -149,7 +150,7 @@ header {
   border: none;
   border-radius: 24px;
   padding: 12px 10px;
-  background-color: #384092;
+  background-color: #402866;
   color: white;
   font-size: 14px;
   outline: none;
@@ -164,7 +165,7 @@ header {
   width: 450px;
   border: none;
   border-radius: 24px;
-  padding: 10px;
+  padding: 13px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
@@ -173,13 +174,14 @@ header {
 }
  
 .btn-registrarse {
-  background: linear-gradient(45deg, #4b00ff, #9c1aff);
+  background: linear-gradient(45deg, #2a0385, #680ab0);
   color: white;
 }
  
 .btn-entrar {
-  background: #444;
+  background: #305497;
   color: white;
+  margin-top: 15px;
 }
  
 .btn-registrarse:hover {
@@ -190,13 +192,19 @@ header {
   background: #333;
 }
  
-.senha-container {
+.textfield-row {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
-
+  gap: 20px;
+  margin-bottom: 12px;
 }
  
-.senha-container .textfield {
+.textfield-row .textfield {
   flex: 1;
+}
+ 
+.textfield-row .textfield input {
+  width: 200px;
+  margin-left: 20;
+  background-color: #212135;
 }
