@@ -35,6 +35,7 @@ function processarRequisicaoJson($data)
     if (isset($data['id'])) {
 
         $id = $data['id'];
+        $id_bd = '';
 
         // Verificar se ID já existe
         $stmt = $con->prepare("SELECT id FROM `login` WHERE id = ?");
@@ -43,18 +44,17 @@ function processarRequisicaoJson($data)
         $stmt->bind_result($id_bd);
         $stmt->fetch();
 
-        // Se ID já existe
-        if ($id_bd == $id) {
+        // Se ID já existe, envia aviso pro JS refazer função
+        if ($id_bd == $id){
 
             echo json_encode([
                 'success' => false,
                 'message' => 'ID já existe',
-                'duplicate' => true // Flag para o JS saber que precisa regenerar
+                'duplicate' => true 
             ]);
             return;
         }
 
-        // Se ID não existe, insere
         try {
 
             $_SESSION['user_id'] = $id;
@@ -102,6 +102,7 @@ function processarFormulario($post)
     }
 
     //Verificando se o email já existe
+    $email_bd = '';
     $stmt = $con->prepare("SELECT email FROM login WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -117,6 +118,7 @@ function processarFormulario($post)
 
     //trazendo usuario para padrão de referência
     $usuario_def = '@' . $usuario;
+    $usuario_bd= '';
 
     //Verificando se o usúario já existe
     $stmt = $con->prepare("SELECT `usuario` FROM `login` WHERE usuario = ? ");
@@ -145,7 +147,7 @@ function processarFormulario($post)
         $stmt->bind_param("ssss", $usuario_def, $email, $senha_has, $idc);
 
         //Validando entrada de dados
-        if ($stmt->execute()) {
+        if ($stmt->execute()){
             header("Location: fotono.php");
         } else {
             $erros[] = "Erro ao enviar formulário!";
@@ -155,7 +157,4 @@ function processarFormulario($post)
 
     }
 
-
 }
-
-

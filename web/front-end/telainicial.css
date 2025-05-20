@@ -124,7 +124,7 @@ header > .interface{
 }
 
 .usuario button > i{
-     color: white;
+    color: #ff6600;
     font-size: 55px;
     cursor: pointer;
 }
@@ -158,8 +158,72 @@ header > .interface{
   color: #fff;
   font-size: 15px;
   margin: 25px 0 50px 0;
-  font-family: 'Optima', sans-serif;
+  font-family: 'Hammersmith One', sans-serif;
+  font-size: 14.5px;
   font-weight: 500;
   text-align: justify;
   max-width: 500px;
+}
+.like button{
+   font-size: 30px;
+   background:none;
+   border: none;
+   margin-top: 5px;
+}
+
+.like button > i{
+  color: #ff6600;
+  
+}
+.coment button{
+   font-size: 30px;
+   background:none;
+   border: none;
+   margin-top: 5px;
+}
+.coment button > i{
+  color: #ff6600;
+}
+
+.bi-chat-dots{
+  position: absolute;
+  left: 200px;
+  top: 345px;
+  
+}
+
+.bi-arrow-down-circle{
+  position: absolute;
+  left: 370px;
+  top: 345px;
+}
+
+.bi-arrow-up-circle{
+  position: absolute;
+  left: 300px;
+  top: 345px;
+}
+
+#quant{
+  position: absolute;
+  left: 240px;
+  top: 355px;
+  font-size: 15px;
+  color: #fff;
+}
+
+#gostei{
+  position: absolute;
+  left: 340px;
+  top: 355px;
+  font-size: 15px;
+  color: #fff;
+}
+
+#ngostei{
+  position: absolute;
+  left: 410px;
+  top: 355px;
+  font-size: 15px;
+  color: #fff;
 }
