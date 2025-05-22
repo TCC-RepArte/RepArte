@@ -1,0 +1,141 @@
+body{
+   background: linear-gradient(to right,#000000, #0d0419, #180730, #1a0637);
+                
+    background-blend-mode: overlay;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    position: relative;
+    padding-top: 0; 
+}
+
+.interface {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+header {
+  height: 40px;
+  background: none;
+  padding: 18px 4%;
+  margin: 12px 2% 0 2%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 200px;
+  max-width: 96vw;
+}
+ section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1rem;
+}
+
+.box {
+   background-color: #130922;
+   border-radius: 20px;
+   padding: 2rem;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+   max-width: 500px;
+   width: 500px;
+   height: 500px;
+   text-align: center;
+}
+
+.logo{
+    position: fixed;
+    left: 70px;
+    top: 5px ;
+}
+.adc-img button{
+   position: fixed;
+   left: 670px;
+   top: 120px;
+   margin-top: 5px;
+   background-color: #130922;
+   border: none;
+   border-radius: 50%;
+   padding: 1rem;
+   font-size: 3rem;
+   color: #ff6600;
+   cursor: pointer;
+   transition: background 0.3s;
+}
+.adc-img button::hover{
+     background-color: #db7500;
+}
+
+.adc-img button > i{
+    color: white;
+    font-size: 180px;
+}
+
+.texto{
+    position: absolute;
+    top: 360px;
+    left: 550px;
+    width: 500px;
+    height: 200px;
+    border-radius: 8px;
+}
+
+.nomeexb{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.nomeexb input{
+  position: fixed;
+  left: 580px;
+  top: 360px;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  background: rgba(43, 43, 43, 0) ;
+  color: white;
+  font-size: 25px;
+  outline: none;
+}
+
+.descricao{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.descricao input{
+  position: fixed;
+  height: 100px;
+  left: 580px;
+  top: 440px;
+  padding: 14px;
+  background: rgba(43, 43, 43, 0) ;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 25px;
+  outline: none;
+}
+  input.nome:focus,
+  input.desc:focus {
+    border-color: #0e061edf;
+    background-color: #ff6600;
+    outline: none;
+}
+
+.nome::placeholder{
+    font-family: 'Hammersmith One', sans-serif;
+    color: rgba(255, 255, 255, 0.699);
+}
+
+.desc::placeholder{
+    font-family: 'Hammersmith One', sans-serif;
+    color: rgba(255, 255, 255, 0.699);
+}
