@@ -18,7 +18,7 @@ body {
   background: linear-gradient(to right, #4603bb, #331560, #a24807e3, #ff6a00),
     linear-gradient(to top, #000 0%, #000000 65%, transparent 100%);
   background-blend-mode: overlay;
-  min-height: 100vh;
+  min-height: 1000%;
   font-family: 'Arial', sans-serif;
   position: relative;
   padding-top: 0;
@@ -37,14 +37,14 @@ body::before {
 }
 
 .interface {
-  max-width: 1280px;
+  max-width: 1440%;
+  width: 100%;
   margin: 0 auto;
-  position: relative;
   z-index: 1;
 }
 
 header {
-  height: 80px;
+  height: 12%;
   background: #181828;
   border-radius: 24px;
   box-shadow: 0 4px 32px #000a;
@@ -59,11 +59,12 @@ header {
   right: 0;
   z-index: 100;
   width: 96%;
-  max-width: 96vw;
+  max-width: 1440%;
 }
 
 header .logo {
-  margin-left: 60px;
+  width: 5vw;
+  margin-left: 5%;
   flex: 1;
 }
 
@@ -78,7 +79,7 @@ header nav {
   flex: 2;
   display: flex;
   justify-content: center;
-  margin-left: 80px;
+  margin-left: 2%;
 }
 
 header nav ul {
@@ -182,11 +183,12 @@ section.topo-do-site .flex {
 
 .topo-do-site h1 {
   color: #fff;
-  font-size: 3.2rem;
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
   line-height: 1.15;
   font-family: 'Hammersmith One', sans-serif;
   font-weight: 900;
   margin-bottom: 18px;
+  text-align: justify;
 }
 
 .topo-do-site h1 span {
@@ -196,7 +198,8 @@ section.topo-do-site .flex {
 
 .topo-do-site p {
   color: #fff;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  text-align: justify;
   margin: 25px 0 50px 0;
   font-family: 'Optima', sans-serif;
   font-weight: 500;
@@ -211,8 +214,8 @@ section.topo-do-site .flex {
 .search-box-custom {
   background: #181828;
   border-radius: 25px;
-  height: 45px;
-  width: 500px;
+  height: 7vh;
+  width: 30vw;
   display: flex;
   align-items: center;
   padding: 0 10px;
@@ -330,20 +333,15 @@ section.topo-do-site .flex {
   transform: translateY(-50%);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1440%) {
   .flex {
     flex-direction: column;
     gap: 40px;
   }
 
-  .carrossel-obra {
-    flex-direction: row;
-    justify-content: center;
-  }
-
   header {
     width: 98vw;
-    max-width: 98vw;
+    max-width: 1440%;
     margin: 12px 1vw 0 1vw;
     padding: 12px 2vw;
   }
@@ -358,10 +356,23 @@ section.topo-do-site .flex {
   }
 
   header .btn-Login {
+    flex-direction: column;
+    gap: 8px;
     justify-content: center;
   }
 }
-
+  @media (max-width: 768px) {
+  footer .flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .btn-login-destaque button,
+  .btn-cadastro-simples button {
+    padding: 8px 16px;
+    font-size: 16px;
+}
+}
 .sobre-nos {
   background: #030101;
   margin-top: 0;
@@ -372,7 +383,7 @@ section.topo-do-site .flex {
 }
 
 .sobre-nos .interface {
-  max-width: 800px;
+  max-width: 1440%;
   margin: 0 auto;
   padding: 0 24px;
   text-align: center;
@@ -400,7 +411,7 @@ section.topo-do-site .flex {
   font-weight: 700;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1440%) {
   .sobre-nos .interface {
     padding: 0 8px;
   }
@@ -439,4 +450,37 @@ footer .flex {
 
 footer .line-footer {
   padding: 8px 0;
+}
+
+@media (max-width: 600px) {
+  .carrossel-obra {
+    flex-direction: column;
+    gap: 16px;
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  .img-obra {
+    width: 200px;
+  }
+
+  .seta {
+    font-size: 36px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 768px) {
+  footer .flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .btn-social {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }
