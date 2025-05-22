@@ -65,6 +65,7 @@ function processarFormulario($post)
 
     // Obtém o ID do formulário
     $id = $_POST['id'] ?? null;
+    $email_bd = '';
 
     // Se o ID estiver ausente, exibe mensagem de erro
     if (empty($id)) {
@@ -135,7 +136,7 @@ function processarFormulario($post)
 
         if ($stmt->execute()) {
             $_SESSION['id'] = $id;
-            header("Location: ../testes-html/fotono.php");
+            header("Location: ../../html/perfil.php");
             exit;
         } else {
             $erros[] = "Erro ao enviar formulário!";

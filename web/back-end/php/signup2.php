@@ -4,17 +4,15 @@ require_once 'signup.php';
 $con = new mysqli("localhost", "root", '', "reparte");
 global $id;
 
-if(isset ($_FILES['foto']) && isset($_POST['nome']) && isset($_POST['desc'])){
-
-    global $id;
+if(isset($_FILES['envft']) && isset($_POST['nomeexi']) && isset($_POST['desc'])){
 
     //Recebendo dados e atribuindo a variaveis
-    $nome = $_POST['nome'];
-    $foto = $_FILES['foto'];
-    $pasta = '../../imagens/';
+    $nome = $_POST['nomeexi'];
+    $foto = $_FILES['envft'];
     $descricao = $_POST['desc'];
-
-
+    $pasta = '../../imagens/';
+    
+    global $id;
 
     if($foto['error']){
         die('Falha ao enviar imagem');
@@ -28,6 +26,8 @@ if(isset ($_FILES['foto']) && isset($_POST['nome']) && isset($_POST['desc'])){
         return;
 
     }
+
+    var_dump($id);
  
     // Gerando um novo nome para a foto
     $novo_nome = uniqid();
@@ -43,8 +43,14 @@ if(isset ($_FILES['foto']) && isset($_POST['nome']) && isset($_POST['desc'])){
     //Movendo foto para a pasta
     $insercao = move_uploaded_file($foto["tmp_name"], $caminho_completo);
 
-    $stmt = $con->prepare("INSERT INTO `perfil`(`foto`, `path`, `data`, `nomexi`, `desc`, `id`) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $con->prepare("INSERT INTO perfil (foto, caminho, data_perf, nomexi, descri, id) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssss", $nome_def, $caminho_completo, $date, $nome, $descricao, $id);
     $stmt->execute();
+
+  
+
+} else{
+
+    echo "faltaram dADOS";
 
 }
