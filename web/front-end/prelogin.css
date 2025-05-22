@@ -3,11 +3,17 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
 .hammersmith-one-regular {
   font-family: "Hammersmith One", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
+
 body {
   background: linear-gradient(to right, #4603bb, #331560, #a24807e3, #ff6a00),
     linear-gradient(to top, #000 0%, #000000 65%, transparent 100%);
@@ -17,21 +23,26 @@ body {
   position: relative;
   padding-top: 0;
 }
+
 body::before {
   content: none;
 }
+
 #bg-fixo {
   display: none;
 }
+
 .flex {
   display: flex;
 }
+
 .interface {
   max-width: 1280px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
 }
+
 header {
   height: 80px;
   background: #181828;
@@ -51,7 +62,7 @@ header {
   max-width: 96vw;
 }
 
-header .logo{
+header .logo {
   margin-left: 60px;
   flex: 1;
 }
@@ -69,14 +80,17 @@ header nav {
   justify-content: center;
   margin-left: 80px;
 }
+
 header nav ul {
   list-style-type: none;
   display: flex;
 }
+
 header nav ul li {
   display: inline-block;
   padding: 0 20px;
 }
+
 header a {
   font-family: "Hammersmith One", sans-serif;
   color: rgb(255, 255, 255);
@@ -84,10 +98,12 @@ header a {
   display: inline-block;
   transition: .1s;
 }
+
 header a:hover {
   color: #ee4300;
   transform: scale(1.05);
 }
+
 header .menu ul li a {
   border: 2px solid #fff;
   border-radius: 12px;
@@ -98,11 +114,13 @@ header .menu ul li a {
   margin: 0 8px;
   transition: background 0.2s, color 0.2s;
 }
+
 header .menu ul li a:hover {
   background: #ff6600;
   color: #fff;
   border-color: #ff6600;
 }
+
 header .btn-Login {
   display: flex;
   gap: 16px;
@@ -110,6 +128,7 @@ header .btn-Login {
   flex: 1;
   justify-content: flex-end;
 }
+
 .btn-login-destaque button {
   background: #ff6600;
   color: #fff;
@@ -122,9 +141,11 @@ header .btn-Login {
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
+
 .btn-login-destaque button:hover {
   background: #ff7f2a;
 }
+
 .btn-cadastro-simples button {
   background: #181828;
   color: #ff6600;
@@ -137,11 +158,13 @@ header .btn-Login {
   cursor: pointer;
   transition: background 0.2s, color 0.2s, border 0.2s;
 }
+
 .btn-cadastro-simples button:hover {
   background: #23233a;
   color: #fff;
   border-color: #ff6600;
 }
+
 section.topo-do-site {
   min-height: 100vh;
   display: flex;
@@ -150,11 +173,13 @@ section.topo-do-site {
   padding: 40px 4%;
   background-size: cover;
 }
+
 section.topo-do-site .flex {
   align-items: center;
   justify-content: center;
   gap: 90px;
 }
+
 .topo-do-site h1 {
   color: #fff;
   font-size: 3.2rem;
@@ -163,10 +188,12 @@ section.topo-do-site .flex {
   font-weight: 900;
   margin-bottom: 18px;
 }
+
 .topo-do-site h1 span {
   color: #ee4300;
   font-family: "Hammersmith One", sans-serif;
 }
+
 .topo-do-site p {
   color: #fff;
   font-size: 1.2rem;
@@ -175,10 +202,12 @@ section.topo-do-site .flex {
   font-weight: 500;
   max-width: 500px;
 }
+
 .destaque {
   color: #ff6600;
   font-weight: bold;
 }
+
 .search-box-custom {
   background: #181828;
   border-radius: 25px;
@@ -190,11 +219,13 @@ section.topo-do-site .flex {
   box-shadow: 0 2px 8px #0008;
   border: 2px solid #ff6600;
 }
+
 .search-icon {
   color: #1e90ff;
   font-size: 22px;
   margin-right: 10px;
 }
+
 .search-text {
   color: #fff;
   background: none;
@@ -204,16 +235,19 @@ section.topo-do-site .flex {
   width: 100%;
   font-family: 'Hammersmith One', sans-serif;
 }
+
 .search-text::placeholder {
   color: #b0b0b0;
   opacity: 1;
 }
+
 .carrossel-obra {
   display: flex;
   align-items: center;
   gap: 18px;
   margin-left: 80px;
 }
+
 .seta {
   background: #181828;
   color: #fff;
@@ -229,33 +263,39 @@ section.topo-do-site .flex {
   justify-content: center;
   transition: background 0.2s, color 0.2s;
 }
+
 .seta:hover {
   background: #ff6600;
   color: #fff;
 }
+
 .img-obra-container {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .img-obra {
   border: 8px solid #ff6600;
   border-radius: 12px;
   width: 270px;
   box-shadow: 0 4px 32px #000a;
 }
+
 .img-obra-container .tag-flutuante {
   opacity: 0;
   transform: translateY(10px) scale(0.95);
   transition: opacity 0.3s, transform 0.3s;
   pointer-events: none;
 }
+
 .img-obra-container:hover .tag-flutuante {
   opacity: 1;
   transform: translateY(0) scale(1);
   pointer-events: auto;
 }
+
 .tag-flutuante {
   position: absolute;
   background: #ff6600;
@@ -271,60 +311,73 @@ section.topo-do-site .flex {
   letter-spacing: 0.01em;
   filter: drop-shadow(0 2px 8px #0006);
 }
+
 .tag1 {
   top: -22px;
   left: -22px;
   transform: none;
 }
+
 .tag2 {
   bottom: -22px;
   left: -22px;
   transform: none;
 }
+
 .tag3 {
   top: 50%;
   right: -22px;
   transform: translateY(-50%);
 }
+
 @media (max-width: 900px) {
   .flex {
     flex-direction: column;
     gap: 40px;
   }
+
   .carrossel-obra {
     flex-direction: row;
     justify-content: center;
   }
+
   header {
     width: 98vw;
     max-width: 98vw;
     margin: 12px 1vw 0 1vw;
     padding: 12px 2vw;
   }
+
   header > .interface {
     flex-direction: column;
     gap: 12px;
   }
+
   header nav {
     justify-content: center;
   }
+
   header .btn-Login {
     justify-content: center;
   }
 }
+
 .sobre-nos {
   background: #030101;
   margin-top: 0;
   padding: 56px 0 64px 0;
   border-radius: 0;
   box-shadow: none;
+  scroll-margin-top: 100px; /* Para compensar o header fixo */
 }
+
 .sobre-nos .interface {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 24px;
   text-align: center;
 }
+
 .sobre-nos h2 {
   color: #ff6600;
   font-size: 2.6rem;
@@ -332,6 +385,7 @@ section.topo-do-site .flex {
   font-weight: 900;
   margin-bottom: 32px;
 }
+
 .sobre-nos p {
   color: #fff;
   font-size: 1.18rem;
@@ -340,18 +394,22 @@ section.topo-do-site .flex {
   font-weight: 400;
   text-align: center;
 }
+
 .sobre-nos b {
   color: #ff6600;
   font-weight: 700;
 }
+
 @media (max-width: 900px) {
   .sobre-nos .interface {
     padding: 0 8px;
   }
+
   .sobre-nos h2 {
     font-size: 2rem;
   }
 }
+
 .btn-social button {
   width: 60px;
   height: 60px;
@@ -363,19 +421,22 @@ section.topo-do-site .flex {
   margin: 0 5px;
   transition: .1s;
 }
+
 footer {
   padding: 30px 4%;
   background-color: #160b2e;
 }
+
 footer .line-footer p a {
   color: white;
   align-items: center;
   text-decoration: none;
 }
+
 footer .flex {
   justify-content: space-between;
 }
+
 footer .line-footer {
   padding: 8px 0;
 }
- 
