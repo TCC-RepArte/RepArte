@@ -39,14 +39,16 @@
         <div class="descricao">
             <label for="descri"></label>
             <input class="desc"  type="text" name="descricao pessoal" placeholder="Insira sua descrição">
+            <div class="botoes">
+        <button type="submit" class="btn-salvar">Salvar</button>
+      </div>
+
         </div>
         </div>
         </div>
         </div>
 
-      <div class="botoes">
-        <button type="submit" class="btn-salvar">Salvar</button>
-      </div>
+    
     </div>
     </section>
 
