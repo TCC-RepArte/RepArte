@@ -43,31 +43,31 @@
     <div class="right-login">
       <div class="card-login">
         <h1>Sign up</h1>
-        <form method="post" action="../back-end/php/signup.php">
+        <form id="signupForm" method="post" action="../back-end/php/signup.php">
           <div class="textfield">
             <label for="nome">Nome Completo: </label>
-            <input type="text" name="usuario" placeholder="Insira seu nome">
+            <input type="text" name="usuario" placeholder="Insira seu nome" required>
           </div>
  
           <div class="textfield">
             <label for="e-mail">Endereço de E-mail: </label>
-            <input type="text" name="email" placeholder="Zamboni@gmail.com">
+            <input type="email" name="email" placeholder="Zamboni@gmail.com" required>
           </div>
  
           <!-- Campos lado a lado -->
           <div class="textfield-row">
             <div class="textfield">
               <label for="senha">Senha:</label>
-              <input type="password" name="senha" placeholder="Senha">
+              <input type="password" name="senha" placeholder="Senha" required>
             </div>
             <div class="textfield">
               <label for="confsenha">Confirme sua Senha:</label>
-              <input type="password" name="confsenha" placeholder="Confirme a senha">
+              <input type="password" name="confsenha" placeholder="Confirme a senha" required>
             </div>
           </div>
  
           <button class="btn-registrarse" type="submit">Registrar-se</button>
-          <button class="btn-entrar">Entrar</button>
+          <a href="perfil.php"><button type="button" class="btn-entrar">Entrar</button></a>
         </form>
  
         <div class="errologin">

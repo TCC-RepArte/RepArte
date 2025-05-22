@@ -26,35 +26,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 function processarRequisicaoJson($data)
 {
     if (isset($data['id'])) {
-        global $id;
-        $id = $data['id'];
-        $id_bd = '';
         global $con;
-
-        var_dump($_SESSION);
-
+        $id = $data['id'];
+        
         // Verifica se o ID já existe no banco
         $stmt = $con->prepare("SELECT id FROM login WHERE id = ?");
         $stmt->bind_param("s", $id);
         $stmt->execute();
-        $stmt->bind_result($id_bd);
-        $stmt->fetch();
-        $stmt->close();
-
-        if ($id_bd === $id) {
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
             echo json_encode([
                 'success' => false,
                 'message' => 'ID já existe',
                 'duplicate' => true
             ]);
-            return;
+        } else {
+            echo json_encode([
+                'success' => true,
+                'message' => 'ID disponível',
+                'id' => $id
+            ]);
         }
-
-        echo json_encode([
-            'success' => true,
-            'message' => 'ID inserido com sucesso',
-            'id' => $id
-        ]);
+        $stmt->close();
     } else {
         echo json_encode([
             'success' => false,
@@ -68,14 +62,13 @@ function processarFormulario($post)
 { 
     global $erros;
     global $con;
-    global $id;
 
-    // Obtém o ID da sessão
-    $idc = $_POST['id'] ?? null;
+    // Obtém o ID do formulário
+    $id = $_POST['id'] ?? null;
 
     // Se o ID estiver ausente, exibe mensagem de erro
-    if (empty($idc)) {
-        echo "ID ausente. Tente novamente.";
+    if (empty($id)) {
+        $erros[] = "ID ausente. Tente novamente.";
         return;
     }
 
@@ -98,7 +91,6 @@ function processarFormulario($post)
     }
 
     // Verificando se o email já existe
-    $email_bd = '';
     $stmt = $con->prepare("SELECT email FROM login WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -115,19 +107,19 @@ function processarFormulario($post)
     // Verificando se o usuário já existe
     $usuario_def = '@' . $usuario;
     $usuario_bd = '';
-
     $stmt = $con->prepare("SELECT `usuario` FROM `login` WHERE usuario = ?");
     $stmt->bind_param("s", $usuario_def);
     $stmt->execute();
     $stmt->bind_result($usuario_bd);
     $stmt->fetch();
 
-    $stmt->close();
 
     if ($usuario_bd == $usuario_def) {
         $erros[] = "Usuário já existe";
         return;
     }
+
+    $stmt->close();
 
     // Validando as senhas
     if ($senha_conf !== $senha) {
@@ -137,16 +129,25 @@ function processarFormulario($post)
 
     if (empty($erros)) {
         // Criptografando a senha e inserindo dados no banco de dados
-        $senha_has = password_hash($senha, PASSWORD_DEFAULT);
-        $stmt = $con->prepare("INSERT INTO `login`(`usuario`, `email`, `senha`, `id`) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $usuario_def, $email, $senha_has, $idc);
+        $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+        $stmt = $con->prepare("INSERT INTO login (usuario, email, senha, id) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $usuario_def, $email, $senha_hash, $id);
 
         if ($stmt->execute()) {
-            header("Location: fotono.php");
+            $_SESSION['id'] = $id;
+            header("Location: ../testes-html/fotono.php");
+            exit;
         } else {
             $erros[] = "Erro ao enviar formulário!";
         }
 
         $stmt->close();
+    }
+
+    // Se houver erros, redireciona de volta para o formulário
+    if (!empty($erros)) {
+        $_SESSION['erros'] = $erros;
+        header("Location: ../../web/html/cadastro.php");
+        exit;
     }
 }

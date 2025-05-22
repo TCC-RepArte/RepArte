@@ -1,8 +1,12 @@
 <?php
 
+require_once 'signup.php';
 $con = new mysqli("localhost", "root", '', "reparte");
+global $id;
 
 if(isset ($_FILES['foto']) && isset($_POST['nome']) && isset($_POST['desc'])){
+
+    global $id;
 
     //Recebendo dados e atribuindo a variaveis
     $nome = $_POST['nome'];
@@ -39,8 +43,8 @@ if(isset ($_FILES['foto']) && isset($_POST['nome']) && isset($_POST['desc'])){
     //Movendo foto para a pasta
     $insercao = move_uploaded_file($foto["tmp_name"], $caminho_completo);
 
-    $stmt = $con->prepare("INSERT INTO `perfil`(`foto`, `path`, `data`, `nomexi`, `desc`) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $nome_def, $caminho_completo, $date, $nome, $descricao);
+    $stmt = $con->prepare("INSERT INTO `perfil`(`foto`, `path`, `data`, `nomexi`, `desc`, `id`) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $nome_def, $caminho_completo, $date, $nome, $descricao, $id);
     $stmt->execute();
 
 }

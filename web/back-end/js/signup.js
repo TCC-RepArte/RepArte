@@ -1,24 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector("#loginf");
+  const form = document.querySelector("form");
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault(); // Evita o envio automático
 
-    // Gera o ID e aguarda
-    const id = await criarID(10);
-    
-    if (id.success) {
-      // Cria e adiciona input hidden ao form
-      const hiddenInput = document.createElement("input");
-      hiddenInput.type = "hidden";
-      hiddenInput.name = "id";
-      hiddenInput.value = id.id;
-      form.appendChild(hiddenInput);
+    try {
+      // Gera o ID e aguarda
+      const id = await criarID(10);
+      
+      if (id && id.success) {
+        // Cria e adiciona input hidden ao form
+        const hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = "id";
+        hiddenInput.value = id.id;
+        form.appendChild(hiddenInput);
 
-      // Agora envia o formulário com o ID incluso
-      form.submit();
-    } else {
-      alert("Erro ao gerar ID. Tente novamente.");
+        // Agora envia o formulário com o ID incluso
+        form.submit();
+      } else {
+        alert("Erro ao gerar ID. Tente novamente.");
+      }
+    } catch (error) {
+      console.error("Erro ao processar formulário:", error);
+      alert("Ocorreu um erro ao processar o formulário. Tente novamente.");
     }
   });
 });
@@ -33,15 +38,30 @@ async function criarID(tamanho) {
   }
 
   const id = resultado;
+  console.log("ID gerado:", id);
 
   try {
-    const response = await fetch('/web/back-end/php/signup.php', {
+    const url = '/RepArte/web/back-end/php/signup.php';
+    console.log("Tentando acessar:", url);
+
+    const response = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
       body: JSON.stringify({ id })
     });
 
+    console.log("Status da resposta:", response.status);
+    console.log("Headers da resposta:", response.headers);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const data = await response.json();
+    console.log("Resposta do servidor:", data);
 
     if (data.duplicate) {
       console.warn("ID duplicado. Tentando novamente...");
@@ -52,6 +72,6 @@ async function criarID(tamanho) {
 
   } catch (error) {
     console.error("Erro ao gerar ID:", error);
-    return { success: false };
+    return { success: false, message: "Erro ao comunicar com o servidor" };
   }
 }
