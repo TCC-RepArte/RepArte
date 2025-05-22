@@ -42,6 +42,12 @@
         </div>
         </div>
         </div>
+        </div>
+
+      <div class="botoes">
+        <button type="submit" class="btn-salvar">Salvar</button>
+      </div>
+    </div>
     </section>
 
     
