@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
- 
+
 body {
   background: linear-gradient(to right, #4603bb, #331560, #a24807e3, #ff6a00),
               linear-gradient(to top, #000 0%, #000000 45%, transparent 100%);
@@ -13,14 +13,14 @@ body {
   position: relative;
   padding-top: 0;
 }
- 
+
 .interface {
   max-width: 1280px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
 }
- 
+
 header {
   height: 60px;
   background: #181828;
@@ -39,7 +39,7 @@ header {
   width: 25%;
   max-width: 96vw;
 }
- 
+
 .main-login {
   width: 100vw;
   height: 100vh;
@@ -48,7 +48,7 @@ header {
   align-items: center;
   gap: 0px;
 }
- 
+
 .left-login, .right-login {
   width: 420px;
   border-radius: 40px;
@@ -58,7 +58,7 @@ header {
   align-items: center;
   box-shadow: 0 0 12px #00000066;
 }
- 
+
 .left-login {
   background-color: #333062;
   width: 500px;
@@ -67,7 +67,7 @@ header {
   position: relative;
   z-index: 1;
 }
- 
+
 .right-login {
   background-color: #130922;
   position: relative;
@@ -76,17 +76,17 @@ header {
   width:450px;
   padding: 40px 30px;
 }
- 
+
 .btns-logins h1 {
   color: #fd4f0a;
   font-family: "Baloo 2", sans-serif;
   font-size: 35px;
   text-align: left;
   margin-bottom: 15px;
-  margin-top: -10px;
- margin-right: 40px;
+  margin-top: 15px;
+  margin-right: 40px;
 }
- 
+
 .btns-logins {
   width: 100%;
   display: flex;
@@ -94,13 +94,13 @@ header {
   align-items: center;
   gap: 16px;
 }
- 
+
 .btns-logins a {
   width: 100%;
   text-decoration: none;
   display: flex;
 }
- 
+
 .btns-logins button {
   width: 100%;
   max-width: 360px;
@@ -117,11 +117,11 @@ header {
   text-align: left;
   margin-left: 20px;
 }
- 
+
 .btns-logins button:hover {
   background-color: #2e1a49;
 }
- 
+
 .card-login h1 {
   color: #fd4f0a;
   font-family: "Hammersmith One", sans-serif;
@@ -130,16 +130,16 @@ header {
   text-align: left;
   width: 100%;
 }
- 
+
 .card-login {
   width: 100%;
 }
- 
+
 .textfield {
   width: 100%;
   margin-bottom: 20px;
 }
- 
+
 .textfield input {
   width: 100%;
   border: none;
@@ -150,12 +150,11 @@ header {
   font-size: 16px;
   outline: none;
 }
- 
+
 .textfield input::placeholder {
   color: rgb(255, 255, 255);
-
 }
- 
+
 .checkbox {
   display: flex;
   align-items: center;
@@ -165,11 +164,11 @@ header {
   color: white;
   width: 100%;
 }
- 
+
 .checkbox input {
   margin-right: 2px;
 }
- 
+
 .btn-entrar, .btn-registrarse {
   width: 100%;
   padding: 14px;
@@ -181,22 +180,153 @@ header {
   cursor: pointer;
   transition: background 0.3s ease;
 }
- 
+
 .btn-entrar {
   background-color: #fd4f0a;
   color: white;
 }
- 
+
 .btn-entrar:hover {
   background-color: #d34608;
 }
- 
+
 .btn-registrarse {
   background-color: #332d54;
   color: white;
 }
- 
+
 .btn-registrarse:hover {
   background-color: #2c2648;
 }
- 
+
+@media (max-width: 768px) {
+  .main-login {
+    flex-direction: column;
+    height: auto;
+    padding: 40px 20px;
+  }
+
+  .left-login,
+  .right-login {
+    width: 100%;
+    height: auto;
+    padding: 32px 24px;
+    margin: 0;
+    box-shadow: none;
+  }
+
+  .left-login{
+    margin-top: 50px;
+  }
+
+  .right-login {
+    margin-left: 0;
+  }
+
+  .btns-logins h1 {
+    font-size: 28px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    margin-right: 0;
+  }
+
+  .btns-logins button {
+    margin-left: 0;
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .card-login h1 {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .textfield input {
+    font-size: 14px;
+  }
+
+  .btn-entrar,
+  .btn-registrarse {
+    font-size: 16px;
+  }
+
+  header {
+    width: 90%;
+  }
+}
+
+
+/* 💻 Telas médias: laptops até ~1440px */
+@media (min-width: 769px) and (max-width: 1440px) {
+  .main-login {
+    flex-direction: row;
+    padding: 40px;
+    gap: 30px;
+  }
+
+  .left-login {
+    width: 420px;
+    height: auto;
+    padding: 40px 30px;
+  }
+
+  .right-login {
+    width: 420px;
+    margin-left: -40px;
+    padding: 40px 30px;
+  }
+
+  .btns-logins h1 {
+    font-size: 32px;
+  }
+
+  .btns-logins button {
+    font-size: 18px;
+  }
+
+  .card-login h1 {
+    font-size: 26px;
+  }
+
+  .btn-entrar,
+  .btn-registrarse {
+    font-size: 18px;
+  }
+}
+
+/* 🖥️ Telas grandes: desktops grandes, 4K */
+@media (min-width: 1920px) {
+  .main-login {
+    max-width: 1600px;
+    margin: 0 auto;
+    gap: 80px;
+  }
+
+  .left-login,
+  .right-login {
+    width: 500px;
+    padding: 60px 50px;
+  }
+
+  .btns-logins h1 {
+    font-size: 46px;
+  }
+
+  .btns-logins button {
+    font-size: 22px;
+  }
+
+  .card-login h1 {
+    font-size: 38px;
+  }
+
+  .textfield input {
+    font-size: 20px;
+  }
+
+  .btn-entrar,
+  .btn-registrarse {
+    font-size: 22px;
+  }
+}
