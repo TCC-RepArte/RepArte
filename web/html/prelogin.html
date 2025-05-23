@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../back-end/js/preloginmenu.js" defer></script>
     <link rel="stylesheet" href="../front-end/prelogin.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +23,7 @@
             <nav class="menu">
                 <ul>
                     <li><a href="#sobre-nos">Sobre Nós</a></li>
-                    <li><a href="#">Contato</a></li>
+                    <li><a href="#cont">Contato</a></li>
                     <li><a href="#">Mobile</a></li>
                 </ul>
             </nav>
@@ -77,6 +78,7 @@
 
     <br><br><br>
 
+    <section class="cont" id="cont"></section>
     <footer>
         <div class="interface">
             <div class="line-footer">
@@ -99,5 +101,26 @@
             </div>
         </div>
     </footer>
+
+    <div class="btn-abrir-menu" id="btn-menu">
+        <i class="bi bi-list"></i>
+    </div>
+    <div class="menu-mobile" id="menu-mobile">
+        <div class="btn-fechar">
+            <i class="bi bi-x"></i>
+        </div>
+           <nav>
+                <ul>
+                    <li><a href="#sobre-nos">Sobre Nós</a></li>
+                    <li><a href="#cont">Contato</a></li>
+                    <li><a href="#">Mobile</a></li>
+                    <li><a href="login1.php">Login</a></li>
+                    <li><a href="cadastro.php">Cadastro</a></li>
+                </ul>
+            </nav>
+    </div>
+    <div class="overlay-menu" id="overlay-menu">
+
+    </div>
 </body>
 </html>
