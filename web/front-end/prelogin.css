@@ -363,7 +363,7 @@ section.topo-do-site .flex {
 }
 
 .sobre-nos {
-  background: #030101;
+  background: #000000;
   margin-top: 0;
   padding: 56px 0 64px 0;
   border-radius: 0;
@@ -439,4 +439,118 @@ footer .flex {
 
 footer .line-footer {
   padding: 8px 0;
+}
+
+@media (max-width: 600px) {
+  .carrossel-obra {
+    flex-direction: column;
+    gap: 16px;
+    margin-left: 0;
+  }
+
+  .img-obra {
+    width: 200px;
+  }
+
+  .seta {
+    font-size: 36px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+.search-box-custom {
+  width: 100%;
+  max-width: 500px;
+}
+
+/*telas pequenas*/
+@media (max-width: 980px) {
+   header {
+    width: 70%;
+    max-width: 80%;
+  }
+  header .btn-Login {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  header .logo{
+  margin-left: 60px;
+  flex: 1;
+  width: 800px;
+  }
+
+  .btn-login{
+       max-width: 500px;
+  }
+  .btn-login-destaque button,
+  .btn-cadastro-simples button {
+    font-size: 20px;
+    margin-left: 20px;
+    padding: 10px 32px;
+  }
+
+  .tag1, .tag2, .tag3 {
+    font-size: 12px;
+    padding: 5px 16px;
+  }
+
+   footer .flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .btn-social {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .topo-do-site h1 {
+  font-size: 40px;
+  text-align: justify;
+}
+.sobre-nos h2{
+  font-size: 40px;
+  text-align: center;
+}
+.topo-do-site p {
+  font-size: 20px;
+  text-align: justify;
+}
+}
+
+/*Telas grandes*/
+@media (min-width: 1600px) {
+
+   header {
+    width: 100%;
+    height: 8%;
+    max-width: 96%;
+  }
+
+  .btn-login-destaque button,
+  .btn-cadastro-simples button {
+    padding: 4px 8px;
+    
+    font-size: 40px;
+  }
+
+    .topo-do-site h1 {
+  font-size: 70px;
+  text-align: justify;
+}
+.sobre-nos h2{
+  font-size: 70px;
+  text-align: center;
+}
+.topo-do-site p {
+  font-size: 30px;
+  text-align: justify;
+}
+.sobre-nos p{
+  font-size: 30px;
+  text-align: center;
+}
 }
