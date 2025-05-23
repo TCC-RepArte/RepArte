@@ -60,6 +60,22 @@ CREATE TABLE IF NOT EXISTS `perfil` (
   `data_perf` datetime NOT NULL,
   KEY `id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Estrutura para tabela `temp_signup`
+--
+
+DROP TABLE IF EXISTS `temp_signup`;
+CREATE TABLE IF NOT EXISTS `temp_signup` (
+  `id` varchar(12) NOT NULL,
+  `usuario` varchar(15) NOT NULL,
+  `email` varchar(15) NOT NULL,
+  `senha` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `completed` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

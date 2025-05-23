@@ -6,6 +6,8 @@ global $id;
 $con = new mysqli("localhost", "root", '', "reparte");
 
 $erros = [];
+// Executa a limpeza de registros temporários
+limparRegistrosTemporarios();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contentType = $_SERVER["CONTENT_TYPE"] ?? '';
@@ -57,6 +59,14 @@ function processarRequisicaoJson($data)
     }
 }
 
+// Função para limpar registros temporários antigos
+function limparRegistrosTemporarios() {
+    global $con;
+    // Remove registros temporários com mais de 1 hora e não completados
+    $stmt = $con->prepare("DELETE FROM temp_signup WHERE created_at < DATE_SUB(NOW(), INTERVAL 1 HOUR) AND completed = 0");
+    $stmt->execute();
+    $stmt->close();
+}
 
 function processarFormulario($post)
 { 
@@ -114,7 +124,6 @@ function processarFormulario($post)
     $stmt->bind_result($usuario_bd);
     $stmt->fetch();
 
-
     if ($usuario_bd == $usuario_def) {
         $erros[] = "Usuário já existe";
         return;
@@ -129,20 +138,37 @@ function processarFormulario($post)
     }
 
     if (empty($erros)) {
-        // Criptografando a senha e inserindo dados no banco de dados
+        // Criptografando a senha
         $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-        $stmt = $con->prepare("INSERT INTO login (usuario, email, senha, id) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $usuario_def, $email, $senha_hash, $id);
-
-        if ($stmt->execute()) {
+        
+        // Iniciando transação
+        $con->begin_transaction();
+        
+        try {
+            // Inserindo dados na tabela temporária
+            $stmt = $con->prepare("INSERT INTO temp_signup (id, usuario, email, senha) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssss", $id, $usuario_def, $email, $senha_hash);
+            
+            if (!$stmt->execute()) {
+                throw new Exception("Erro ao salvar dados temporários");
+            }
+            
+            $stmt->close();
+            
+            // Armazenando ID na sessão
             $_SESSION['id'] = $id;
-            header("Location: ../../html/perfil.php");
+            $_SESSION['signup_in_progress'] = true;
+            
+            // Commit da transação
+            $con->commit();
+            
+            header("Location: signup2.php");
             exit;
-        } else {
-            $erros[] = "Erro ao enviar formulário!";
+        } catch (Exception $e) {
+            // Rollback em caso de erro
+            $con->rollback();
+            $erros[] = "Erro ao processar cadastro: " . $e->getMessage();
         }
-
-        $stmt->close();
     }
 
     // Se houver erros, redireciona de volta para o formulário
