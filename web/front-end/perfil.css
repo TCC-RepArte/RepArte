@@ -7,21 +7,21 @@
 body {
   background: linear-gradient(to right, #000000, #0d0419, #180730, #1a0637);
   background-blend-mode: overlay;
-  min-height: 100vh;
+  min-height: 1200%;
   font-family: 'Arial', sans-serif;
   padding-top: 60px;
   color: white;
 }
 
 .interface {
-  max-width: 1280px;
+  max-width: 1440%;
   margin: 0 auto;
   position: relative;
   z-index: 1;
 }
 
 header {
-  height: 40px;
+  height: 8vh;
   background: none;
   padding: 18px 4%;
   margin: 12px 2% 0 2%;
@@ -34,7 +34,7 @@ header {
   right: 0;
   z-index: 100;
   width: 200px;
-  max-width: 96vw;
+  max-width: 1440%;
 }
 
 .logo {
@@ -55,10 +55,10 @@ section {
   background-color: #130922;
   border-radius: 20px;
   padding: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   max-width: 500px;
-  width: 500px;
-  height: 550px;
+  width: 600vw;
+  height: 100vh;
   text-align: center;
   position: relative;
   margin-left: 10px;
