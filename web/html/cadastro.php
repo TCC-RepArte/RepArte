@@ -46,23 +46,22 @@
         <form id="signupForm" method="post" action="../back-end/php/signup.php">
           <div class="textfield">
             <label for="nome">Nome Completo: </label>
-            <input type="text" name="usuario" placeholder="Insira seu nome" required>
+            <input type="text" name="usuario" placeholder="" required>
           </div>
  
           <div class="textfield">
             <label for="e-mail">Endereço de E-mail: </label>
-            <input type="email" name="email" placeholder="Zamboni@gmail.com" required>
+            <input type="email" name="email" placeholder="1234@gmail.com" required>
           </div>
  
-          <!-- Campos lado a lado -->
           <div class="textfield-row">
             <div class="textfield">
               <label for="senha">Senha:</label>
-              <input type="password" name="senha" placeholder="Senha" required>
+              <input type="password" name="senha" placeholder="********" required>
             </div>
             <div class="textfield">
               <label for="confsenha">Confirme sua Senha:</label>
-              <input type="password" name="confsenha" placeholder="Confirme a senha" required>
+              <input type="password" name="confsenha" placeholder="********" required>
             </div>
           </div>
  
