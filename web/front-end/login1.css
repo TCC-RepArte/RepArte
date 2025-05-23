@@ -255,9 +255,7 @@ header {
     width: 90%;
   }
 }
-
-
-/* 💻 Telas médias: laptops até ~1440px */
+ /*telas pequenas*/
 @media (min-width: 769px) and (max-width: 1440px) {
   .main-login {
     flex-direction: row;
@@ -295,7 +293,7 @@ header {
   }
 }
 
-/* 🖥️ Telas grandes: desktops grandes, 4K */
+/*telas grandes*/
 @media (min-width: 1920px) {
   .main-login {
     max-width: 1600px;
@@ -305,8 +303,9 @@ header {
 
   .left-login,
   .right-login {
+    height:600px ;
     width: 500px;
-    padding: 60px 50px;
+    padding: 60px 30px;
   }
 
   .btns-logins h1 {
@@ -318,7 +317,7 @@ header {
   }
 
   .card-login h1 {
-    font-size: 38px;
+    font-size: 50px;
   }
 
   .textfield input {
