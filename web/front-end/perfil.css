@@ -66,7 +66,7 @@ section {
 
 .adc-img button {
   background-color: #130922;
-  border: 2px solid #ff6600;
+  border: 2px #ff6600;
   border-radius: 50%;
   padding: 1rem;
   font-size: 3rem;
@@ -85,7 +85,19 @@ section {
   color: white;
   font-size: 180px;
 }
-
+#envfto{
+  position: fixed;
+  top: 50%;
+  left: 43%;
+  background:none;
+  font-family: "Hammersmith One", sans-serif;
+  border: none;
+  border-radius: 10px;
+  font-size: 10px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 .texto {
   margin-top: 30px;
   color: white;
@@ -140,4 +152,48 @@ input.desc:focus {
 
 .btn-salvar:hover {
   background-color: #db7500;
+}
+ /*telas pequenas*/
+@media (min-width: 769px) and (max-width: 980px) {
+ #envfto{
+  display: flex;
+  margin-bottom: 45px;
+  justify-items: center;
+
+ }
+}
+
+/*telas grandes*/
+@media (min-width: 1920px) {
+  .box{
+    max-width: 800px;
+    padding: 50px;
+    margin: 5% auto;
+    gap: 80px;
+    height: 60vh ;
+    width: 70vw ;
+
+  }
+  .adc-img button i{
+    font-size: 300px;
+    justify-content: center;
+    border: none;
+  }
+  .nomeexb,
+.descricao {
+  margin-bottom: 20px;
+  font-size: 50px;
+}
+#envfto{
+  font-size: 18px;
+  position: fixed;
+  top: 45%;
+  left: 42%;
+}
+.btn-salvar{
+  position: fixed;
+  top: 65%;
+
+}
+
 }

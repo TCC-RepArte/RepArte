@@ -33,7 +33,7 @@
 
             <form enctype="multipart/form-data" method="post" action="../back-end/php/signup2.php">
                 <div class="adc-img">
-                    <button><i class="bi bi-person-circle"><input type="file" id="envfto" name="envft" /></i></button>
+                    <button><i class="bi bi-person-circle"><br><input type="file" id="envfto" name="envft" /></i></button>
                 </div>
                 <div class="texto">
                     <div class="nomeexb">
