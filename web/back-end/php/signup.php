@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Processa requisições JSON (como a do fetch do JavaScript)
+// Processa requisições JSON (tipo a do fetch do JavaScript)
 function processarRequisicaoJson($data)
 {
     if (isset($data['id'])) {
