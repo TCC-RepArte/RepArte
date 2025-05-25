@@ -1,98 +1,189 @@
-        <!DOCTYPE html>
-        <html lang="pt-br">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="..//front-end/telainicial.css">
-            
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap" rel="stylesheet">
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-            
-            <title>Reparte</title>
-        </head>
-        <body>
-            <header>
-                <div class="logo">
-                        <a href="#">
-                            <img src="../imagens/logo.png" alt="Logo do site">
-                        </a>
-                    </div>
-                    <div class="search-box search-box-custom">
-                                    <span class="search-icon">🔍</span>
-                                    <input type="text" class="search-text" placeholder="Pesquisar tema...">
-                                </div>    
-                                <div class="perfil">
-                                    <a href=""><button><i class="bi bi-person-circle"></i></button> </a>
-                                </div>                       
-                <div class="interface">
-                        <nav class="menu">
-                            <div class="lista">
-                                <i class="bi bi-list"></i>
-                            </div>                 
-                </nav>
-                </div>      
-            </header>
-            <section class="post1">
-            <div class="caixa">
-                <div class="usuario">
-                    <a href=""><button><i class="bi bi-person-circle"></i></button> </a>
-                </div>
-                <div class="postagem">
-                    <p>
-                        Sinners é uma proposta inovadora que mistura drama criminal e familiar com o realismo mágico do gótico sulista, evocando a América profunda de Flannery O’Connor. Apesar disso, o diretor Ryan Coogler mantém elementos de sua abordagem na Marvel, como o espetáculo visual, influências dos super-heróis e um estilo maniqueísta. Michael B. Jordan interpreta dois irmãos gêmeos que retornam ao sul para abrir um bar de jive e blues. O filme destaca-se ao explorar profundamente a ligação entre música e cultura afro-americana, aproximando-se até de um musical ao fundir blues, tribalismo africano e hip hop. O ponto forte da obra está na sua rica ambientação sulista.
-                    </p>
-                        
-                </div>
-                <div class="feedback">
-                    <div class="coment">
-                        <a href="#"><button id="c1"><i class="bi bi-chat-dots"></i></button></a>
-                        <h6 id="quant1">25</h6>
-                    </div>
-                    <div class="like">
-                        <a href="#"><button id="up"><i class="bi bi-arrow-up-circle"></i></button></a>
-                        <h6 id="g1">63</h6>
-                        <a href="#"><button id="down"><i class="bi bi-arrow-down-circle"></i></button></a>
-                        <h6 id="ng1">14</h6>
-                    </div>
-                    <div class="imagem">
-                        <img src="../imagens/pecadores.jpg" class="img-obra">
-                    </div>
-                
-                </div>
-            </div>
-            </section>
-            <section class="post2">
-                <div class="caixa2">
-                      <div class="usuario2">
-                    <a href=""><button><i class="bi bi-person-circle"></i></button> </a>
-                </div>
-                <div class="postagem2">
-                    <p>
-                        O filme mostra perfeitamente a perspectiva de uma criança em meio aos confusos conflitos dos adultos na alemanha durante a 2º guerra mundial. Dos sutis gestos de preconceito, aos ataques de fúrias sem sentido contra os judeus, tudo observado pelo ponto de vista de um menino inocente e desbravador de 8 anos.
-                    </p>
-                </div>
-                <div class="feedback2">
-                    <div class="coment2">
-                     <a href="#"><button id="c2"><i class="bi bi-chat-dots"></i></button></a> 
-                     <h6 id="quant2">17</h6>  
-                    </div>
-                    <div class="like2">
-                        <a href="#"><button id="up2"><i class="bi bi-arrow-up-circle"></i></button></a>
-                        <h6 id="g2">56</h6>
-                        <a href="#"><button id="down2"><i class="bi bi-arrow-down-circle"></i></button></a>
-                        <h6 id="ng2">9</h6>
-                    </div>
-                   <div class="imagem2">
-                    <img src="../imagens/listrado.jpg" class="img-obra2">
-                   </div>
-                </div>
-                </div>
-            </section>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../front-end/telainicial.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">  
+  <title>Reparte</title>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="#"><img src="../imagens/logo.png" alt="Logo do site"></a>
+    </div>
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-text" placeholder="">
+    </div>
+  </header>
 
-        </body>
-        </html>
+  <main class="main-container">
+    <aside class="sidebar-left">
+      <div class="user-principal">
+        <img src="../imagens/usuario3.png" alt="Seu Perfil">
+        <strong>Seu Nome</strong>
+      </div>
+      <div class="user-list">
+        <div class="user-item"><img src="../imagens/usuario2.png"> Usuário 1</div>
+        <div class="user-item"><img src="../imagens/usuario1.png"> Usuário 2</div>
+        <div class="user-item"><img src="user3.jpg"> Usuário 3</div>
+        <div class="user-item"><img src="user3.jpg"> Usuário 4</div>
+        <div class="user-item"><img src="user3.jpg"> Usuário 5</div>
+        <div class="user-item"><img src="user3.jpg"> Usuário 6</div>
+        <div class="user-item"><img src="user3.jpg"> Usuário 7</div>
+        <div class="user-item"><img src="user3.jpg"> Usuário 8</div>
+        <div class="user-item"><img src="user3.jpg"> Usuário 9</div>
+        <div class="user-item"><img src="user3.jpg"> Usuário 10</div>
+        <div class="user-item"><img src="user3.jpg"> Usuário 11</div>
+      </div>
+    </aside>
+
+    <section class="feed">
+      <div class="create-post">
+        <textarea placeholder="Escreva sua análise..."></textarea>
+        <div class="post-actions">
+          <button>Anexar</button>
+          <button>Enviar</button>
+        </div>
+      </div>
+
+      <div class="post">
+        <div class="post-header">
+          <img src="../imagens/usuario1.png" alt="Foto do Usuário V" class="post-user-photo" />
+          <h3>Usuário V</h3>
+        </div>
+        <div class="post-body">
+          <img src="../imagens/blackmirror.jpg" alt="Imagem post">
+          <p>Comentário sobre o filme...</p>
+        </div>
+        <div class="post-buttons">
+  <div class="comment-button">
+    <i class="fas fa-comment-dots"></i>
+  </div>
+  <div class="vote-buttons">
+    <i class="fas fa-arrow-up"></i>
+    <i class="fas fa-arrow-down"></i>
+  </div>
+</div>
+      </div>
+
+      <div class="post">
+        <div class="post-header">
+          <img src="../imagens/usuario2.png" alt="Foto do Usuário V" class="post-user-photo" />
+          <h3>Usuário W</h3>
+        </div>
+        <div class="post-body">
+          <img src="../imagens/pecadores.jpg" alt="Imagem post">
+          <p>Comentário sobre o filme..hdhdhdhdhdhdhhdhdhdh<br> 
+             djfjiodcijsdkkdnsdoiecjneojnsdjdjdffjvnkjddnvk<br>
+             kdddkdkdksnkvjkjdkdejdjkvnjckdjdcidcjdciodidsi<br>
+            Comentário sobre o filme..hdhdhdhdhdhdhhdhdhdh 
+             djfjiodcijsdkkdnsdoiecjneojnsdjdjdffjvnkjddnvk<br></p>
+        </div>
+        <div class="post-buttons">
+  <div class="comment-button">
+    <i class="fas fa-comment-dots"></i>
+  </div>
+  <div class="vote-buttons">
+    <i class="fas fa-arrow-up"></i>
+    <i class="fas fa-arrow-down"></i>
+  </div>
+</div>
+      </div>
+
+      <div class="post">
+        <div class="post-header">
+          <img src="userV.jpg" alt="Foto do Usuário V" class="post-user-photo" />
+          <h3>Usuário X</h3>
+        </div>
+        <div class="post-body">
+          <img src="../imagens/listrado.jpg" alt="Imagem post">
+          <p>Comentário sobre o filme...</p>
+        </div>
+        <div class="post-buttons">
+  <div class="comment-button">
+    <i class="fas fa-comment-dots"></i>
+  </div>
+  <div class="vote-buttons">
+    <i class="fas fa-arrow-up"></i>
+    <i class="fas fa-arrow-down"></i>
+  </div>
+</div>
+      </div>
+
+      <div class="post">
+        <div class="post-header">
+          <img src="userV.jpg" alt="Foto do Usuário V" class="post-user-photo" />
+          <h3>Usuário Y</h3>
+        </div>
+        <div class="post-body">
+          <img src="../imagens/vantagens.png" alt="Imagem post">
+          <p>Comentário sobre o filme...</p>
+        </div>
+        <div class="post-buttons">
+  <div class="comment-button">
+    <i class="fas fa-comment-dots"></i>
+  </div>
+  <div class="vote-buttons">
+    <i class="fas fa-arrow-up"></i>
+    <i class="fas fa-arrow-down"></i>
+  </div>
+</div>
+      </div>
+
+      <div class="post">
+        <div class="post-header">
+          <img src="userV.jpg" alt="Foto do Usuário V" class="post-user-photo" />
+          <h3>Usuário Z</h3>
+        </div>
+        <div class="post-body">
+          <img src="pecadores.jpg" alt="Imagem post">
+          <p>Comentário sobre o filme...</p>
+        </div>
+       <div class="post-buttons">
+  <div class="comment-button">
+    <i class="fas fa-comment-dots"></i>
+  </div>
+  <div class="vote-buttons">
+    <i class="fas fa-arrow-up"></i>
+    <i class="fas fa-arrow-down"></i>
+  </div>
+</div>
+      </div>
+
+    </section>
+
+    <aside class="sidebar-right">
+      <div class="top-icons">
+        <i class="fas fa-bell"></i>
+        <i class="fas fa-cog"></i>
+      </div>
+      <h5>hashtags</h5>
+      <div class="hashtags">
+  <a href="#" class="tag">#HistóriadoBrasil</a>
+  <a href="#" class="tag">#1984</a>
+  <a href="#" class="tag">#Literatura</a>
+  <a href="#" class="tag">#LadyGaga</a>
+  <a href="#" class="tag">#Neofascismo</a>
+  <a href="#" class="tag">#Religião</a>
+</div>
+
+        <h5>Obras Populares:</h5>
+        <div class="carousel-wrapper">
+  <button class="carousel-btn left">&#10094;</button>
+  <div class="carousel" id="carousel">
+    <img src="img1.jpg" alt="Imagem 1">
+    <img src="img2.jpg" alt="Imagem 2">
+    <img src="img3.jpg" alt="Imagem 3">
+  </div>
+  <button class="carousel-btn right">&#10095;</button>
+</div>
+
+      </div>
+    </aside>
+  </main>
+</body>
+</html>
