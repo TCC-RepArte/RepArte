@@ -62,8 +62,10 @@ header {
   max-width: 96vw;
 }
 
-.logo{
-  display: flex;
+header .logo img{
+      width: 15vw;
+  margin-left: 5%;
+  flex: 1;
 }
 
 header > .interface {
