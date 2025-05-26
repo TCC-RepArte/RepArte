@@ -66,7 +66,7 @@
           </div>
  
           <button class="btn-registrarse" type="submit">Registrar-se</button>
-          <a href="perfil.php"><button type="button" class="btn-entrar">Entrar</button></a>
+          <a href="login1.php"><button type="button" class="btn-entrar">Entrar</button></a>
         </form>
  
         <div class="errologin">

@@ -136,7 +136,7 @@ function processarFormulario($post)
 
         if ($stmt->execute()) {
             $_SESSION['id'] = $id;
-            header("Location: ../../html/signup2.php");
+            header("Location: ../../html/perfil.php");
             exit;
         } else {
             $erros[] = "Erro ao enviar formulário!";
