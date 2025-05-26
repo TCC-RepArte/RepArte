@@ -546,6 +546,11 @@ footer .line-footer {
     background: none;
     box-shadow: none;
   }
+  header .logo img {
+  width: 50vw;
+  margin-left: 20%;
+  flex: 1;
+}
   .interface .menu {
     display: none;
   }
