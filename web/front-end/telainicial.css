@@ -389,7 +389,11 @@ button:hover {
   max-height: 90%;
   max-width: 80%;
  }
- .search-box {
+ .search-box, search-text{
+  font-size: 30px;
+  width: 620px;
+  height: 60px;
+  max-width: 500px;
   font-size: 30px;
  }
  .create-post textarea{
@@ -401,6 +405,7 @@ button:hover {
  .sidebar-left {
   height: 70%;
   width: 13vw;
+  margin-right: -100px;
 
  }
  .sidebar-left::-webkit-scrollbar{
@@ -414,7 +419,7 @@ button:hover {
 .sidebar-right{
   position: sticky;
   display: flex;
-  margin-left: -100px;
+  margin-left: -80px;
   height: 70%;
   width: 24vh;
 }
