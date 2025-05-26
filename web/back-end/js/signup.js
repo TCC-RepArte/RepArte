@@ -41,7 +41,7 @@ async function criarID(tamanho) {
   console.log("ID gerado:", id);
 
   try {
-    const url = '/RepArte/web/back-end/php/signup.php';
+    const url = '../back-end/php/signup.php';
     console.log("Tentando acessar:", url);
 
     const response = await fetch(url, {

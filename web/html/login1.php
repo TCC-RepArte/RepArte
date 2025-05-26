@@ -54,7 +54,7 @@
                     <label for="checkbox">Lembre-se de mim</label>
                 </div>
                 <button class="btn-entrar">Entrar</button>
-                <button class="btn-registrarse">Registrar-se</button>
+                <a href="cadastro.php"><button class="btn-registrarse">Registrar-se</button></a>
             </div>
         </div>
 

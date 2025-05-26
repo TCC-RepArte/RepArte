@@ -1,6 +1,11 @@
 <?php
 
 session_start();
+// Prevenir cache
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 global $con;
 global $id;
 $con = new mysqli("localhost", "root", '', "reparte");
@@ -136,8 +141,12 @@ function processarFormulario($post)
 
         if ($stmt->execute()) {
             $_SESSION['id'] = $id;
+            // Forçar limpeza do buffer de saída
+            ob_clean();
+            // Forçar redirecionamento
+            header("HTTP/1.1 302 Found");
             header("Location: ../../html/perfil.php");
-            exit;
+            exit();
         } else {
             $erros[] = "Erro ao enviar formulário!";
         }
@@ -148,7 +157,11 @@ function processarFormulario($post)
     // Se houver erros, redireciona de volta para o formulário
     if (!empty($erros)) {
         $_SESSION['erros'] = $erros;
-        header("Location: ../../web/html/cadastro.php");
-        exit;
+        // Forçar limpeza do buffer de saída
+        ob_clean();
+        // Forçar redirecionamento
+        header("HTTP/1.1 302 Found");
+        header("Location: ../../html/cadastro.php");
+        exit();
     }
 }
