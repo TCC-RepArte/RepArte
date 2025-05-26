@@ -2,7 +2,6 @@
 
 require_once 'signup.php';
 $con = new mysqli("localhost", "root", '', "reparte");
-global $id;
 
 if(isset($_FILES['envft']) && isset($_POST['nomeexi']) && isset($_POST['desc'])){
 
@@ -17,7 +16,7 @@ if(isset($_FILES['envft']) && isset($_POST['nomeexi']) && isset($_POST['desc']))
         $descricao = $_POST['desc'];
         $pasta = '../../imagens/';
         
-        global $id;
+        $id = $_SESSION['id'] ?? null;
 
         if($foto['error']){
             die('Falha ao enviar imagem');
@@ -32,8 +31,6 @@ if(isset($_FILES['envft']) && isset($_POST['nomeexi']) && isset($_POST['desc']))
 
         }
 
-        var_dump($id);
-    
         // Gerando um novo nome para a foto
         $novo_nome = uniqid();
         $nome_def = $novo_nome . '.' . $extensao ;
@@ -57,6 +54,7 @@ if(isset($_FILES['envft']) && isset($_POST['nomeexi']) && isset($_POST['desc']))
     } else{
 
         echo "faltaram dADOS";
+        var_dump($id);
 
     }
 }

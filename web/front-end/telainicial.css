@@ -237,7 +237,8 @@ button:hover {
 
 .post-body p {
   flex: 1;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
   line-height: 1.5;
   color: white;
   max-width: 100%;
@@ -375,4 +376,95 @@ button:hover {
   color: #ff6600;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+/*Telas Grandes*/
+@media (min-width: 1600px) {
+ .post-body p{
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+ }
+ .feed{
+  margin-left: 10%;
+  max-height: 90%;
+  max-width: 80%;
+ }
+ .search-box {
+  font-size: 30px;
+ }
+ .create-post textarea{
+  font-size: 30px;
+ }
+ .post-actions button{
+  font-size: 25px;
+ }
+ .sidebar-left {
+  height: 70%;
+  width: 13vw;
+
+ }
+ .sidebar-left::-webkit-scrollbar{
+  height: 100vh;
+  width: 50vw;
+ }
+ .sidebar-left::-webkit-scrollbar-thumb {
+  background: #444444;
+  border-radius: 60px;
+}
+.sidebar-right{
+  position: sticky;
+  display: flex;
+  margin-left: -100px;
+  height: 70%;
+  width: 24vh;
+}
+.top-icons{
+  font-size: 40px;
+}
+#h{
+  margin-bottom: -110px;
+  gap: 1rem;
+  font-size: 35px;
+}
+#ob{
+  gap: 1rem;
+  font-size: 35px;
+}
+.hashtags .tag {
+  padding: 0.4rem 0.8rem;
+  font-size: 1.2rem;
+  justify-content: left;
+}
+.user-principal{
+  padding: 20px;
+  font-size: 30px;
+}
+.user-principal img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.user-item{
+  padding: 20px;
+  font-size: 20px;
+}
+.user-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.carousel-wrapper{
+  margin-bottom: 220px;
+}
+.carousel img {
+  border-radius: 10px;
+  height: 360px;
+  min-width: 220px;
+  object-fit: cover;
+}
+.carousel-btn {
+  font-size: 30px;
+}
 }
