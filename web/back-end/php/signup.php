@@ -12,6 +12,9 @@ $con = new mysqli("localhost", "root", '', "reparte");
 
 $erros = [];
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contentType = $_SERVER["CONTENT_TYPE"] ?? '';
 
@@ -23,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         processarRequisicaoJson($data);
     } else {
         // Requisição via formulário tradicional
+        error_log("Requisição recebida: " . print_r($_POST, true));
         processarFormulario($_POST);
     }
 }
