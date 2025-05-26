@@ -1,5 +1,9 @@
 <?php
 
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 require_once 'signup.php';
 $con = new mysqli("localhost", "root", '', "reparte");
 
@@ -45,6 +49,7 @@ if(isset($_FILES['envft']) && isset($_POST['nomeexi']) && isset($_POST['desc']))
         //Movendo foto para a pasta
         $insercao = move_uploaded_file($foto["tmp_name"], $caminho_completo);
 
+        //Inserindo na tabela
         $stmt = $con->prepare("INSERT INTO perfil (foto, caminho, data_perf, nomexi, descri, id) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssss", $nome_def, $caminho_completo, $date, $nome, $descricao, $id);
         $stmt->execute();

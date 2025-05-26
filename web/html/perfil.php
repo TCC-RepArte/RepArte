@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
+<?php
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
+?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +30,7 @@
     <header>
         <div class="interface">
             <div class="logo">
-                <a href="#">
+                <a>
                     <img src="../imagens/logo.png" alt="Logo do site">
                 </a>
             </div>
@@ -33,8 +41,9 @@
 
             <form enctype="multipart/form-data" method="post" action="../back-end/php/signup2.php">
                 <div class="adc-img">
-                    <button><i class="bi bi-person-circle"><br> 
-                    <input type="file" id="envfto" name="envft" /></i></button>
+                    <button type="button" id="selft"><i id="ftperfil" class="bi bi-person-circle"><br>
+                    <img src="" alt=""> 
+                    <input type="file" style="display: none;" id="envfoto" name="envft" /></i></button>
                 </div>
                 <div class="texto">
                     <div class="nomeexb">
@@ -57,6 +66,27 @@
 
         </div>
     </section>
+
+<script>
+
+    const inpfoto = document.getElementById('envfoto');
+    const selecionarfoto = document.getElementById('selft');
+
+    foto = selecionarfoto.addEventListener('click', (event) => {
+        inpfoto.click();
+        var foto = this.files[0];
+    })
+
+    if(foto){
+
+        const buttonft = document.getElementById('envfoto');
+
+        buttonft.setAttribute("class", "")
+
+    }
+    
+
+</script>
 
 
 </body>

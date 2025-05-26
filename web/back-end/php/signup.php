@@ -30,34 +30,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Processa requisições JSON (tipo a do fetch do JavaScript)
 function processarRequisicaoJson($data)
 {
-    if (isset($data['id'])) {
-        global $con;
-        $id = $data['id'];
-        
-        // Verifica se o ID já existe no banco
-        $stmt = $con->prepare("SELECT id FROM login WHERE id = ?");
-        $stmt->bind_param("s", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows > 0) {
-            echo json_encode([
-                'success' => false,
-                'message' => 'ID já existe',
-                'duplicate' => true
-            ]);
+    try {
+        if (isset($data['id'])) {
+            global $con;
+            $id = $data['id'];
+            
+            // Verifica se o ID já existe no banco
+            $stmt = $con->prepare("SELECT id FROM login WHERE id = ?");
+            if (!$stmt) {
+                throw new Exception("Erro ao preparar consulta: " . $con->error);
+            }
+            
+            $stmt->bind_param("s", $id);
+            if (!$stmt->execute()) {
+                throw new Exception("Erro ao executar consulta: " . $stmt->error);
+            }
+            
+            $result = $stmt->get_result();
+            
+            if ($result->num_rows > 0) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'ID já existe',
+                    'duplicate' => true
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'ID disponível',
+                    'id' => $id
+                ]);
+            }
+            $stmt->close();
         } else {
             echo json_encode([
-                'success' => true,
-                'message' => 'ID disponível',
-                'id' => $id
+                'success' => false,
+                'message' => 'ID não recebido'
             ]);
         }
-        $stmt->close();
-    } else {
+    } catch (Exception $e) {
         echo json_encode([
             'success' => false,
-            'message' => 'ID não recebido'
+            'message' => 'Erro ao processar requisição: ' . $e->getMessage()
         ]);
     }
 }
