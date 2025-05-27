@@ -2,6 +2,13 @@
 <html lang="pt-br">
 
 <?php
+session_start();
+
+// Verificar se o usuário já está logado
+if(isset($_SESSION['user_id'])) {
+    header("Location: telainicial.php");
+    exit();
+}
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
@@ -50,23 +57,68 @@ header("Pragma: no-cache");
         <div class="right-login">
             <div class="card-login">
                 <h1>Login</h1>
-                <div class="textfield">
-                    <label for="usuario"></label>
-                    <input type="text" name="usuario" placeholder="Nome de Usuário ou e-mail">
-                </div>
-                <div class="textfield">
-                    <label for="senha"></label>
-                    <input type="password" name="senha" placeholder="Senha">
-                </div>
-                <div class="checkbox">
-                    <input type="checkbox">
-                    <label for="checkbox">Lembre-se de mim</label>
-                </div>
-                <button class="btn-entrar">Entrar</button>
-                <a href="cadastro.php"><button class="btn-registrarse">Registrar-se</button></a>
+                <form id="loginForm" method="post" action="../back-end/php/login.php">
+                    <div class="textfield">
+                        <label for="usuario"></label>
+                        <input type="text" name="usuario" placeholder="Nome de Usuário ou e-mail" required>
+                    </div>
+                    <div class="textfield">
+                        <label for="senha"></label>
+                        <input type="password" name="senha" placeholder="Senha" required>
+                    </div>
+                    <div class="checkbox">
+                        <input type="checkbox" name="lembrar">
+                        <label for="checkbox">Lembre-se de mim</label>
+                    </div>
+                    <button type="submit" class="btn-entrar">Entrar</button>
+                    <a href="cadastro.php"><button type="button" class="btn-registrarse">Registrar-se</button></a>
+                </form>
+                <div id="mensagem" style="margin-top: 10px; text-align: center;"></div>
             </div>
         </div>
-
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const mensagemDiv = document.getElementById('mensagem');
+            
+            fetch('../back-end/php/login.php', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro na resposta do servidor');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.sucesso) {
+                    mensagemDiv.style.color = 'green';
+                    mensagemDiv.textContent = data.mensagem;
+                    // Redirecionar após login bem-sucedido
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    } else {
+                        window.location.href = '../web/html/telainicial.php';
+                    }
+                } else {
+                    mensagemDiv.style.color = 'red';
+                    mensagemDiv.textContent = data.mensagem || 'Erro ao processar login';
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                mensagemDiv.style.color = 'red';
+                mensagemDiv.textContent = 'Erro ao processar login: ' + error.message;
+            });
+        });
+    </script>
 </body>
 </html>
