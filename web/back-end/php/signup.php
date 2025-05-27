@@ -1,10 +1,15 @@
 <?php
+ob_start();
 
-session_start();
 // Prevenir cache
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+
+session_start();
 
 global $con;
 global $id;
@@ -158,6 +163,17 @@ function processarFormulario($post)
         $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
         $stmt = $con->prepare("INSERT INTO login (usuario, email, senha, id) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $usuario_def, $email, $senha_hash, $id);
+        $novo_id = $con->insert_id; // pega o último id inserido
+        $_SESSION['id'] = $novo_id;
+
+        if ($stmt->execute()) {
+            $_SESSION['id'] = $con->insert_id;
+            // redireciona para o perfil ou signup2.php
+        } else {
+            $_SESSION['erro_cadastro'] = "Erro ao cadastrar usuário: " . $stmt->error;
+            header("Location: ../../html/signup.php");
+            exit();
+        }
 
         if ($stmt->execute()) {
             $_SESSION['id'] = $id;

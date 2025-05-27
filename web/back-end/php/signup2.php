@@ -1,11 +1,36 @@
 <?php
 
+ob_start();
+
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
 
 session_start();
 $con = new mysqli("localhost", "root", '', "reparte");
+
+$id = $_SESSION['id'] ?? null;
+
+if (!$id) {
+    $_SESSION['erro_perfil'] = "ID de usuário ausente na sessão.";
+    header("Location: ../../html/cadastro.php");
+    exit();
+}
+
+// Validar se o usuário existe mesmo
+$stmtVerifica = $con->prepare("SELECT 1 FROM usuario WHERE id = ?");
+$stmtVerifica->bind_param("i", $id);
+$stmtVerifica->execute();
+$resultado = $stmtVerifica->get_result();
+
+if ($resultado->num_rows === 0) {
+    $_SESSION['erro_perfil'] = "Usuário não encontrado no banco.";
+    header("Location: ../../html/cadastro.php");
+    exit();
+}
 
 // Verificar se o usuário está logado
 if(!isset($_SESSION['id'])) {
