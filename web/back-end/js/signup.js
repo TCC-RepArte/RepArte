@@ -48,16 +48,23 @@ async function criarID(tamanho) {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
       },
       body: JSON.stringify({ id })
     });
 
     console.log("Status da resposta:", response.status);
-    console.log("Headers da resposta:", response.headers);
-
+    
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // Verificar o tipo de conteúdo retornado
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      console.error("Resposta não é JSON:", await response.text());
+      throw new Error('Resposta do servidor não é JSON válido');
     }
 
     const data = await response.json();

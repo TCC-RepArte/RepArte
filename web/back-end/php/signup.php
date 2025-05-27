@@ -17,8 +17,9 @@ ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contentType = $_SERVER["CONTENT_TYPE"] ?? '';
+    $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 
-    if (strpos($contentType, 'application/json') !== false) {
+    if (strpos($contentType, 'application/json') !== false || $isAjax) {
         // Requisição JSON (JavaScript)
         header('Content-Type: application/json');
         $json = file_get_contents('php://input');
@@ -34,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Processa requisições JSON (tipo a do fetch do JavaScript)
 function processarRequisicaoJson($data)
 {
+    header('Content-Type: application/json');
     try {
         if (isset($data['id'])) {
             global $con;
@@ -160,7 +162,7 @@ function processarFormulario($post)
         if ($stmt->execute()) {
             $_SESSION['id'] = $id;
             // Forçar limpeza do buffer de saída
-            ob_clean();
+            if (ob_get_length()) ob_clean();
             // Forçar redirecionamento
             header("HTTP/1.1 302 Found");
             header("Location: ../../html/perfil.php");
@@ -169,6 +171,8 @@ function processarFormulario($post)
             $erros[] = "Erro ao enviar formulário!";
         }
 
+        $dados_login = [$usuario_def, $email, $senha_hash, $id];
+        $_SESSION['login'] = $dados_login;
         $stmt->close();
     }
 
@@ -176,7 +180,7 @@ function processarFormulario($post)
     if (!empty($erros)) {
         $_SESSION['erros'] = $erros;
         // Forçar limpeza do buffer de saída
-        ob_clean();
+        if (ob_get_length()) ob_clean();
         // Forçar redirecionamento
         header("HTTP/1.1 302 Found");
         header("Location: ../../html/cadastro.php");
