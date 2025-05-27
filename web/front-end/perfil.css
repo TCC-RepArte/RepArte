@@ -155,11 +155,8 @@ padding: 12px 24px;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-top: 30px;
-  display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: -20px;
 }
 
 .btn-salvar:hover {
@@ -203,8 +200,6 @@ padding: 12px 24px;
   left: 42%;
 }
 .btn-salvar{
-  position: fixed;
-  top: 65%;
 
 }
 
