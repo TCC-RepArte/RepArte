@@ -29,13 +29,14 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `login`;
 CREATE TABLE IF NOT EXISTS `login` (
-  `usuario` varchar(15) NOT NULL,
-  `email` varchar(15) NOT NULL,
-  `senha` varchar(15) NOT NULL,
-  `id` varchar(12) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `senha` varchar(255) NOT NULL,
+  `id` varchar(36) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `usuario` (`usuario`,`email`,`senha`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+  UNIQUE KEY `usuario` (`usuario`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Despejando dados para a tabela `login`
@@ -52,14 +53,16 @@ INSERT INTO `login` (`usuario`, `email`, `senha`, `id`) VALUES
 
 DROP TABLE IF EXISTS `perfil`;
 CREATE TABLE IF NOT EXISTS `perfil` (
-  `nomexi` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `caminho` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `id` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
-  `foto` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `descri` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nomexi` varchar(50) NOT NULL,
+  `caminho` varchar(255) NOT NULL,
+  `id` varchar(36) NOT NULL,
+  `foto` varchar(255) NOT NULL,
+  `descri` varchar(500) NOT NULL,
   `data_perf` datetime NOT NULL,
-  KEY `id` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  KEY `id` (`id`),
+  CONSTRAINT `fk_perfil_login` FOREIGN KEY (`id`) REFERENCES `login` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
