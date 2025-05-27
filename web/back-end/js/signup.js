@@ -1,32 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector("form");
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault(); // Evita o envio automático
-
-    try {
-      // Gera o ID e aguarda
-      const id = await criarID(10);
-      
-      if (id && id.success) {
-        // Cria e adiciona input hidden ao form
-        const hiddenInput = document.createElement("input");
-        hiddenInput.type = "hidden";
-        hiddenInput.name = "id";
-        hiddenInput.value = id.id;
-        form.appendChild(hiddenInput);
-
-        // Agora envia o formulário com o ID incluso
-        form.submit();
-      } else {
-        alert("Erro ao gerar ID. Tente novamente.");
-      }
-    } catch (error) {
-      console.error("Erro ao processar formulário:", error);
-      alert("Ocorreu um erro ao processar o formulário. Tente novamente.");
-    }
-  });
-});
+// Não adicionar o listener de evento aqui, pois já temos um personalizado no cadastro.php
+// O código abaixo será usado pela função em cadastro.php
 
 async function criarID(tamanho) {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

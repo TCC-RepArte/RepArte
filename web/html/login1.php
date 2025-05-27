@@ -27,6 +27,26 @@ header("Pragma: no-cache");
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../front-end/login1.css"> 
     <title>Reparte</title>
+    <style>
+        .mensagem-erro {
+            background-color: #ffecec;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .mensagem-sucesso {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -57,6 +77,22 @@ header("Pragma: no-cache");
         <div class="right-login">
             <div class="card-login">
                 <h1>Login</h1>
+                <!-- Exibir mensagem de erro se existir -->
+                <?php if (isset($_SESSION['mensagem_erro'])): ?>
+                    <div class="mensagem-erro">
+                        <?= htmlspecialchars($_SESSION['mensagem_erro']); ?>
+                        <?php unset($_SESSION['mensagem_erro']); ?>
+                    </div>
+                <?php endif; ?>
+                
+                <!-- Exibir mensagem de sucesso se existir -->
+                <?php if (isset($_SESSION['mensagem_sucesso'])): ?>
+                    <div class="mensagem-sucesso">
+                        <?= htmlspecialchars($_SESSION['mensagem_sucesso']); ?>
+                        <?php unset($_SESSION['mensagem_sucesso']); ?>
+                    </div>
+                <?php endif; ?>
+                
                 <form id="loginForm" method="post" action="../back-end/php/login.php">
                     <div class="textfield">
                         <label for="usuario"></label>
@@ -100,23 +136,20 @@ header("Pragma: no-cache");
             })
             .then(data => {
                 if (data.sucesso) {
-                    mensagemDiv.style.color = 'green';
-                    mensagemDiv.textContent = data.mensagem;
+                    mensagemDiv.innerHTML = '<div class="mensagem-sucesso">' + data.mensagem + '</div>';
                     // Redirecionar após login bem-sucedido
                     if (data.redirect) {
                         window.location.href = data.redirect;
                     } else {
-                        window.location.href = '../web/html/telainicial.php';
+                        window.location.href = '../html/telainicial.php';
                     }
                 } else {
-                    mensagemDiv.style.color = 'red';
-                    mensagemDiv.textContent = data.mensagem || 'Erro ao processar login';
+                    mensagemDiv.innerHTML = '<div class="mensagem-erro">' + (data.mensagem || 'Erro ao processar login') + '</div>';
                 }
             })
             .catch(error => {
                 console.error('Erro:', error);
-                mensagemDiv.style.color = 'red';
-                mensagemDiv.textContent = 'Erro ao processar login: ' + error.message;
+                mensagemDiv.innerHTML = '<div class="mensagem-erro">Erro ao processar login: ' + error.message + '</div>';
             });
         });
     </script>

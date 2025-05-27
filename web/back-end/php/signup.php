@@ -161,6 +161,11 @@ function processarFormulario($post)
 
         if ($stmt->execute()) {
             $_SESSION['id'] = $id;
+            $_SESSION['user_id'] = $id; // Para compatibilidade com o sistema de login
+            $_SESSION['usuario'] = $usuario_def;
+            $_SESSION['email'] = $email;
+            $_SESSION['mensagem_sucesso'] = "Cadastro realizado com sucesso!";
+            
             // Forçar limpeza do buffer de saída
             if (ob_get_length()) ob_clean();
             // Forçar redirecionamento
@@ -168,7 +173,7 @@ function processarFormulario($post)
             header("Location: ../../html/perfil.php");
             exit();
         } else {
-            $erros[] = "Erro ao enviar formulário!";
+            $erros[] = "Erro ao enviar formulário: " . $stmt->error;
         }
 
         $dados_login = [$usuario_def, $email, $senha_hash, $id];

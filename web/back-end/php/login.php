@@ -75,14 +75,35 @@ if(isset($_POST['usuario']) && isset($_POST['senha'])){
             ]);
         } else {
             echo json_encode(['sucesso' => false, 'mensagem' => 'Senha incorreta']);
+            
+            // Se não for uma requisição AJAX, usar mensagem de sessão
+            if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+                $_SESSION['mensagem_erro'] = 'Senha incorreta';
+                header('Location: ../../html/login1.php');
+                exit();
+            }
         }
     } else {
         echo json_encode(['sucesso' => false, 'mensagem' => 'Usuário não encontrado']);
+        
+        // Se não for uma requisição AJAX, usar mensagem de sessão
+        if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+            $_SESSION['mensagem_erro'] = 'Usuário não encontrado';
+            header('Location: ../../html/login1.php');
+            exit();
+        }
     }
 
     $stmt->close();
 } else {
     echo json_encode(['sucesso' => false, 'mensagem' => 'Dados incompletos']);
+    
+    // Se não for uma requisição AJAX, usar mensagem de sessão
+    if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+        $_SESSION['mensagem_erro'] = 'Dados incompletos';
+        header('Location: ../../html/login1.php');
+        exit();
+    }
 }
 
 $con->close();
