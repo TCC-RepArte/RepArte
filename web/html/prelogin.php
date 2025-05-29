@@ -44,7 +44,7 @@
                 <div class="flex">
                     <div class="txt-topo-site">
                         <h1>O <span class="destaque">melhor</span> amigo <br>dos seus estudos!</h1>
-                        <p>Nossa campanha tem como principal intuito oferecer <span class="destaque">apoio gratuito</span> para estudantes e redatores que buscam aprimorar suas <span class="destaque">habilidades de escrita</span>, e argumentação! Comece buscando por algum tema abaixo:</p>
+                        <p>Nossa campanha tem como principal intuito oferecer <span class="destaque">apoio</span> gratuito para estudantes e redatores que buscam aprimorar suas <span class="destaque">habilidades</span> de escrita e argumentação</p>
                         <div class="search-box search-box-custom">
                             <span class="search-icon">🔍</span>
                             <input type="text" class="search-text" placeholder="Pesquisar tema...">
