@@ -1,3 +1,41 @@
+// Endpoints das APIs
+const API_ENDPOINTS = {
+  movies: '/back-end/php/api-endpoints.php?action=search_movies',
+  tv: '/back-end/php/api-endpoints.php?action=search_tv',
+  tracks: '/back-end/php/api-endpoints.php?action=search_tracks',
+  movieDetails: '/back-end/php/api-endpoints.php?action=movie_details',
+  tvDetails: '/back-end/php/api-endpoints.php?action=tv_details',
+  trackDetails: '/back-end/php/api-endpoints.php?action=track_details'
+};
+
+// Buscar detalhes de um filme
+async function buscarDetalhesFilme(filmeId) {
+  try {
+    const url = `${API_ENDPOINTS.movieDetails}&id=${filmeId}`;
+    const response = await fetch(url);
+    const filme = await response.json();
+    if (!filme || !filme.id) {
+      throw new Error('Filme não encontrado');
+    }
+    return {
+      id: filme.id,
+      tipo: 'filme',
+      subtipo: filme.genres?.some(g => g.id === 99) ? 'documentário' : 'filme',
+      titulo: filme.title,
+      descricao: filme.overview || 'Descrição não disponível',
+      ano: filme.release_date ? filme.release_date.split('-')[0] : '',
+      imagem: filme.poster_path 
+        ? `https://image.tmdb.org/t/p/w300${filme.poster_path}`
+        : 'https://placehold.co/300x450/333333/FFFFFF?text=Sem+Imagem',
+      diretor: 'Informação não disponível',
+      genero: filme.genres ? filme.genres.map(g => g.name).join(', ') : ''
+    };
+  } catch (err) {
+    console.error('Erro ao obter detalhes do filme:', err);
+    throw new Error('Não foi possível carregar os detalhes do filme');
+  }
+}
+
 const options = {
     method: 'GET',
     headers: {
@@ -7,61 +45,38 @@ const options = {
 };
 
 async function desc() {
-
-    // Puxa texto do input 'inp_ser'
     const procFilme = document.getElementById('inp_ser').value;
-
-    // Moldando url para busca do filme
     const baseUrl = 'https://api.themoviedb.org/3/search/movie';
     const url = `${baseUrl}?include_adult=true&language=en-US&page=1&query=${encodeURIComponent(procFilme)}`;
-
     try {
-
-        // Armazenando resposta, em JSON, na constante data
         const response = await fetch(url, options);
         const data = await response.json();
-        
         if (data.results && data.results.length > 0) {
-            // Encontrar o filme com o título mais similar
             const maisParecido = data.results.reduce((parecido, corresponde) => {
                 const correspondeTitle = corresponde.title.toLowerCase();
                 const procTitle = procFilme.toLowerCase();
-                
-                // Calcular similaridade usando distância de Levenshtein
                 const similaridade = levenshteinDistance(correspondeTitle, procTitle);
-                
                 if (!parecido || similaridade < parecido.similaridade) {
                     return { movie: corresponde, similaridade };
                 }
                 return parecido;
             }, null);
-
-            // Segunda requisição para garantir dados completos em pt-BR
             const filmeId = maisParecido.movie.id;
             const filmeUrl = `https://api.themoviedb.org/3/movie/${filmeId}?language=pt-BR`;
-
             const filmeDetalhesResp = await fetch(filmeUrl, options);
             const filmeDetalhes = await filmeDetalhesResp.json();
-
             const nomefilme = document.querySelector('.nomefilme');
             const descrifilme = document.querySelector('.descrifilme');
-
             nomefilme.innerHTML = filmeDetalhes.title || maisParecido.movie.title;
             descrifilme.innerHTML = filmeDetalhes.overview || maisParecido.movie.overview || 'Descrição não disponível';
-
-            // Puxando poster do filme:
-
             const urlfilmePoster = `https://api.themoviedb.org/3/movie/${filmeId}/images?include_image_language=pt%2Cnull&language=pt-BR`;
-
             const responseImg = await fetch(urlfilmePoster, options);
             const dataImg = await responseImg.json();
             const caminho_poster = dataImg.posters[1].file_path;      
             const imgFilme = document.querySelector('#imgFilmeSel');
             imgFilme.setAttribute("src", `https://image.tmdb.org/t/p/original/${caminho_poster}`);
             imgFilme.setAttribute("alt", caminho_poster);
-
         } else {
-            console.log('Nenhum filme encontrado');
             document.querySelector('.nomefilme').innerHTML = 'Nenhum filme encontrado';
             document.querySelector('.descrifilme').innerHTML = '';
         }
@@ -72,42 +87,29 @@ async function desc() {
     }
 }
 
-// Função para calcular a distância de Levenshtein (similaridade entre strings)
+// Calcula a distância entre duas strings
 function levenshteinDistance(a, b) {
-    // Se uma das strings estiver vazia, a distância será o tamanho da outra string
     if (a.length === 0) return b.length;
     if (b.length === 0) return a.length;
-
     const matriz = [];
-
-    // Inicializa a primeira coluna da matriz com valores de 0 até o tamanho de b
     for (let i = 0; i <= b.length; i++) {
         matriz[i] = [i];
     }
-
-    // Inicializa a primeira linha da matriz com valores de 0 até o tamanho de a
     for (let j = 0; j <= a.length; j++) {
         matriz[0][j] = j;
     }
-
-    // Preenche a matriz calculando a distância entre as substrings
     for (let i = 1; i <= b.length; i++) {
         for (let j = 1; j <= a.length; j++) {
-            // Se os caracteres são iguais, mantém o valor da diagonal
             if (b.charAt(i - 1) === a.charAt(j - 1)) {
                 matriz[i][j] = matriz[i - 1][j - 1];
             } else {
-                // Calcula o menor número de operações necessárias:
                 matriz[i][j] = Math.min(
-                    matriz[i - 1][j - 1] + 1, // substituição
-                    matriz[i][j - 1] + 1,     // inserção
-                    matriz[i - 1][j] + 1      // deleção
+                    matriz[i - 1][j - 1] + 1,
+                    matriz[i][j - 1] + 1,
+                    matriz[i - 1][j] + 1
                 );
             }
         }
     }
-
-    // Retorna o valor final que representa o número mínimo de operações
-    // necessárias para transformar a string 'a' na string 'b'
     return matriz[b.length][a.length];
 }

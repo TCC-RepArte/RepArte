@@ -14,7 +14,7 @@ body {
 
 header {
   height: 80px;
-  background: #181828;
+  background: #130922;
   border-radius: 24px;
   box-shadow: 0 4px 32px #000a;
   padding: 0 4%;
@@ -37,7 +37,7 @@ header .logo img {
 }
 
 .search-box {
-  background: #181828;
+  background: #1a112d;
   border-radius: 25px;
   height: 45px;
   width: 280px;
@@ -57,7 +57,6 @@ header .logo img {
   flex: 1;
 }
 
-/* main layout */
 .main-container {
   display: grid;
   grid-template-columns: 250px 1fr 250px;
@@ -65,7 +64,6 @@ header .logo img {
   padding: 1rem;
 }
 
-/*sidebar esquerdo*/
 .sidebar-left {
   height: 580px;
   background-color: #0f0e0f;
@@ -139,7 +137,6 @@ header .logo img {
   background-color: #512062;
 }
 
-/*feed*/
 .feed {
   max-height: 570px;
   overflow-y: auto;
@@ -170,6 +167,189 @@ header .logo img {
   height: 80px;
 }
 
+.textarea-container {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.textarea-container textarea {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.btn-buscar-obra {
+  background: #ff6600;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 40px;
+  margin-top: 5px;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.btn-buscar-obra:hover {
+  background: #e25b00;
+  transform: translateY(-2px);
+}
+
+.btn-buscar-obra i {
+  margin-right: 5px;
+}
+
+.painel-busca-obras {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #120329;
+  color: white;
+  padding: 0;
+  border-radius: 15px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.7);
+  width: 700px;
+  height: 550px;
+  max-width: 85%;
+  max-height: 85vh;
+  z-index: 99999;
+  display: none;
+  overflow: hidden;
+}
+
+.painel-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #1a0637;
+}
+.painel-cabecalho h3 {
+  margin: 0;
+  font-size: 18px;
+}
+.fechar-painel {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+}
+.fechar-painel:hover {
+  color: #ff6600;
+  transform: scale(1.1);
+}
+
+.painel-conteudo {
+  padding: 20px;
+  height: calc(100% - 60px);
+  overflow-y: hidden;
+}
+.painel-layout {
+  display: flex;
+  gap: 20px;
+  height: 100%;
+}
+
+.filtros-tipos {
+  width: 180px;
+  flex-shrink: 0;
+  background: #1a0637;
+  border-radius: 10px;
+  padding: 12px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.filtros-tipos h4 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  color: #fff;
+  padding-bottom: 8px;
+  flex-shrink: 0;
+}
+.opcoes-filtro {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.opcao-filtro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  transition: background 0.2s, font-weight 0.2s;
+}
+.opcao-filtro.checked, .opcao-filtro:hover {
+  background: #2a0e4c;
+  font-weight: bold;
+}
+
+.conteudo-principal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.campo-busca {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.campo-busca input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #272727;
+  color: white;
+  font-size: 16px;
+}
+.btn-buscar-painel {
+  background: #ff6600;
+  color: white;
+  border: none;
+  padding: 0 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
+#resultados-busca {
+  flex: 1;
+  height: 330px;
+  overflow-y: hidden;
+  background: #222;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 99998;
+  display: none;
+}
+
 .post-actions {
   display: flex;
   justify-content: flex-end;
@@ -194,12 +374,11 @@ button:hover {
 }
 
 .feed::-webkit-scrollbar-thumb {
-  background-color: #a354c9;
+  background-color: #444444;
   border-radius: 4px;
 }
 
 
-/*posts*/
 .post {
   background-color: rgb(19, 19, 20);
   padding: 16px;
@@ -293,10 +472,9 @@ button:hover {
   margin-top: -80px;
 }
 
-/*sidebar direito*/
 .sidebar-right {
   height: 570px;
-  background: linear-gradient(to top, #3b0390, #30035a, #120329, #000000, #000000, #000000, #000000) ;
+  background: linear-gradient(to top, #260355, rgb(19, 19, 20) 30%) ;
   border-radius: 16px;
   padding: 16px;
   position: sticky;
@@ -305,8 +483,8 @@ button:hover {
   flex-direction: column;
   justify-content: space-between;
   margin-top: 10px;
-  border: solid 2px #272727;
   margin-right: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .top-icons {
@@ -378,7 +556,6 @@ button:hover {
   cursor: pointer;
 }
 
-/*Telas Grandes*/
 @media (min-width: 1600px) {
  .post-body p{
   font-size: 1.2rem;
@@ -472,4 +649,36 @@ button:hover {
 .carousel-btn {
   font-size: 30px;
 }
+}
+
+.btn-logout {
+  display: inline-block;
+  background-color: #ff3b3b;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-left: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  position: relative !important;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
 }
