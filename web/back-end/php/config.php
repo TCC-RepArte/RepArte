@@ -6,7 +6,7 @@ define('TMDB_API_KEY', 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNGY1NWJmYmRkYWU5MTRlMTI
 
 // Spotify API
 define('SPOTIFY_CLIENT_ID', '9a234ae20b4b4dd09866c1d22c56f5bb');
-define('SPOTIFY_CLIENT_SECRET', '919ca2dec5d341ff8fa39e6ac04c5c7c');
+define('SPOTIFY_CLIENT_SECRET', '4ac381f6be504327b2ab6d8ce73f69f7');
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
