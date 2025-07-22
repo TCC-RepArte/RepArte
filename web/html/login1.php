@@ -1,21 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<?php
-session_start();
-
-// Verificar se o usuário já está logado
-if(isset($_SESSION['user_id'])) {
-    header("Location: telainicial.php");
-    exit();
-}
-
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
-
-?>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,6 +32,27 @@ header("Pragma: no-cache");
         }
     </style>
 </head>
+<?php
+
+session_start();
+
+// Verificar se o usuário já está logado
+if(isset($_SESSION['id'])) {
+    header("Location: telainicial.php");
+    exit();
+}
+
+$erros = $_SESSION['erros'] ?? [];
+$val = $_SESSION['val'] ?? [];
+
+unset($_SESSION['erros'], $_SESSION['val']);
+
+if (isset($_SESSION['erros']) || isset($_SESSION['val'])) {
+    unset($_SESSION['erros']);
+    unset($_SESSION['val']);
+}
+
+?>
 <body>
     <header>
     <div class="interface">
@@ -77,21 +82,6 @@ header("Pragma: no-cache");
         <div class="right-login">
             <div class="card-login">
                 <h1>Login</h1>
-                <!-- Exibir mensagem de erro se existir -->
-                <?php if (isset($_SESSION['mensagem_erro'])): ?>
-                    <div class="mensagem-erro">
-                        <?= htmlspecialchars($_SESSION['mensagem_erro']); ?>
-                        <?php unset($_SESSION['mensagem_erro']); ?>
-                    </div>
-                <?php endif; ?>
-                
-                <!-- Exibir mensagem de sucesso se existir -->
-                <?php if (isset($_SESSION['mensagem_sucesso'])): ?>
-                    <div class="mensagem-sucesso">
-                        <?= htmlspecialchars($_SESSION['mensagem_sucesso']); ?>
-                        <?php unset($_SESSION['mensagem_sucesso']); ?>
-                    </div>
-                <?php endif; ?>
                 
                 <form id="loginForm" method="post" action="../back-end/php/login.php">
                     <div class="textfield">
@@ -102,6 +92,22 @@ header("Pragma: no-cache");
                         <label for="senha"></label>
                         <input type="password" name="senha" placeholder="Senha" required>
                     </div>
+                    <!-- Exibir mensagem de erro se existir -->
+                    <?php if (!empty($erros)): ?>
+                        <div class="mensagem-erro">
+                            <?php foreach($erros as $erro): ?>
+                                <p><?= htmlspecialchars($erro); ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                    <!-- Exibir mensagem de validacao -->
+                    <?php if (!empty($val)): ?>
+                        <div class="mensagem-sucesso">
+                            <?php foreach($val as $validacao): ?>
+                                <p><?= htmlspecialchars($validacao); ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                     <div class="checkbox">
                         <input type="checkbox" name="lembrar">
                         <label for="checkbox">Lembre-se de mim</label>
@@ -113,45 +119,5 @@ header("Pragma: no-cache");
             </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const mensagemDiv = document.getElementById('mensagem');
-            
-            fetch('../back-end/php/login.php', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro na resposta do servidor');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.sucesso) {
-                    mensagemDiv.innerHTML = '<div class="mensagem-sucesso">' + data.mensagem + '</div>';
-                    // Redirecionar após login bem-sucedido
-                    if (data.redirect) {
-                        window.location.href = data.redirect;
-                    } else {
-                        window.location.href = '../html/telainicial.php';
-                    }
-                } else {
-                    mensagemDiv.innerHTML = '<div class="mensagem-erro">' + (data.mensagem || 'Erro ao processar login') + '</div>';
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                mensagemDiv.innerHTML = '<div class="mensagem-erro">Erro ao processar login: ' + error.message + '</div>';
-            });
-        });
-    </script>
 </body>
 </html>

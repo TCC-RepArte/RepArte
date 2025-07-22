@@ -5,7 +5,7 @@
 session_start();
 
 // Verificar se o usuário já está logado
-if(isset($_SESSION['user_id'])) {
+if(isset($_SESSION['id'])) {
     header("Location: telainicial.php");
     exit();
 }

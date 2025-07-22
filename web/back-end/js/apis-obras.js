@@ -105,9 +105,23 @@ async function buscarLivros(termoBusca) {
         return {
           id: livro.id,
           tipo: 'livro',
+          autor: volumeInfo.authors,
           titulo: volumeInfo.title || 'Título desconhecido',
           ano: volumeInfo.publishedDate ? volumeInfo.publishedDate.split('-')[0] : 'Desconhecido',
-          imagem: volumeInfo.imageLinks?.thumbnail || 'https://placehold.co/92x138/333333/FFFFFF?text=Sem+Capa',
+          imagem: (() => {
+            const img = volumeInfo.imageLinks || {};
+            const prioridades = ['large', 'medium', 'thumbnail', 'smallThumbnail'];
+          
+            for (const chave of prioridades) {
+              let link = img[chave];
+              if (typeof link === 'string' && link.startsWith('http')) {
+                return `proxy.php?url=${encodeURIComponent(link)}`;
+              }
+            }
+          
+            return 'https://placehold.co/92x138/333333/FFFFFF?text=Sem+Capa';
+          })(),
+          
           autor: volumeInfo.authors ? volumeInfo.authors.join(', ') : 'Autor desconhecido',
           apiId: livro.id
         };
@@ -194,6 +208,7 @@ function formatarDuracao(ms) {
 // Obter detalhes de uma obra
 async function obterDetalhesObra({ apiId, tipo }) {
   try {
+    
     console.log('Obtendo detalhes para:', tipo, apiId);
     
     let url;
@@ -302,9 +317,21 @@ async function obterDetalhesObra({ apiId, tipo }) {
           id: data.id,
           tipo: 'livro',
           titulo: volumeInfo.title || 'Título desconhecido',
+          autor: volumeInfo.authors,
           ano: volumeInfo.publishedDate ? volumeInfo.publishedDate.split('-')[0] : 'Desconhecido',
-          imagem: volumeInfo.imageLinks?.large || volumeInfo.imageLinks?.medium || volumeInfo.imageLinks?.thumbnail || 'https://placehold.co/500x750/333333/FFFFFF?text=Sem+Capa',
-          autor: volumeInfo.authors ? volumeInfo.authors.join(', ') : 'Autor desconhecido',
+          imagem: (() => {
+            const img = volumeInfo.imageLinks || {};
+            const prioridades = ['large', 'medium', 'thumbnail', 'smallThumbnail'];
+          
+            for (const chave of prioridades) {
+              let link = img[chave];
+              if (typeof link === 'string' && link.startsWith('http')) {
+                return `proxy.php?url=${encodeURIComponent(link)}`;
+              }
+            }
+          
+            return 'https://placehold.co/92x138/333333/FFFFFF?text=Sem+Capa';
+          })(),          
           descricao: volumeInfo.description || 'Sem descrição disponível',
           genero: volumeInfo.categories ? volumeInfo.categories.join(', ') : 'Categoria desconhecida',
           apiId: data.id

@@ -19,6 +19,7 @@ if(isset($_FILES['envft']) && isset($_POST['nomeexi']) && isset($_POST['desc']))
     $foto = $_FILES['envft'];
     $descricao = $_POST['desc'];
     $pasta = '../../imagens/';
+    $endereco = '/RepArte/web/imagens/';
     
     $id = $_SESSION['id'] ?? null;
 
@@ -45,16 +46,17 @@ if(isset($_FILES['envft']) && isset($_POST['nomeexi']) && isset($_POST['desc']))
     // Gerando um novo nome para a foto
     $novo_nome = uniqid();
     $nome_def = $novo_nome . '.' . $extensao;
-    $caminho_completo = $pasta . $nome_def;
+    $caminho_inserir = $pasta . $nome_def;
+    $caminho_completo= $endereco . $nome_def;
 
-    //definindo data para horário de Brasília
+    // Definindo data para horário de Brasília
     date_default_timezone_set('America/Sao_Paulo');
 
-    //atribuindo data a uma variável
+    // Atribuindo data a uma variável
     $date = date('Y-m-d H:i:s');
 
-    //Movendo foto para a pasta
-    $insercao = move_uploaded_file($foto["tmp_name"], $caminho_completo);
+    // Movendo foto para a pasta
+    $insercao = move_uploaded_file($foto["tmp_name"], $caminho_inserir);
     
     if(!$insercao) {
         $_SESSION['erro_perfil'] = "Falha ao salvar a imagem no servidor.";
@@ -83,11 +85,14 @@ if(isset($_FILES['envft']) && isset($_POST['nomeexi']) && isset($_POST['desc']))
         header("Location: ../../html/perfil.php");
         exit();
     }
-    
-    $stmt->close();
+
+
 } else {
     $_SESSION['erro_perfil'] = "Todos os campos são obrigatórios.";
     header("Location: ../../html/perfil.php");
     exit();
 }
+
+
+
 ?>

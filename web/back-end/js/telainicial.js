@@ -57,12 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         setTimeout(() => {
-            // Exemplo de resultados
-            const obras = [
-                { titulo: 'Black Mirror', tipo: 'Série', ano: '2011-2023', imagem: '../imagens/blackmirror.jpg' },
-                { titulo: 'As Vantagens de Ser Invisível', tipo: 'Livro/Filme', ano: '2012', imagem: '../imagens/vantagens.png' },
-                { titulo: 'O Menino do Pijama Listrado', tipo: 'Livro/Filme', ano: '2008', imagem: '../imagens/listrado.jpg' }
-            ];
             
             if (obras.length > 0) {
                 let html = '<ul class="lista-obras">';
@@ -87,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         const obraTitulo = this.parentElement.getAttribute('data-titulo');
                         const obraImg = this.parentElement.querySelector('img').src;
                         
-                        // Aqui você pode adicionar a lógica para inserir a obra selecionada na análise
                         alert(`Obra "${obraTitulo}" selecionada para análise!`);
                         
                         // Fechar o painel após selecionar

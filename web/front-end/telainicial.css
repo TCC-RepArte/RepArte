@@ -7,7 +7,7 @@
 
 body {
   background: linear-gradient(to right, #000000, #0d0419, #180730, #1a0637);
-  min-height: 100vh;
+  max-height: 99vh;
   color: white;
   padding-top: 80px;
 }
@@ -78,6 +78,12 @@ header .logo img {
   margin-top: 10px;
 }
 
+.left{
+
+  padding-right: 1rem;
+
+}
+
 .sidebar-left::-webkit-scrollbar {
   height: 6px;
   width: 6px;
@@ -138,11 +144,13 @@ header .logo img {
 }
 
 .feed {
-  max-height: 570px;
+  position: relative;
+  max-height: 100%;
   overflow-y: auto;
   padding-right: 1rem;
   margin-top: 10px;
 }
+
 
 .create-post {
   position: sticky;
@@ -172,6 +180,7 @@ header .logo img {
   display: flex;
   gap: 10px;
   align-items: flex-start;
+  flex-direction: column;
 }
 
 .textarea-container textarea {
@@ -392,11 +401,44 @@ button:hover {
   max-height: 340px;
 }
 
-.post-header {
+.post-user {
+
+  position: relative;
   display: flex;
+  flex-direction: row;
   align-items: center;
+  justify-items: auto;
   gap: 12px;
   margin-top: -10px;
+  width: 100%;
+
+}
+
+.post-header{
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+
+}
+
+.post-header i{
+
+  top: -0.2rem;
+  position: relative;
+  color: #272727;
+  font-size: 2.2rem;
+
+
+}
+
+.post-set i {
+
+  position: relative;
+  right: 0px;
+
 }
 
 .post-user-photo {
@@ -423,24 +465,27 @@ button:hover {
   max-width: 100%;
   max-height: 100px;
   order: 1;
+  padding-bottom: 20px;
 }
 
 .post-body img {
-  width: 180px;
-  height: 260px;
+  width: auto;
+  height: 240px;
   border-radius: 12px;
   object-fit: cover;
   order: 2;
   margin-left: 1rem;
-  margin-top: -50px;
+  
 }
 
 .post-buttons {
+  position: relative;
   display: flex;
   justify-content: space-between;
   padding: 0 1.5rem;
   margin-bottom: 20px; 
   align-items: center;
+  background-color: #272727;
 }
 
 .comment-button i,

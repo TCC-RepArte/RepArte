@@ -1,6 +1,3 @@
-// Não adicionar o listener de evento aqui, pois já temos um personalizado no cadastro.php
-// O código abaixo será usado pela função em cadastro.php
-
 async function criarID(tamanho) {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let resultado = "";

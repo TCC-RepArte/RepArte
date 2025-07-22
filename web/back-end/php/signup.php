@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Processa requisições JSON (tipo a do fetch do JavaScript)
+// Processa requisições JSON
 function processarRequisicaoJson($data)
 {
     header('Content-Type: application/json');
@@ -161,7 +161,6 @@ function processarFormulario($post)
 
         if ($stmt->execute()) {
             $_SESSION['id'] = $id;
-            $_SESSION['user_id'] = $id; // Para compatibilidade com o sistema de login
             $_SESSION['usuario'] = $usuario_def;
             $_SESSION['email'] = $email;
             $_SESSION['mensagem_sucesso'] = "Cadastro realizado com sucesso!";

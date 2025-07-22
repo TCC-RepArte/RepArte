@@ -3,32 +3,23 @@
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-header('Content-Type: application/json'); 
 
 session_start();
+require 'config.php';
 
 // Verificar se já está logado e foi uma requisição AJAX
-if(isset($_SESSION['user_id']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
-    echo json_encode([
-        'sucesso' => true, 
-        'mensagem' => 'Usuário já logado',
-        'redirect' => '../../web/html/telainicial.php'
-    ]);
-    exit();
-}
-
-// Verificar se já está logado e foi uma requisição direta (não AJAX)
-if(isset($_SESSION['user_id']) && (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest')){
-    header('Location: ../../web/html/telainicial.php');
+if(isset($_SESSION['id'])){
+    $_SESSION['val'] = ['Usuario já está logado!'];
+    header('Location: ../../html/telainicial.php');
     exit();
 }
 
 // Conexão com o banco
-$con = new mysqli("localhost", "root", '', "reparte");
+global $con;
 
 // Verificar conexão
 if ($con->connect_error) {
-    echo json_encode(['sucesso' => false, 'mensagem' => 'Erro na conexão com o banco: ' . $con->connect_error]);
+    $_SESSION['erros'] = ['Não foi possível realizar conexão com o banco'];
     exit();
 }
 
@@ -41,18 +32,21 @@ if(isset($_POST['usuario']) && isset($_POST['senha'])){
     if(filter_var($usuario, FILTER_VALIDATE_EMAIL)) {
         $stmt = $con->prepare("SELECT id, usuario, email, senha FROM login WHERE email = ?");
     } else {
+        $usuario = substr_replace($usuario, '@', 0, 0);
         $stmt = $con->prepare("SELECT id, usuario, email, senha FROM login WHERE usuario = ?");
     }
 
     if (!$stmt) {
-        echo json_encode(['sucesso' => false, 'mensagem' => 'Erro na preparação da query: ' . $con->error]);
+        $_SESSION['erros'] = ['Não foi possível verificar os dados do login!'];
+        header('Location: ../../html/login1.php');
         exit();
     }
 
     $stmt->bind_param("s", $usuario);
     
     if (!$stmt->execute()) {
-        echo json_encode(['sucesso' => false, 'mensagem' => 'Erro na execução da query: ' . $stmt->error]);
+        $_SESSION['erros'] = ['Houve um erro no processo de verificação do e-mail/senha'];
+        header('Location: ../../html/login1.php');
         exit();
     }
 
@@ -64,46 +58,35 @@ if(isset($_POST['usuario']) && isset($_POST['senha'])){
         // Verificar a senha
         if(password_verify($senha, $usuario['senha'])) {
             // Armazenar informações na sessão
-            $_SESSION['user_id'] = $usuario['id'];
             $_SESSION['usuario'] = $usuario['usuario'];
             $_SESSION['email'] = $usuario['email'];
-            
-            echo json_encode([
-                'sucesso' => true, 
-                'mensagem' => 'Login realizado com sucesso',
-                'redirect' => '../../web/html/telainicial.php'
-            ]);
+            $_SESSION['id'] = $usuario['id'];
+
+            $_SESSION['val'] = ['Logado com sucesso!'];
+            header('Location: ../../html/telainicial.php');
+
         } else {
-            echo json_encode(['sucesso' => false, 'mensagem' => 'Senha incorreta']);
-            
-            // Se não for uma requisição AJAX, usar mensagem de sessão
-            if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
-                $_SESSION['mensagem_erro'] = 'Senha incorreta';
-                header('Location: ../../html/login1.php');
-                exit();
-            }
-        }
-    } else {
-        echo json_encode(['sucesso' => false, 'mensagem' => 'Usuário não encontrado']);
-        
-        // Se não for uma requisição AJAX, usar mensagem de sessão
-        if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
-            $_SESSION['mensagem_erro'] = 'Usuário não encontrado';
+            $_SESSION['erros'] = ['Senha incorreta!'];
             header('Location: ../../html/login1.php');
             exit();
         }
-    }
+                
+    } else {
 
-    $stmt->close();
-} else {
-    echo json_encode(['sucesso' => false, 'mensagem' => 'Dados incompletos']);
-    
-    // Se não for uma requisição AJAX, usar mensagem de sessão
-    if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
-        $_SESSION['mensagem_erro'] = 'Dados incompletos';
+        $_SESSION['erros'] = ['Usuario não encontrado!'];
         header('Location: ../../html/login1.php');
         exit();
-    }
+        
+        }
+    
+    $stmt->close();
+
+} else {
+
+    $_SESSION['erros'] = ['Dados estão incompletos!'];
+    header('Location: ../../html/login1.php');
+    exit();
+    
 }
 
 $con->close();
