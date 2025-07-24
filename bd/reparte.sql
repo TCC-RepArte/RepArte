@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 16, 2025 at 06:18 PM
+-- Generation Time: Jul 24, 2025 at 06:42 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -29,16 +29,16 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `comentarios`;
 CREATE TABLE IF NOT EXISTS `comentarios` (
-  `id_conteudo` varchar(20) NOT NULL,
-  `id_usuario` varchar(36) NOT NULL,
-  `id` varchar(20) NOT NULL,
-  `tipo_conteudo` enum('postagem','comentario') NOT NULL,
-  `texto` text NOT NULL,
+  `id_conteudo` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_usuario` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `id` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `tipo_conteudo` enum('postagem','comentario') COLLATE utf8mb4_general_ci NOT NULL,
+  `texto` text COLLATE utf8mb4_general_ci NOT NULL,
   `data` datetime NOT NULL,
   `data_edit` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_login_comentarios` (`id_usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -48,21 +48,14 @@ CREATE TABLE IF NOT EXISTS `comentarios` (
 
 DROP TABLE IF EXISTS `login`;
 CREATE TABLE IF NOT EXISTS `login` (
-  `usuario` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `senha` varchar(255) NOT NULL,
-  `id` varchar(36) NOT NULL,
+  `usuario` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `senha` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `usuario` (`usuario`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `login`
---
-
-INSERT INTO `login` (`usuario`, `email`, `senha`, `id`) VALUES
-('@ooi', 'teste@gmail.com', '$2y$10$IXOk1.DgiWqhDINk9r62bua7o3PYyW8D7XCVBwra5hwtT4mxxzJBS', 'L3HQO5f-RQX');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -72,22 +65,15 @@ INSERT INTO `login` (`usuario`, `email`, `senha`, `id`) VALUES
 
 DROP TABLE IF EXISTS `obras`;
 CREATE TABLE IF NOT EXISTS `obras` (
-  `id` varchar(36) NOT NULL,
-  `titulo` varchar(100) NOT NULL,
-  `autor` varchar(100) DEFAULT NULL,
-  `tipo` enum('livro','filme','música','outro') NOT NULL DEFAULT 'outro',
+  `id` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `titulo` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `autor` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tipo` enum('livro','filme','serie','arte','musica') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `ano_lancamento` year DEFAULT NULL,
-  `descricao` text,
+  `descricao` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `data_criacao` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `obras`
---
-
-INSERT INTO `obras` (`id`, `titulo`, `autor`, `tipo`, `ano_lancamento`, `descricao`, `data_criacao`) VALUES
-('obra_6845744d8bfc17.55123168', 'Obra não especificada', NULL, 'outro', NULL, 'Obra temporária para postagens sem referência específica', '2025-06-08 08:30:21');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -97,21 +83,14 @@ INSERT INTO `obras` (`id`, `titulo`, `autor`, `tipo`, `ano_lancamento`, `descric
 
 DROP TABLE IF EXISTS `perfil`;
 CREATE TABLE IF NOT EXISTS `perfil` (
-  `nomexi` varchar(50) NOT NULL,
-  `caminho` varchar(255) NOT NULL,
-  `id` varchar(36) NOT NULL,
-  `foto` varchar(255) NOT NULL,
-  `descri` varchar(500) NOT NULL,
+  `nomexi` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `caminho` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descri` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
   `data_perf` datetime NOT NULL,
   KEY `idx_login` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `perfil`
---
-
-INSERT INTO `perfil` (`nomexi`, `caminho`, `id`, `foto`, `descri`, `data_perf`) VALUES
-('olaa', '../../imagens/684571dcb0175.png', 'L3HQO5f-RQX', '684571dcb0175.png', 'oii gente', '2025-06-08 08:19:56');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -121,17 +100,17 @@ INSERT INTO `perfil` (`nomexi`, `caminho`, `id`, `foto`, `descri`, `data_perf`) 
 
 DROP TABLE IF EXISTS `postagens`;
 CREATE TABLE IF NOT EXISTS `postagens` (
-  `id_usuario` varchar(36) NOT NULL,
-  `id_obra` varchar(20) NOT NULL,
-  `id` varchar(20) NOT NULL,
-  `titulo` varchar(40) NOT NULL,
-  `texto` text NOT NULL,
-  `data` datetime NOT NULL,
+  `id_usuario` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_obra` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `titulo` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
+  `texto` mediumtext COLLATE utf8mb4_general_ci NOT NULL,
+  `data_post` datetime NOT NULL,
   `data_edit` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_login_postagens` (`id_usuario`),
   KEY `fk_obras_postagens` (`id_obra`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -141,14 +120,14 @@ CREATE TABLE IF NOT EXISTS `postagens` (
 
 DROP TABLE IF EXISTS `reacoes`;
 CREATE TABLE IF NOT EXISTS `reacoes` (
-  `id_usuario` varchar(36) NOT NULL,
-  `tipo_conteudo` enum('postagem','comentario') NOT NULL,
-  `id_conteudo` varchar(20) NOT NULL,
-  `tipo` enum('like','dislike') NOT NULL,
+  `id_usuario` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `tipo_conteudo` enum('postagem','comentario') COLLATE utf8mb4_general_ci NOT NULL,
+  `id_conteudo` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `tipo` enum('like','dislike') COLLATE utf8mb4_general_ci NOT NULL,
   `data` datetime DEFAULT CURRENT_TIMESTAMP,
   KEY `idx_usuario` (`id_usuario`),
   KEY `idx_conteudo` (`id_conteudo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Constraints for dumped tables
