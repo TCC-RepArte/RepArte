@@ -1,0 +1,242 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1:3306
+-- Tempo de geração: 10/08/2025 às 04:17
+-- Versão do servidor: 9.1.0
+-- Versão do PHP: 8.3.14
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Banco de dados: `reparte2`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `comentarios`
+--
+
+DROP TABLE IF EXISTS `comentarios`;
+CREATE TABLE IF NOT EXISTS `comentarios` (
+  `id_conteudo` varchar(20) NOT NULL,
+  `id_usuario` varchar(36) NOT NULL,
+  `id` varchar(20) NOT NULL,
+  `tipo_conteudo` enum('postagem','comentario') NOT NULL,
+  `texto` text NOT NULL,
+  `data` datetime NOT NULL,
+  `data_edit` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_login_comentarios` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `deposito da lista`
+--
+
+DROP TABLE IF EXISTS `deposito da lista`;
+CREATE TABLE IF NOT EXISTS `deposito da lista` (
+  `id_usuario` int NOT NULL,
+  `id_postagens` int NOT NULL,
+  `id_lista` int NOT NULL,
+  `id_"lixeira"` int NOT NULL,
+  PRIMARY KEY (`id_"lixeira"`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `lista`
+--
+
+DROP TABLE IF EXISTS `lista`;
+CREATE TABLE IF NOT EXISTS `lista` (
+  `titulo` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `descricao` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `id_lista` int NOT NULL,
+  `visibilidade(amigos,publico)` enum('(amigos,publico)','','','') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  PRIMARY KEY (`id_lista`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `login`
+--
+
+DROP TABLE IF EXISTS `login`;
+CREATE TABLE IF NOT EXISTS `login` (
+  `usuario` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `senha` varchar(255) NOT NULL,
+  `id` varchar(36) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `usuario` (`usuario`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Despejando dados para a tabela `login`
+--
+
+INSERT INTO `login` (`usuario`, `email`, `senha`, `id`) VALUES
+('@ooi', 'teste@gmail.com', '$2y$10$IXOk1.DgiWqhDINk9r62bua7o3PYyW8D7XCVBwra5hwtT4mxxzJBS', 'L3HQO5f-RQX');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `notificacoes`
+--
+
+DROP TABLE IF EXISTS `notificacoes`;
+CREATE TABLE IF NOT EXISTS `notificacoes` (
+  `id_usuario` varchar(20) NOT NULL,
+  `tipo` enum('(curtiu,seguiu,comentou,postou','','','') NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `obras`
+--
+
+DROP TABLE IF EXISTS `obras`;
+CREATE TABLE IF NOT EXISTS `obras` (
+  `id` varchar(36) NOT NULL,
+  `titulo` varchar(100) NOT NULL,
+  `autor` varchar(100) DEFAULT NULL,
+  `tipo` enum('livro','filme','música','outro') NOT NULL DEFAULT 'outro',
+  `ano_lancamento` year DEFAULT NULL,
+  `descricao` text,
+  `data_criacao` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Despejando dados para a tabela `obras`
+--
+
+INSERT INTO `obras` (`id`, `titulo`, `autor`, `tipo`, `ano_lancamento`, `descricao`, `data_criacao`) VALUES
+('obra_6845744d8bfc17.55123168', 'Obra não especificada', NULL, 'outro', NULL, 'Obra temporária para postagens sem referência específica', '2025-06-08 08:30:21');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `perfil`
+--
+
+DROP TABLE IF EXISTS `perfil`;
+CREATE TABLE IF NOT EXISTS `perfil` (
+  `nomexi` varchar(50) NOT NULL,
+  `caminho` varchar(255) NOT NULL,
+  `id` varchar(36) NOT NULL,
+  `foto` varchar(255) NOT NULL,
+  `descri` varchar(500) NOT NULL,
+  `data_perf` datetime NOT NULL,
+  KEY `idx_login` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Despejando dados para a tabela `perfil`
+--
+
+INSERT INTO `perfil` (`nomexi`, `caminho`, `id`, `foto`, `descri`, `data_perf`) VALUES
+('olaa', '../../imagens/684571dcb0175.png', 'L3HQO5f-RQX', '684571dcb0175.png', 'oii gente', '2025-06-08 08:19:56');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `postagens`
+--
+
+DROP TABLE IF EXISTS `postagens`;
+CREATE TABLE IF NOT EXISTS `postagens` (
+  `id_usuario` varchar(36) NOT NULL,
+  `id_obra` varchar(20) NOT NULL,
+  `id` varchar(20) NOT NULL,
+  `titulo` varchar(40) NOT NULL,
+  `texto` text NOT NULL,
+  `data` datetime NOT NULL,
+  `data_edit` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_login_postagens` (`id_usuario`),
+  KEY `fk_obras_postagens` (`id_obra`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `reacoes`
+--
+
+DROP TABLE IF EXISTS `reacoes`;
+CREATE TABLE IF NOT EXISTS `reacoes` (
+  `id_usuario` varchar(36) NOT NULL,
+  `tipo_conteudo` enum('postagem','comentario') NOT NULL,
+  `id_conteudo` varchar(20) NOT NULL,
+  `tipo` enum('like','dislike') NOT NULL,
+  `data` datetime DEFAULT CURRENT_TIMESTAMP,
+  KEY `idx_usuario` (`id_usuario`),
+  KEY `idx_conteudo` (`id_conteudo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `seguidores`
+--
+
+DROP TABLE IF EXISTS `seguidores`;
+CREATE TABLE IF NOT EXISTS `seguidores` (
+  `id_usuario` int NOT NULL AUTO_INCREMENT,
+  `usuario_complementar` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `relacao(seguindo,amigos,normal)` enum('(seguindo,amigos,normal)','','','') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `visibilidade(silenciado,bloqueado)` enum('(seguindo,amigos,normal)','','','') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  PRIMARY KEY (`id_usuario`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `comentarios`
+--
+ALTER TABLE `comentarios`
+  ADD CONSTRAINT `fk_login_comentarios` FOREIGN KEY (`id_usuario`) REFERENCES `login` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `perfil`
+--
+ALTER TABLE `perfil`
+  ADD CONSTRAINT `fk_perfil_login` FOREIGN KEY (`id`) REFERENCES `login` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `postagens`
+--
+ALTER TABLE `postagens`
+  ADD CONSTRAINT `fk_login_postagens` FOREIGN KEY (`id_usuario`) REFERENCES `login` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_obras_postagens` FOREIGN KEY (`id_obra`) REFERENCES `obras` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `reacoes`
+--
+ALTER TABLE `reacoes`
+  ADD CONSTRAINT `fk_login_reacoes` FOREIGN KEY (`id_usuario`) REFERENCES `login` (`id`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
