@@ -89,29 +89,39 @@ $posts = postagensFeitas();
       </div>
       <?php if (!empty($posts)): ?>
         <?php foreach ($posts as $post): ?>
-          <div class="post">
-            <div class="post-header">
-              <div class="post-user">
-                <img src="<?= $post['foto']?>" alt="Foto do Usuário V" class="post-user-photo" />
-                <h3><?= $post['usuario'] ?></h3>
-              </div>
-              <i class="post-set fa-solid fa-bars"></i>
-            </div>
-            <div class="post-body">
-              <img id="img-post" id-obra="<?= $post['id_obra'] ?>" tipo-obra="<?= $post['obra_tipo'] ?>" src="" alt="Imagem post">
-              <p><?= $post['titulo'] ?><br></p>
-              <p><?= $post['texto'] ?><br></p>
-            </div>
-            <div class="post-buttons">
-              <div class="comment-button">
-                <i class="fas fa-comment-dots"></i>
-              </div>
-              <div class="vote-buttons">
-                <i class="fas fa-arrow-up"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
+
+                            <!-- POSTAGENS -->
+
+          <div class="postback"> <!-- bloco cinza que engloba tudo -->
+  <div class="post-header">
+    <div class="post-user">
+      <img src="<?= $post['foto']?>" alt="Foto do Usuário V" class="post-user-photo" />
+      <h3><?= $post['usuario'] ?></h3>
+    </div>
+    <i class="post-set fa-solid fa-bars"></i>
+  </div>
+</div>
+<div class="post-container">
+  <div class="post-body">
+    <img id="img-post" id-obra="<?= $post['id_obra'] ?>" tipo-obra="<?= $post['obra_tipo'] ?>" src="" alt="Imagem post">
+
+    <div class="post-texto">
+      <p class="titulo"><?= $post['titulo'] ?></p>
+      <p class="texto"><?= $post['texto'] ?></p>
+    </div>
+  </div>
+
+  <div class="post-buttons">
+    <div class="comment-button">
+      <i class="fas fa-comment-dots"></i>
+    </div>
+    <div class="vote-buttons">
+      <i class="fas fa-arrow-up"></i>
+      <i class="fas fa-arrow-down"></i>
+    </div>
+  </div>
+</div>
+
         <?php endforeach; ?>
       <?php endif; ?>
     </section>

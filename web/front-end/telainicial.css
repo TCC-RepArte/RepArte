@@ -398,105 +398,124 @@ button:hover {
   gap: 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   margin-top: 20px;
-  max-height: 340px;
+  color: #fff;
+}
+
+/* ==== Header ==== */
+.post-header {
+  background-color: #0f0e0f;   /* fundo cinza em toda a barra */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 12px;
+  margin-top: 30px;
 }
 
 .post-user {
-
-  position: relative;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-items: auto;
   gap: 12px;
-  margin-top: -10px;
-  width: 100%;
-
 }
 
-.post-header{
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-
-}
-
-.post-header i{
-
-  top: -0.2rem;
-  position: relative;
-  color: #272727;
-  font-size: 2.2rem;
-
-
-}
-
-.post-set i {
-
-  position: relative;
-  right: 0px;
-
+.post-user h3 {
+  font-size: 1.5rem;
+  color: white;
 }
 
 .post-user-photo {
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   object-fit: cover;
-  margin-top: 8px;
+  margin-left: 10px;
+}
+
+.post-header i {
+  color: white;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+/* ==== body da postagem ==== */
+.post-container {
+  background-color: rgb(19, 19, 20);
+  padding: 16px;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .post-body {
-  display: flex;
-  align-items: flex-start;
+ display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  align-items: stretch; /* força colunas com mesma altura */
+  gap: 25px; 
+  flex-wrap: wrap;
 }
 
-.post-body p {
-  flex: 1;
+/* lado esquerdo (texto + barra de interações) */
+  .post-texto {
+  flex: 1 1 60%;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* texto em cima, barra embaixo */
+}
+
+
+.post-texto .titulo {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 1.3rem;
+  margin-top: 15px;
+}
+
+.post-texto .texto {
+  line-height: 1.4;
+  color: #ddd;
   font-size: 0.9rem;
-  margin-bottom: 1rem;
-  line-height: 1.5;
-  color: white;
-  max-width: 100%;
-  max-height: 100px;
-  order: 1;
-  padding-bottom: 20px;
+  margin-bottom: -30;
 }
 
+/* capa */
 .post-body img {
-  width: auto;
-  height: 240px;
-  border-radius: 12px;
-  object-fit: cover;
   order: 2;
-  margin-left: 1rem;
-  
+  flex: 0 0 20%;
+  max-width: 200px;
+  height: 240px; /* altura fixa da capa */
+  border-radius: 10px;
+  object-fit: cover;
+  min-width: 140px;
+  align-self: flex-start;
+  margin-top: 15px;
 }
 
+/* barra de interação */
 .post-buttons {
-  position: relative;
+  margin-top: auto; /* garante que fique colada ao final do .post-texto */
   display: flex;
   justify-content: space-between;
-  padding: 0 1.5rem;
-  margin-bottom: 20px; 
   align-items: center;
+  padding: 0.6rem 1rem;
   background-color: #272727;
+  border-radius: 10px;
+  max-width: 700px;
 }
 
 .comment-button i,
 .vote-buttons i {
   color: #ff6600;
-  font-size: 2.2rem;
+  font-size: 1.4rem;
   cursor: pointer;
-  padding: 12px;
+  padding: 6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease;
 }
 
 .comment-button i:hover,
@@ -504,18 +523,40 @@ button:hover {
   transform: scale(1.2);
 }
 
-.vote-buttons{
+.vote-buttons {
   display: flex;
-  gap: 1.2rem;
-  margin-right: 170px; 
-  justify-content: flex-end;
-  margin-top: -70px;
-  padding-right: 10px;
+  align-items: center;
+  gap: 1rem;
 }
 
-.comment-button{
-  margin-top: -80px;
+
+/* ==== Responsividade ==== */
+@media (max-width: 600px) {
+  .post-body {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .post-body img {
+    order: 1;
+    max-width: 100%;
+    width: 80%;
+    margin-bottom: 10px;
+  }
+
+  .post-texto {
+    order: 2;
+    flex: 1 1 100%;
+    text-align: left;
+  }
+
+  .post-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
+
 
 .sidebar-right {
   height: 570px;
