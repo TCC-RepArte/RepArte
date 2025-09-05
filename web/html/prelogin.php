@@ -11,42 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap" rel="stylesheet">
     <title>ReParte</title>
 </head>
-
-<!-- libras -->
-<div vw class="enabled">
-  <div vw-access-button class="active"></div>
-  <div vw-plugin-wrapper>
-    <div class="vw-plugin-top-wrapper"></div>
-  </div>
-</div>
-<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-<script>
-  new window.VLibras.Widget('https://vlibras.gov.br/app');
-</script>
-
-
-
-  <script>
-    document.getElementById("tts-btn").addEventListener("click", function () {
-      const texto = document.getElementById("tts-input").value;
-      if (!texto) {
-        alert("Digite um texto para converter!");
-        return;
-      }
-
-      // Usando a API nativa do navegador
-      const utterance = new SpeechSynthesisUtterance(texto);
-      speechSynthesis.speak(utterance);
-
-      // Mostra o player fake
-      document.getElementById("tts-player").style.display = "flex";
-    });
-
-    document.getElementById("tts-play-btn").addEventListener("click", function () {
-      alert("Esse play/pause é apenas ilustrativo. Para áudio real, precisa de uma API como TTSMaker.");
-    });
-  </script>
-
 <body>
     <div id="bg-fixo"></div>
     <header>
@@ -100,20 +64,6 @@
             </div>
         </section>
     </main>
-
-    <!--conversor de audio-->
- <div class="tts-container">
-    <h2>Conversor de Texto para Áudio</h2>
-    
-    <textarea id="tts-input" placeholder="Digite aqui o texto para ouvir..."></textarea>
-    <button id="tts-btn">🔊 Converter</button>
-
-    <div class="tts-player" id="tts-player" style="display: none;">
-      <div class="tts-play-btn" id="tts-play-btn">▶️</div>
-      <span id="tts-status">Pausado</span>
-      <audio id="tts-audio"></audio>
-    </div>
-  </div>
 
     <!-- Seção Sobre Nós com ID -->
     <section class="sobre-nos" id="sobre-nos">
