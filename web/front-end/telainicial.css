@@ -9,7 +9,7 @@ body {
   background: linear-gradient(to right, #000000, #0d0419, #180730, #1a0637);
   max-height: 99vh;
   color: white;
-  padding-top: 80px;
+  padding-top: 10px;
 }
 
 header {
@@ -18,7 +18,7 @@ header {
   border-radius: 24px;
   box-shadow: 0 4px 32px #000a;
   padding: 0 4%;
-  margin: 12px 2% 0;
+  margin: 12px 2% 0 ;
   display: flex;
   align-items: center;
   justify-content: space-between;
