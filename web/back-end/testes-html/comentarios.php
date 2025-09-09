@@ -25,114 +25,77 @@ $posts = postagensFeitas();
     <?php endforeach; ?>
     
 </body>
+<script src="../js/criarID.js"></script>
 <script>
 
-const idPostagem = document.querySelector('id_postagem');
 const curtida = document.querySelectorAll('.like');
 const descurtida = document.querySelectorAll('.dislike');
-let like = false;
-let dislike = false;
-let desfLike = false;
-let desfDislike = false;
+
+const estadosPosts = {}; // mapa id => estado
 
 curtida.forEach(botao => {
-    botao.addEventListener('click', function(){
-        postagem = this.closest('.postagem');
-        id = postagem.dataset.id;
+  botao.addEventListener('click', () => {
+    const post = botao.closest('.postagem');
+    const id = post.dataset.id;
+    const estadoAtual = estadosPosts[id] || null;
 
-        definirLike(this);
-        envLike(id);
+    if (estadoAtual === 'like') {
+      estadosPosts[id] = null; // desfazer like
+    } else {
+      estadosPosts[id] = 'like'; // curtir
+    }
 
-    });
+    atualizarBotoesPost(post, estadosPosts[id]);
+    enviarReacao(id, estadosPosts[id]);
+  });
 });
 
 descurtida.forEach(botao => {
-    botao.addEventListener('click', function(){
-        postagem = this.closest('.postagem');
-        id = postagem.dataset.id;
+  botao.addEventListener('click', () => {
+    const post = botao.closest('.postagem');
+    const id = post.dataset.id;
+    const estadoAtual = estadosPosts[id] || null;
 
-        definirDeslike(this);
-        envLike(id);
-       
-    });
+    if (estadoAtual === 'dislike') {
+      estadosPosts[id] = null; // desfazer dislike
+    } else {
+      estadosPosts[id] = 'dislike'; // descurtir
+    }
+
+    atualizarBotoesPost(post, estadosPosts[id]);
+    enviarReacao(id, estadosPosts[id]);
+  });
 });
 
-function definirLike(botao) {
-    like = !like;
-    if (like) {
-        dislike = false;
-        desfLike = false;
-        desfDislike = true;
-        atualizarBotoes();
-    } else {
-        botao.innerHTML = 'curtir';
-        desfLike = true;
-    }
-    console.log('like:', like, 'dislike:', dislike);
+function atualizarBotoesPost(post, estado) {
+  const likeBtn = post.querySelector('.like');
+  const dislikeBtn = post.querySelector('.dislike');
+
+  likeBtn.innerText = estado === 'like' ? 'curtido' : 'curtir';
+  dislikeBtn.innerText = estado === 'dislike' ? 'descurtido' : 'descurtir';
 }
 
-function definirDeslike(botao) {
-    dislike = !dislike;
-    if (dislike) {
-        like = false;
-        desfDislike = false;
-        desfLike = true;
-        atualizarBotoes();
-    } else {
-        botao.innerHTML = 'descurtir';
-        desfDislike = true;
-    }
-    console.log('like:', like, 'dislike:', dislike);
-}
+async function enviarReacao(id, estado) {
+  let like = false, dislike = false;
 
-function atualizarBotoes() {
-    curtida.forEach(botao => {
-        botao.innerHTML = like ? 'curtido' : 'curtir';
-    });
-    descurtida.forEach(botao => {
-        botao.innerHTML = dislike ? 'descurtido' : 'descurtir';
-    });
-}
+  if (estado === 'like') like = true;
+  else if (estado === 'dislike') dislike = true;
 
-async function envLike(id){
+  const response = await fetch('../php/reagir.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id, like, dislike})
+  });
 
-    let response;
+  data = await response.json();
 
-    if(like == true || dislike == true){
-        response = await fetch('../php/reagir.php',{
-            method: 'POST',
-            headers:{
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify({like: like, dislike: dislike, id: id})
-        });
-    } else if(desfLike == true || desfDislike == true){
-        response = await fetch('../php/reagir.php',{
-            method: 'POST',
-            headers:{
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({DesfazerLike: desfLike, DesfazerDislike: desfDislike, id: id})
-        });
-    }
+  if (!response.ok) {
+    alert('Erro na requisição: ' + response.status);
+  } else{
+    console.log('Resposta do servidor (reacao):', data);
 
-    like = false;
-    dislike = false;
-    desfLike = false;
-    desfDislike = false;
-
-    if(response){
-        if(response.ok){
-                alert("deu certo!!");
-                window.location.href = '../php/reagir.php';
-        }else{
-            alert("erro na requisição:" + response.status);
-        }
-
-    } else {
-        alert("nenhum fecth realizado!");
-    }
-    return;
+    criarID(14, '../php/reagir.php');
+  }
 }
 
 

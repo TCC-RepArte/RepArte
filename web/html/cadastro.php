@@ -132,7 +132,7 @@ if (isset($_SESSION['erros'])) {
     </div>
   </div>
  
-  <script src="../back-end/js/signup.js"></script>
+  <script src="../back-end/js/criarID.js"></script>
   <script>
     // Adicionar tratamento de erros no lado do cliente
     const formSignup = document.getElementById('signupForm');
@@ -161,13 +161,13 @@ if (isset($_SESSION['erros'])) {
             erroEncontrado = true;
         }
         
-        // Se não houver erros, continuar com o processo de submissão do ID original (signup.js)
+        // Se não houver erros, continuar com o processo de submissão do ID original (criarID.js)
         if (!erroEncontrado) {
-            // Usar o processo de geração de ID do signup.js
+            // Usar o processo de geração de ID do criarID.js
             (async function() {
                 try {
                     // Gera o ID e aguarda
-                    const id = await criarID(10);
+                    const id = await criarID(10, '../back-end/php/signup.php');
                     
                     if (id && id.success) {
                         // Cria e adiciona input hidden ao form

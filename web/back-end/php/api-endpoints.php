@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
     $response = makeTMDBRequest('/search/tv', [
         'query' => $query,
         'include_adult' => 'true',
-        'language' => 'pt-BR',
+        'language' => 'pt-BR',  
         'page' => '1'
     ]);
     echo $response;
@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
         'q' => $query,
         'type' => 'track',
         'market' => 'BR',
-        'limit' => '20'
+        'limit' => '10'
     ]);
     echo $response;
     exit;

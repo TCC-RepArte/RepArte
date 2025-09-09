@@ -13,6 +13,11 @@ global $con;
     // Utilizando da sessão do id para puxar outros dados do perfil
     $id_usuario = $_SESSION['id'];
 
+    if(!isset($_SESSION['id'])){
+        header("Location: ../../web/html/login1.php");;
+        exit;
+    }
+
     // Fazendo a seleção dos dados
     $stmt = $con->prepare("SELECT * from perfil where id = ?");
     $stmt->bind_param("s", $id_usuario);

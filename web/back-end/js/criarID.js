@@ -1,4 +1,4 @@
-async function criarID(tamanho) {
+async function criarID(tamanho, url) {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let resultado = "";
 
@@ -11,7 +11,6 @@ async function criarID(tamanho) {
   console.log("ID gerado:", id);
 
   try {
-    const url = '../back-end/php/signup.php';
     console.log("Tentando acessar:", url);
 
     const response = await fetch(url, {
@@ -21,7 +20,7 @@ async function criarID(tamanho) {
         'Accept': 'application/json',
         'X-Requested-With': 'XMLHttpRequest'
       },
-      body: JSON.stringify({ id })
+      body: JSON.stringify({ idCriado: id })
     });
 
     console.log("Status da resposta:", response.status);
@@ -42,7 +41,7 @@ async function criarID(tamanho) {
 
     if (data.duplicate) {
       console.warn("ID duplicado. Tentando novamente...");
-      return await criarID(tamanho); // Recursivo até gerar único
+      return await criarID(tamanho, url); // até gerar único
     }
 
     return data;

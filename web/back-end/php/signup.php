@@ -37,9 +37,9 @@ function processarRequisicaoJson($data)
 {
     header('Content-Type: application/json');
     try {
-        if (isset($data['id'])) {
+        if (isset($data['idCriado'])) {
             global $con;
-            $id = $data['id'];
+            $id = $data['idCriado'];
             
             // Verifica se o ID já existe no banco
             $stmt = $con->prepare("SELECT id FROM login WHERE id = ?");
