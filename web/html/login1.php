@@ -112,6 +112,10 @@ if (isset($_SESSION['erros']) || isset($_SESSION['val'])) {
                         <input type="checkbox" name="lembrar">
                         <label for="checkbox">Lembre-se de mim</label>
                     </div>
+                    <div class="esqueceu-senha">
+                                <p><a href="emailesqueceu.html">Esqueceu a senha?</a></p>
+                    </div>
+
                     <button type="submit" class="btn-entrar">Entrar</button>
                     <a href="cadastro.php"><button type="button" class="btn-registrarse">Registrar-se</button></a>
                 </form>

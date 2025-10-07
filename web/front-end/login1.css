@@ -164,6 +164,15 @@ header {
   color: white;
   width: 100%;
 }
+.esqueceu-senha p a{
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-right: 0px;
+  font-size: 16px;
+  color: white;
+  width: 100%;
+}
 
 .checkbox input {
   margin-right: 2px;
