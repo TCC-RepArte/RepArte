@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 10/08/2025 às 04:17
+-- Tempo de geração: 29/09/2025 às 23:17
 -- Versão do servidor: 9.1.0
 -- Versão do PHP: 8.3.14
 
@@ -43,16 +43,17 @@ CREATE TABLE IF NOT EXISTS `comentarios` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `deposito da lista`
+-- Estrutura para tabela `deposito`
 --
 
-DROP TABLE IF EXISTS `deposito da lista`;
-CREATE TABLE IF NOT EXISTS `deposito da lista` (
-  `id_usuario` int NOT NULL,
-  `id_postagens` int NOT NULL,
+DROP TABLE IF EXISTS `deposito`;
+CREATE TABLE IF NOT EXISTS `deposito` (
+  `id_deposito` int NOT NULL AUTO_INCREMENT,
   `id_lista` int NOT NULL,
-  `id_"lixeira"` int NOT NULL,
-  PRIMARY KEY (`id_"lixeira"`)
+  `id_postagem` int NOT NULL,
+  PRIMARY KEY (`id_deposito`),
+  KEY `id_lista` (`id_lista`),
+  KEY `id_postagem` (`id_postagem`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
@@ -67,7 +68,9 @@ CREATE TABLE IF NOT EXISTS `lista` (
   `descricao` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `id_lista` int NOT NULL,
   `visibilidade(amigos,publico)` enum('(amigos,publico)','','','') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  PRIMARY KEY (`id_lista`)
+  `id_login` int NOT NULL,
+  PRIMARY KEY (`id_lista`),
+  KEY `fk_lista_login` (`id_login`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
@@ -203,8 +206,10 @@ CREATE TABLE IF NOT EXISTS `seguidores` (
   `id_usuario` int NOT NULL AUTO_INCREMENT,
   `usuario_complementar` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `relacao(seguindo,amigos,normal)` enum('(seguindo,amigos,normal)','','','') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `visibilidade(silenciado,bloqueado)` enum('(seguindo,amigos,normal)','','','') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  PRIMARY KEY (`id_usuario`)
+  `visibilidade(silenciado,bloqueado)` enum('(silenciado,bloqueado)','','','') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `id_login` int NOT NULL,
+  PRIMARY KEY (`id_usuario`),
+  KEY `fk_seguidores_login` (`id_login`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
 
 --
