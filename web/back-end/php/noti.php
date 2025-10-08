@@ -42,6 +42,24 @@ global $con;
      <a href="notificações.css"> Notificações </a>
     </head>
     <body>
-        
+        <button id="ativarnoti" > Notificação </button>
+         <?php foreach ($notificacoes as $n): ?>
+      <p>📨 <?php echo htmlspecialchars($n['mensagem']); ?> (<?php echo $n['tipo']; ?>)</p>
+    <?php endforeach; ?>
+    </div>
+
+            <script> 
+            const idUsuario = 1; 
+            const socket = new WebSocket ('ws://localhost:8080/notificacoes');
+            socket.onopen = function () {
+                console.log ('Está conectado ao WS');
+                socket.send('Usuario:' + idUsuario) // informa qual é o usuário
+
+            };
+            socket_onmessage = function(event) {
+            const mensagem = event. data;
+            mostrarNoti(mensagem);
+            if (notification. permission === )
+            };
     </body>
     </html>
