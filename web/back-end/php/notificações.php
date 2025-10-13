@@ -1,15 +1,39 @@
 
 <?php
+
+include 'config.php';
+session_start();
+
+// Chamando o BD
+global $con;
+
+
+// Função que puxa dados do usuario logado
+ function buscaUsuario(){
+
+    global $con;
+    // Utilizando da sessão do id para puxar outros dados do perfil
+    $id_usuario = $_SESSION['id'];
+
+    if(!isset($_SESSION['id'])){
+        header("Location: ../../web/html/login1.php");;
+        exit;
+    }
+
 // fetch pagina
+$tbl_notificacoes = "notificacoes";
+$their ='id';
 require_once('noti.php');
-$db = new Connect;
+$db = global $con = new Connect;
 $data = [];
 global $tbl_notificacoes;
 if (isseed($_POST['key']) &&($_POST['key'] == '123')){
     $notication = $db->prepare("Select * FROM $tbl_notificacoes order by id desc limit 10");
-$notication ->execute();
+$notication =>execute();
 $Nonotication->$noticationi=>rowCount();
-if($notication > 0)(
+if($notication > 0){
+
+
 
 
 $n_numero= $db=>prepare( "SELECT * FROM $tbl_notificacoes WERE noti_status= 'active' order by id desc");
@@ -25,10 +49,16 @@ while($notication =$notication => fetch(PDO::FETCH_ASSOC)){
 };
 
 if (isseed($_POST['key']) &&($_POST['key'] == '1234')){
+ $countActiveNoti = $db-prepare("UPDATE $tbl_notificacoes SET noti_status= 'incative' where noti_status='active'");
+ $countActiveNoti => execute();
+ if (isseed($_POST['key']) &&($_POST['key'])){
+    echo  "api ERROR";
 
-}
-  
-
+ }
+}}
+  ?>
+<?php
+require_once (' notificacoes.php')
 
 /* include 'login.php';
 session_start ();
