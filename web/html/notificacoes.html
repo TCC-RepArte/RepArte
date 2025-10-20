@@ -7,14 +7,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../front-end/configuraçoes.css">
+    <link rel="stylesheet" href="../front-end/notificcpes.css">
+    <script src="../back-end/js/toggleconf.js"></script>
     <title>RepArte</title>
 </head>
 <body>
     <div class="container">
     <!-- Menu lateral -->
     <aside class="sidebar">
-      <a href="" class="btn">Seu Perfil</a>
+      <a href="../html/configuracoes.html" class="btn">Seu Perfil</a>
       <a href="../html/notificacoes.html" class="btn">Notificações</a>
       <a href="" class="btn">Privacidade</a>
       <a href="" class="btn">Segurança</a>
@@ -29,23 +30,30 @@
         <button class="back-btn">⬅ Voltar</button>
       </header>
 
-      <section class="profile">
-        <div class="avatar">
-          <div class="img">
-            <i class="bi bi-person-circle"></i>
-          </div>
-          <button class="alterar">Alterar</button>
+     
+        <div class="settings">
+        <div class="setting">
+          <span>Análises publicadas</span>
+          <div class="toggle"></div>
         </div>
-
-        <div class="inputs">
-          <input type="text" placeholder="Nome de usuário">
-          <input type="text" placeholder="Nome">
-          <input type="text" placeholder="Sobrenome">
+        <div class="setting">
+          <span>Comentários</span>
+          <div class="toggle"></div>
         </div>
-
-        <div class="descricao">
-          <textarea placeholder="Descrição"></textarea>
+        <div class="setting">
+          <span>Seguidores</span>
+          <div class="toggle"></div>
         </div>
+        <div class="setting">
+          <span>Reações</span>
+          <div class="toggle"></div>
+        </div>
+        <div class="setting">
+          <span>Chats</span>
+          <div class="toggle"></div>
+        </div>
+      </div>
+    
 
         <div class="actions">
           <button class="delete">🗑 Excluir</button>
@@ -53,13 +61,6 @@
         </div>
       </section>
 
-      <section class="notifica">
-
-        <div>
-
-        </div>
-
-      </section>
     </main>
   </div>
 </body>
