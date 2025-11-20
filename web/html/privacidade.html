@@ -7,8 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../front-end/notificcpes.css">
-    <script src="../back-end/js/toggleconf.js"></script>
+    <link rel="stylesheet" href="../front-end/privacidade.css">
     <title>RepArte</title>
 </head>
 <body>
@@ -30,32 +29,44 @@
         <button class="back-btn">⬅ Voltar</button>
       </header>
 
-     
-        <div class="settings">
+       <div class="settings">
         <div class="setting">
-          <span>Análises publicadas</span>
-          <div class="toggle"></div>
+          <span>Conta privada</span>
+          <label class="switch">
+            <input type="checkbox" id="toggle">
+            <span class="slider"></span>
+          </label>
         </div>
+
         <div class="setting">
-          <span>Comentários</span>
-          <div class="toggle"></div>
+          <span>Quem pode ver suas publicações</span>
+          <select>
+            <option>Amigos</option>
+            <option>Todos</option>
+            <option>Só você</option>
+          </select>
         </div>
+
         <div class="setting">
-          <span>Seguidores</span>
-          <div class="toggle"></div>
+          <span>Quem pode ver seus favoritos</span>
+          <select>
+            <option>Todos</option>
+            <option>Amigos</option>
+            <option>Só você</option>
+          </select>
         </div>
+
         <div class="setting">
-          <span>Reações</span>
-          <div class="toggle"></div>
-        </div>
-        <div class="setting">
-          <span>Chats</span>
-          <div class="toggle"></div>
+          <span>Quem pode ver seus comentários</span>
+          <select>
+            <option>Só você</option>
+            <option>Amigos</option>
+            <option>Todos</option>
+          </select>
         </div>
       </div>
-    
 
-        <div class="actions">
+ <div class="actions">
           <button class="delete">🗑 Excluir</button>
           <button class="save">⬇ Salvar</button>
         </div>

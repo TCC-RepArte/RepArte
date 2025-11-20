@@ -1,7 +1,7 @@
 
 * {
-  margin: 0;
-  padding: 0;
+  margin: 0px;
+  padding: 0px;
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
 }
@@ -162,8 +162,8 @@ a.btn {
 
 .descricao textarea {
   width: 100%;
-  height: 200px;
-  padding: 15px;
+  height: 180px;
+  padding: 10px;
   border-radius: 20px;
   border: 2px solid #fff;
   background: transparent;
@@ -174,7 +174,7 @@ a.btn {
 
 /* --------- BOTÕES DE AÇÃO --------- */
 .actions {
-  padding: 0 0px;
+  padding: 0px 0px;
   display: flex;
   justify-content: left;
   gap: 30px;
@@ -183,7 +183,7 @@ a.btn {
 .actions button {
   border: none;
   border-radius: 10px;
-  padding: 0 10px;
+  padding: 170 10px;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
