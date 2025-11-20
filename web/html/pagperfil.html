@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../front-end/pagperfil.css">
+    <title>Página de Perfil</title>
+</head>
+<body>
+    
+  <div class="container">
+
+    <!-- Topo -->
+    <div class="topbar">
+      <div class="logo">
+        <span class="brand">Rep<span class="accent">Arte</span></span>
+      </div>
+    </div>
+
+    <!-- Header do perfil -->
+    <div class="profile-header">
+      
+      <div class="cover"></div>
+
+      <div class="profile-main">
+
+        <!-- Avatar -->
+        <div class="avatar-wrap">
+          <div class="avatar">🙂</div>
+        </div>
+
+        <!-- Infos principais -->
+        <div class="info">
+          <div class="name-row">
+            <div class="display-name">Fulano</div>
+
+            <div class="actions">
+              <button class="btn accent">Editar perfil</button>
+              <button class="btn ghost">Configurações</button>
+            </div>
+          </div>
+
+          <div class="counters">
+            <div class="count"><span class="num">20</span> Seguidores</div>
+            <div class="count"><span class="num">10</span> Seguindo</div>
+          </div>
+
+          <div class="bio">minha bio blablabla</div>
+        </div>
+
+        <!-- Coluna direita (badges / stats) -->
+        <div class="meta">
+          <div class="badge">Artista 🎨</div>
+          <div class="badge">Desde 2024</div>
+          <div class="small muted">0 denúncias</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Abas -->
+    <div class="tabs">
+      <div class="tab-list">
+        <div class="tab active" data-tab="atividade">Minha atividade</div>
+        <div class="tab" data-tab="favoritos">Favoritos</div>
+      </div>
+
+      <div class="tab-panels" id="painel">
+
+        <div class="post-card">
+          <div class="title">Minha primeira postagem</div>
+          <div class="meta">2 dias atrás</div>
+        </div>
+
+        <div class="post-card">
+          <div class="title">Crítica sobre a obra X</div>
+          <div class="meta">1 semana atrás</div>
+        </div>
+
+        <div class="post-card">
+          <div class="title">Recomendei um artista</div>
+          <div class="meta">3 semanas atrás</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JS básico (trocar abas) -->
+  <script>
+    const tabs = document.querySelectorAll(".tab");
+    const painel = document.getElementById("painel");
+
+    tabs.forEach(t => {
+      t.addEventListener("click", () => {
+        document.querySelector(".tab.active")?.classList.remove("active");
+        t.classList.add("active");
+
+        if (t.dataset.tab === "atividade") {
+          painel.innerHTML = `
+            <div class="post-card">
+              <div class="title">Minha primeira postagem</div>
+              <div class="meta">2 dias atrás</div>
+            </div>
+            <div class="post-card">
+              <div class="title">Crítica sobre a obra X</div>
+              <div class="meta">1 semana atrás</div>
+            </div>
+            <div class="post-card">
+              <div class="title">Recomendei um artista</div>
+              <div class="meta">3 semanas atrás</div>
+            </div>
+          `;
+        }
+
+        if (t.dataset.tab === "favoritos") {
+          painel.innerHTML = `<div class="empty">Nenhum favorito ainda 👀</div>`;
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
