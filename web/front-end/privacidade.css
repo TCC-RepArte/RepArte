@@ -174,7 +174,7 @@ input:checked + .slider:before {
 .actions button {
   border: none;
   border-radius: 10px;
-  padding: 180px 10px;
+  padding: 170px 10px;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
