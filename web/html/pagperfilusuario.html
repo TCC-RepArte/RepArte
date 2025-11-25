@@ -1,0 +1,201 @@
+<!DOCTYPE html> 
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../front-end/pagperfilusuario.css">
+    <title>Página de Perfil do Usuário</title>
+</head>
+
+<body>
+    
+  <div class="container">
+
+    <div class="topbar">
+      <div class="logo">
+        <span class="brand">Rep<span class="accent">Arte</span></span>
+      </div>
+    </div>
+
+   <!-- TEMPLATE INVISIVEL DO PERFIL -->
+<section id="profile-template" style="display:block;">
+
+    <header class="profile-header">
+
+        <div class="cover"></div>
+
+        <div class="profile-main">
+
+            <div class="avatar-wrap">
+                <div class="avatar">IMG</div>
+            </div>
+
+            <div class="info">
+                <div class="name-row">
+                    <span class="display-name" id="profile-name">Nome do Usuário</span>
+
+                    <div class="actions">
+                        <button class="btn ghost" id="edit-profile-btn">Editar Perfil</button>
+                        <button class="btn accent" id="favorites-btn">Favoritos</button>
+                    </div>
+                </div>
+
+                <div class="counters">
+                    <div class="count">
+                        <span class="num" id="followers-count">0</span> seguidores
+                    </div>
+                    <div class="count">
+                        <span class="num" id="following-count">0</span> seguindo
+                    </div>
+                </div>
+
+                <p class="bio" id="profile-bio">
+                    Biografia do usuário / descrição breve...
+                </p>
+            </div>
+
+        </div>
+
+        <div class="tabs">
+            <div class="tab-list">
+                <div class="tab active">Atividade</div>
+                <div class="tab">Favoritos</div>
+                <div class="tab">Sobre</div>
+            </div>
+        </div>
+
+    </header>
+
+    <main>
+        <div class="tab-panels">
+            <div class="empty">Nenhuma atividade ainda...</div>
+        </div>
+    </main>
+
+</section>
+<!-- FIM DO TEMPLATE -->
+
+
+</body>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* ---Alterar foto de perfil--- */
+    const avatar = document.querySelector(".avatar");
+    if (avatar) {
+        avatar.addEventListener("click", () => {
+            const input = document.createElement("input");
+            input.type = "file";
+            input.accept = "image/*";
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        avatar.style.backgroundImage = `url('${event.target.result}')`;
+                        avatar.textContent = "";
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.click();
+        });
+    }
+
+    /* ---Alterar capa--- */
+    const cover = document.querySelector(".cover");
+    if (cover) {
+        cover.addEventListener("click", () => {
+            const input = document.createElement("input");
+            input.type = "file";
+            input.accept = "image/*";
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        cover.style.backgroundImage = `url('${event.target.result}')`;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.click();
+        });
+    }
+
+    /* ---Minha atividade / Favoritos--- */
+    const feed = document.querySelector(".tab-panels");
+    const favBtn = document.getElementById("favorites-btn");
+    const atividadeBtn = document.getElementById("edit-profile-btn");
+
+    if (favBtn && feed) {
+        favBtn.addEventListener("click", () => {
+            feed.innerHTML = `
+                <h2>Favoritos</h2>
+                <p class="empty">Nenhum favorito ainda 👀</p>
+            `;
+        });
+    }
+
+    if (atividadeBtn && feed) {
+        atividadeBtn.addEventListener("click", () => {
+            feed.innerHTML = `
+                <h2>Minha Atividade</h2>
+                <div class="post-card">
+                    <div class="title">Minha primeira postagem</div>
+                    <div class="meta">2 dias atrás</div>
+                </div>
+                <div class="post-card">
+                    <div class="title">Crítica sobre a obra X</div>
+                    <div class="meta">1 semana atrás</div>
+                </div>
+            `;
+        });
+    }
+
+    /* ---ABAS: Atividade / Favoritos / Sobre--- */
+const tabs = document.querySelectorAll(".tab");
+const panel = document.querySelector(".tab-panels");
+
+tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => {
+
+        // Remove classe 'active' de todas
+        tabs.forEach(t => t.classList.remove("active"));
+
+        // Ativa a aba clicada
+        tab.classList.add("active");
+
+        // Conteúdo por aba
+        if (index === 0) {
+            panel.innerHTML = `
+                <h2>Atividade</h2>
+                <div class="empty">Nenhuma atividade ainda...</div>
+            `;
+        }
+        else if (index === 1) {
+            panel.innerHTML = `
+                <h2>Favoritos</h2>
+                <p class="empty">Nenhum favorito ainda 👀</p>
+            `;
+        }
+        else if (index === 2) {
+            panel.innerHTML = `
+                <h2>Sobre</h2>
+                <p class="empty">Nenhuma informação adicional...</p>
+            `;
+        }
+
+    });
+});
+
+
+});
+</script>
+
+</html>
