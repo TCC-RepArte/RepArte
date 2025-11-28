@@ -1,0 +1,452 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(to right, #4603bb, #331560, #a24807e3, #ff6a00),
+    linear-gradient(to top, #000 0%, #000000 50%, transparent 100%);
+  background-blend-mode: overlay;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+  padding-top: 0;
+}
+
+.interface {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+header {
+  height: 60px;
+  background: #130922;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(123, 24, 173, 0.667);
+  padding: 18px 4%;
+  margin: 12px 2% 0 2%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 25%;
+  max-width: 96vw;
+}
+
+.main-login {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.right-login {
+  width: 100%;
+  max-width: 500px;
+  background-color: #130922;
+  border-radius: 40px;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.left-login h1 {
+  color: #fd4f0a;
+  font-family: "Baloo 2", sans-serif;
+  font-size: 35px;
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.btns-logins {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 16px;
+}
+
+.btns-logins a {
+  text-decoration: none;
+  width: 100%;
+  display: flex;
+}
+
+.btns-logins button {
+  width: 100%;
+  max-width: 360px;
+  padding: 16px 20px;
+  background: #130922;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  font-style: italic;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btns-logins button:hover {
+  background-color: #2e1a49;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.card-login {
+  width: 100%;
+  padding: 30px;
+}
+
+.card-login h1 {
+  color: #ff6600;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 28px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.textfield {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.textfield label {
+  color: white;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.textfield input {
+  width: 100%;
+  border: none;
+  border-radius: 22px;
+  padding: 14px 18px;
+  background-color: #2b2146;
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.textfield input:focus {
+  background-color: #3d2a5f;
+  box-shadow: 0 0 0 2px #ff6600;
+}
+
+.textfield input::placeholder {
+  color: #8a8a8a;
+  font-style: italic;
+}
+
+.btn-registrarse,
+.btn-entrar {
+  width: 100%;
+  border: none;
+  border-radius: 22px;
+  padding: 14px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-registrarse {
+  background: linear-gradient(135deg, #5a00b3, #7700e6);
+  color: white;
+}
+
+.btn-entrar {
+  background: linear-gradient(135deg, #ff6600, #ff8833);
+  color: white;
+  margin-top: 15px;
+}
+
+.btn-registrarse:hover {
+  background: linear-gradient(135deg, #7700e6, #9933ff);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(90, 0, 179, 0.4);
+}
+
+.btn-entrar:hover {
+  background: linear-gradient(135deg, #e55a00, #ff6600);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.4);
+}
+
+.textfield-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.textfield-row .textfield {
+  flex: 1;
+}
+
+.textfield-row .textfield input {
+  width: 100%;
+}
+
+#envfto input::placeholder {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Mobile - Telas pequenas */
+@media (max-width: 768px) {
+  .main-login {
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 80px 15px 30px;
+    gap: 20px;
+  }
+
+  .left-login,
+  .right-login {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 500px;
+    padding: 30px 20px;
+    margin: 0 !important;
+    border-radius: 30px;
+  }
+
+  .left-login {
+    margin-top: 20px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .right-login {
+    margin-left: 0 !important;
+    margin-top: -30px !important;
+  }
+
+  .left-login h1 {
+    font-size: 24px;
+    margin: 0 0 20px 0;
+    text-align: center;
+  }
+
+  .btns-logins {
+    align-items: center;
+  }
+
+  .btns-logins button {
+    font-size: 15px;
+    padding: 12px 16px;
+    max-width: 100%;
+  }
+
+  .card-login {
+    padding: 0;
+  }
+
+  .card-login h1 {
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .textfield {
+    margin-bottom: 15px;
+  }
+
+  .textfield label {
+    font-size: 13px;
+  }
+
+  .textfield input {
+    font-size: 14px;
+    padding: 12px 16px;
+  }
+
+  .textfield-row {
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 0;
+  }
+
+  .textfield-row .textfield {
+    margin-bottom: 15px;
+  }
+
+  .btn-entrar,
+  .btn-registrarse {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  header {
+    width: 80%;
+    min-width: 180px;
+    padding: 12px 3%;
+  }
+}
+
+/* Tablet - Telas intermediárias */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .main-login {
+    padding: 100px 30px 30px;
+  }
+
+  .left-login,
+  .right-login {
+    max-width: 420px;
+    height: 570px;
+  }
+
+  .right-login {
+    margin-left: -50px;
+  }
+
+  .left-login h1 {
+    font-size: 30px;
+  }
+
+  .btns-logins button {
+    font-size: 16px;
+  }
+
+  .card-login h1 {
+    font-size: 24px;
+  }
+
+  .textfield input {
+    font-size: 15px;
+  }
+
+  .btn-entrar,
+  .btn-registrarse {
+    font-size: 17px;
+  }
+}
+
+/* Desktop - Telas médias */
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+  .left-login,
+  .right-login {
+    max-width: 480px;
+    height: 600px;
+  }
+
+  .right-login {
+    margin-left: -60px;
+  }
+
+  .left-login h1 {
+    font-size: 32px;
+  }
+
+  .card-login h1 {
+    font-size: 26px;
+  }
+}
+
+/* Desktop - Telas grandes */
+@media (min-width: 1441px) and (max-width: 1919px) {
+
+  .left-login,
+  .right-login {
+    max-width: 550px;
+    height: 630px;
+  }
+
+  .right-login {
+    margin-left: -70px;
+  }
+
+  .left-login h1 {
+    font-size: 36px;
+  }
+
+  .card-login h1 {
+    font-size: 30px;
+  }
+
+  .textfield input {
+    font-size: 17px;
+    padding: 15px 20px;
+  }
+
+  .btn-entrar,
+  .btn-registrarse {
+    font-size: 19px;
+    padding: 15px;
+  }
+}
+
+/* Desktop - Telas extra grandes */
+@media (min-width: 1920px) {
+  .main-login {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  .left-login,
+  .right-login {
+    max-width: 600px;
+    height: 700px;
+    padding: 50px 40px;
+  }
+
+  .right-login {
+    margin-left: -80px;
+  }
+
+  .left-login h1 {
+    font-size: 42px;
+    margin-bottom: 25px;
+  }
+
+  .btns-logins button {
+    font-size: 20px;
+    padding: 18px 24px;
+  }
+
+  .card-login h1 {
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+
+  .textfield label {
+    font-size: 16px;
+  }
+
+  .textfield input {
+    font-size: 18px;
+    padding: 16px 20px;
+  }
+
+  .btn-entrar,
+  .btn-registrarse {
+    font-size: 20px;
+    padding: 16px;
+  }
+}

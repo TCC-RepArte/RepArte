@@ -1,0 +1,699 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.hammersmith-one-regular {
+  font-family: "Hammersmith One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  background: linear-gradient(to right, #4603bb, #331560, #a24807e3, #ff6a00),
+  linear-gradient(to top, #000 0%, #000000 65%, transparent 100%);
+  background-blend-mode: overlay;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+  padding-top: 0;
+}
+
+body::before {
+  content: none;
+}
+
+#bg-fixo {
+  display: none;
+}
+
+.flex {
+  display: flex;
+}
+
+.interface {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+header {
+  height: 80px;
+  background: #130922;
+  border-radius: 24px;
+  box-shadow: 0 4px 32px #000a;
+  padding: 18px 4%;
+  margin: 12px 2% 0 2%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 96%;
+  max-width: 96vw;
+}
+
+header .logo img{
+      width: 15vw;
+  margin-left: 5%;
+  flex: 1;
+}
+
+header > .interface {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+header nav.menu {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  margin-left: 80px;
+}
+
+header nav.menu ul {
+  list-style-type: none;
+  display: flex;
+}
+
+header nav.menu ul li {
+  display: inline-block;
+  padding: 0 20px;
+}
+
+/*Menu mobile*/
+.btn-abrir-menu{
+  position: fixed;
+  top: 10px;;
+  right: 10px;
+  display: none;
+}
+.btn-abrir-menu i{
+  color: #160b2e;
+  font-size: 60px;
+  
+}
+.menu-mobile{
+  background-color: #160b2e;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 99999 ;
+  width: 0%;
+  overflow: hidden;
+}
+
+.menu-mobile.abrir-menu{
+  width: 70%;
+  transition: .2s;
+}
+
+.menu-mobile.abrir-menu ~ .overlay-menu{
+  display: block;
+}
+
+.menu-mobile .btn-fechar{
+  padding: 20px 5%;
+}
+
+.menu-mobile .btn-fechar i{
+  color: #ee4300;
+  font-size: 50px;
+}
+
+.menu-mobile nav ul{
+  text-align: right;
+  text-decoration: none;
+}
+.menu-mobile nav ul li{
+  padding: 20px 4%;
+}
+.menu-mobile nav ul li a{
+  color: white;
+  font-size: 20px;
+  font-weight: 300;
+  padding: 30px 2%;
+  text-decoration: none;
+  top: 20px;
+  display: block;
+}
+.menu-mobile nav ul li a:hover{
+  background-color: #ee4300;
+}
+.overlay-menu{
+  background-color: #0000004e;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 88888;
+  display: none;
+}
+
+header a {
+  font-family: "Hammersmith One", sans-serif;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  display: inline-block;
+  transition: .1s;
+}
+
+header a:hover {
+  color: #ee4300;
+  transform: scale(1.05);
+}
+
+header .menu ul li a {
+  border: 2px solid #fff;
+  border-radius: 12px;
+  padding: 8px 24px;
+  color: #fff;
+  background: transparent;
+  font-weight: 600;
+  margin: 0 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+header .menu ul li a:hover {
+  background: #ff6600;
+  color: #fff;
+  border-color: #ff6600;
+}
+
+header .btn-Login {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.btn-login-destaque button {
+  background: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 10px 32px;
+  box-shadow: 0 2px 8px #0006;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  display: block;
+}
+
+.btn-login-destaque button:hover {
+  background: #ff7f2a;
+}
+
+.btn-cadastro-simples button {
+  background: #181828;
+  color: #ff6600;
+  border: 2px solid #ff6600;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 10px 32px;
+  box-shadow: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  display: block;
+}
+
+.btn-cadastro-simples button:hover {
+  background: #23233a;
+  color: #fff;
+  border-color: #ff6600;
+}
+
+section.topo-do-site {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 4%;
+  background-size: cover;
+}
+
+section.topo-do-site .flex {
+  align-items: center;
+  justify-content: center;
+  gap: 90px;
+}
+
+.topo-do-site h1 {
+  color: #fff;
+  font-size: 3.2rem;
+  line-height: 1.15;
+  font-family: 'Hammersmith One', sans-serif;
+  font-weight: 900;
+  margin-bottom: 18px;
+}
+
+.topo-do-site h1 span {
+  color: #ee4300;
+  font-family: "Hammersmith One", sans-serif;
+}
+
+.topo-do-site p {
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 25px 0 50px 0;
+  font-family: 'Optima', sans-serif;
+  font-weight: 500;
+  max-width: 500px;
+}
+
+.destaque {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.search-box-custom {
+  background: #2b2146;
+  border-radius: 22px;
+  height: 45px;
+  width: 500px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.search-box-custom:focus-within {
+  background: #3d2a5f;
+  box-shadow: 0 0 0 2px #ff6600;
+}
+
+.search-icon {
+  color: #ff6600;
+  font-size: 22px;
+  margin-right: 10px;
+}
+
+.search-text {
+  color: white;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  width: 100%;
+  font-family: 'Hammersmith One', sans-serif;
+}
+
+.search-text::placeholder {
+  color: #8a8a8a;
+  font-style: italic;
+}
+
+.carrossel-obra {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: 80px;
+}
+
+.seta {
+  background: #181828;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 48px;
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+  box-shadow: 0 2px 12px #000a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.seta:hover {
+  background: #ff6600;
+  color: #fff;
+}
+
+.img-obra-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-obra {
+  border: 8px solid #ff6600;
+  border-radius: 12px;
+  width: 270px;
+  box-shadow: 0 4px 32px #000a;
+}
+
+.img-obra-container .tag-flutuante {
+  opacity: 0;
+  transform: translateY(10px) scale(0.95);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+}
+
+.img-obra-container:hover .tag-flutuante {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.tag-flutuante {
+  position: absolute;
+  background: #ff6600;
+  color: #fff;
+  font-size: 15px;
+  font-family: 'Hammersmith One', sans-serif;
+  padding: 7px 22px;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px #0007;
+  z-index: 2;
+  white-space: nowrap;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  filter: drop-shadow(0 2px 8px #0006);
+}
+
+.tag1 {
+  top: -22px;
+  left: -22px;
+  transform: none;
+}
+
+.tag2 {
+  bottom: -22px;
+  left: -22px;
+  transform: none;
+}
+
+.tag3 {
+  top: 50%;
+  right: -22px;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 900px) {
+  .flex {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .carrossel-obra {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  header {
+    width: 98vw;
+    max-width: 98vw;
+    margin: 12px 1vw 0 1vw;
+    padding: 12px 2vw;
+  }
+
+  header > .interface {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  header nav {
+    justify-content: center;
+  }
+
+  header .btn-Login {
+    justify-content: center;
+  }
+}
+
+.sobre-nos {
+  background: #000000;
+  margin-top: 0;
+  padding: 56px 0 64px 0;
+  border-radius: 0;
+  box-shadow: none;
+  scroll-margin-top: 100px; /* Para compensar o header fixo */
+}
+
+.sobre-nos .interface {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.sobre-nos h2 {
+  color: #ff6600;
+  font-size: 2.6rem;
+  font-family: 'Hammersmith One', sans-serif;
+  font-weight: 900;
+  margin-bottom: 32px;
+}
+
+.sobre-nos p {
+  color: #fff;
+  font-size: 1.18rem;
+  line-height: 1.7;
+  font-family: 'Hammersmith One', sans-serif;
+  font-weight: 400;
+  text-align: center;
+}
+
+.sobre-nos b {
+  color: #ff6600;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .sobre-nos .interface {
+    padding: 0 8px;
+  }
+
+  .sobre-nos h2 {
+    font-size: 2rem;
+  }
+}
+
+.btn-social button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background-color: #333062;
+  font-size: 22px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: .1s;
+}
+
+footer {
+  padding: 30px 4%;
+  background-color: #160b2e;
+}
+
+footer .line-footer p a {
+  color: white;
+  align-items: center;
+  text-decoration: none;
+}
+
+footer .flex {
+  justify-content: space-between;
+}
+
+footer .line-footer {
+  padding: 8px 0;
+}
+
+@media (max-width: 600px) {
+  .carrossel-obra {
+    flex-direction: column;
+    gap: 16px;
+    margin-left: 0;
+  }
+
+  .img-obra {
+    width: 200px;
+  }
+
+  .seta {
+    font-size: 36px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+.search-box-custom {
+  width: 100%;
+  max-width: 500px;
+}
+
+/*telas pequenas*/
+@media (max-width: 980px) {
+   header {
+    width: 70%;
+    max-width: 80%;
+    background: none;
+    box-shadow: none;
+  }
+  header .logo img {
+  width: 50vw;
+  margin-left: 20%;
+  flex: 1;
+}
+  .interface .menu {
+    display: none;
+  }
+  .logo{
+    margin: 40px;
+    justify-content: left;
+  }
+  .btn-abrir-menu{
+    display: block;
+}
+  .btn-login-destaque button,
+  .btn-cadastro-simples button {
+    display: none;
+  }
+
+  .tag1, .tag2, .tag3 {
+    font-size: 12px;
+    padding: 5px 16px;
+  }
+
+   footer .flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .btn-social {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .topo-do-site h1 {
+  padding: 40px;
+  margin-left: 0px;
+  font-size: 40px;
+  justify-content: left;
+  text-align: justify;
+}
+.sobre-nos h2{
+  font-size: 40px;
+  text-align: center;
+}
+.topo-do-site p {
+  font-size: 20px;
+  text-align: justify;
+}
+}
+
+/*Telas grandes*/
+@media (min-width: 1600px) {
+
+   header {
+    width: 100%;
+    height: 8%;
+    max-width: 96%;
+  }
+  header nav ul li{
+  max-width: 400%;
+  display: inline block;
+  padding: 20px 50px;
+  width: 100%;
+  height: 100px;
+  font-size: 20px;
+  align-items: center;
+  }
+  .menu ul{
+    gap: 20px;
+    justify-content: center;
+    margin-top: 42px;
+  }
+  .menu ul li{
+    font-size: 25px;
+    padding: 15px 4%;
+  }
+  .menu ul li a{
+    width: 180px;
+  }
+
+  .seta {
+    font-size: 70px;
+    width: 70px;
+    height: 60px;
+  }
+  .btn-Login{
+  padding: 10px 32px
+  }
+  .btn-Login a{
+    justify-content: left;
+  }
+
+  .btn-login-destaque button,
+  .btn-cadastro-simples button {
+    padding: 20px 50px;
+    font-size: 20px;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+    .topo-do-site h1 {
+  font-size: 70px;
+  text-align: justify;
+}
+.sobre-nos h2{
+  font-size: 70px;
+  text-align: center;
+}
+.topo-do-site p {
+  font-size: 30px;
+  text-align: justify;
+}
+.sobre-nos p{
+  font-size: 30px;
+  text-align: center;
+}
+
+   .btn-social {
+    display: flex;
+    justify-content:  right;
+    flex-wrap: wrap;
+    font-size: 90%;
+  }
+
+  .img-obra{
+  max-width: 100%;
+  width: 500px;
+  height: auto;
+  }
+  .tag-flutuante{
+    max-width: 100%;
+    font-size: 25px;
+
+  }
+  .search-box-custom, .search-box-custom input {
+  width: 620px;
+  height: 60px;
+  max-width: 500px;
+  font-size: 20px;
+}
+
+}
