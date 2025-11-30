@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Perfil — RepArte</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../front-end/perfildeterceiros.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="topbar">
+      <div class="logo">Rep<span class="accent">Arte</span></div>
+
+    </div>
+
+    <!-- TEMPLATE DO PERFIL (visível por enquanto) -->
+    <section id="profile-template" class="profile-card">
+
+      <header class="profile-header">
+        <div class="cover" role="img" aria-label="capa do usuário"></div>
+        <div class="profile-main">
+          <div class="avatar-wrap">
+            <div class="avatar" id="avatar">IMG</div>
+          </div>
+
+          <div class="info">
+            <div class="name-row">
+              <!-- nome (trocar por PHP: <?= $usuario['nome'] ?> ) -->
+              <span class="display-name" id="profile-name">Nome do Usuário</span>
+
+              <div class="actions">
+                <button class="btn follow" id="follow-btn">Seguir</button>
+                <button class="btn ghost" id="chat-btn" title="Enviar mensagem">
+                  <i class="bi bi-chat-dots"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="counters">
+              <div class="count"><span class="num" id="followers-count">0</span> seguidores</div>
+              <div class="count"><span class="num" id="following-count">0</span> seguindo</div>
+            </div>
+
+            <p class="bio" id="profile-bio">Biografia do usuário aparece aqui</p>
+          </div>
+        </div>
+        <div class="tabs">
+          <div class="tab-list">
+            <div class="tab active" data-tab="postagens">Postagens</div>
+          </div>
+        </div>
+
+      </header>
+
+      <main>
+        <div class="tab-panels" id="tab-panels">
+          <div class="empty" id="no-posts">Nenhuma postagem ainda...</div>
+
+          <!-- Exemplo de postage, -->
+          <!--
+          <article class="post-card">
+            <div class="title">Título da postagem</div>
+            <div class="meta">2 dias atrás</div>
+            <p>Trecho da postagem...</p>
+          </article>
+          -->
+
+        </div>
+      </main>
+
+    </section>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const followBtn = document.getElementById('follow-btn');
+      followBtn.addEventListener('click', () => {
+        const following = followBtn.classList.toggle('following');
+        followBtn.textContent = following ? 'Seguindo' : 'Seguir';
+      });
+
+      const avatar = document.getElementById('avatar');
+      avatar.addEventListener('click', () => {
+      });
+    });
+  </script>
+
+</body>
+</html>
