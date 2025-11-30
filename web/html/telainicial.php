@@ -24,45 +24,56 @@ $posts = postagensFeitas();
 <body>
   <header>
     <div class="logo">
-      <a href="#"><img src="../imagens/logo.png" alt="Logo do site"></a>
+        <a href="#"><img src="../imagens/logo.png" alt="Logo do site"></a>
     </div>
 
     <div class="search-box">
-      <span class="search-icon">🔍</span>
-      <input type="text" class="search-text" placeholder="Procure uma obra...">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-text" placeholder="Procure uma obra...">
     </div>
 
     <div class="header-controls">
-      <a href="../back-end/php/logout.php" class="btn-logout">
-        <i class="fas fa-sign-out-alt"></i> Sair
-      </a>
+
+        <!-- Ícone de configurações -->
+        <a href="../front-end/configuracoes.php" class="btn-config">
+            <i class="fas fa-cog"></i>
+        </a>
+
+        <!-- Foto do usuário logado (CORRIGIDO) -->
+        <a href="../front-end/pagperfilusuario.php" class="btn-perfil"> 
+            <img class="foto-perfil-header" 
+                 src="<?= $perfil['foto'] ?>" 
+                 alt="Foto de perfil">
+        </a>
     </div>
-  </header>
+</header>
 
   <main class="main-container">
-    <section class="left">
-      <aside class="sidebar-left">
-        <a class="user-red">
-          <div class="user-principal">
-            <img src="<?= $perfil['caminho'] ?>" alt="Seu Perfil">
-            <strong><?php echo $perfil['nomexi']; ?></strong>
+
+      <section class="left">
+  <aside class="sidebar-left">
+
+      <h3 class="titulo-lista">Quem seguir</h3>
+
+      <div class="lista-usuarios"></div>
+
+      <!-- TEMPLATE OCULTO (não mexe) -->
+      <template id="usuario-template">
+          <div class="usuario-item">
+              <img class="usuario-foto" src="../imagens/padrao_usuario.png" alt="Foto de perfil">
+              <div class="usuario-info">
+                  <p class="usuario-nome">Nome de usuário</p>
+              </div>
+              <button class="usuario-seguir-btn">Seguir</button>
           </div>
-        </a>
-        <div class="user-list">
-          <div class="user-item"><img src="../imagens/usuario2.png"> Usuário 1</div>
-          <div class="user-item"><img src="../imagens/usuario1.png"> Usuário 2</div>
-          <div class="user-item"><img src="../imagens/usuario7.png"> Usuário 3</div>
-          <div class="user-item"><img src="../imagens/usuario8.png"> Usuário 4</div>
-          <div class="user-item"><img src="../imagens/usuario9.png"> Usuário 5</div>
-          <div class="user-item"><img src="../imagens/usuario10.png"> Usuário 6</div>
-          <div class="user-item"><img src="../imagens/usuario11.png"> Usuário 7</div>
-          <div class="user-item"><img src="../imagens/usuario12.png"> Usuário 8</div>
-          <div class="user-item"><img src="../imagens/usuario13.jpg"> Usuário 9</div>
-          <div class="user-item"><img src="../imagens/usuario14.jpg"> Usuário 10</div>
-          <div class="user-item"><img src="../imagens/usuario15.png"> Usuário 11</div>
-        </div>
-      </aside>
-    </section>
+      </template>
+
+  </aside>
+</section>
+
+  </aside>
+</section>
+     
 
     <section class="feed">
       <div class="create-post">
@@ -89,6 +100,7 @@ $posts = postagensFeitas();
           </div>
         </form>
       </div>
+
       <?php if (!empty($posts)): ?>
         <?php foreach ($posts as $post): ?>
           <div class="post">
@@ -97,13 +109,35 @@ $posts = postagensFeitas();
                 <img src="<?= $post['foto']?>" alt="Foto do Usuário V" class="post-user-photo" />
                 <h3><?= $post['usuario'] ?></h3>
               </div>
+
               <div style="display: flex; align-items: center; gap: 10px;">
                 <a href="postagem.php?id=<?= $post['id'] ?>" class="fullscreen-icon" title="Ver postagem completa">
                   <i class="fas fa-expand"></i>
                 </a>
-                <i class="post-set fa-solid fa-bars"></i>
+
+                <!-- MENU DE OPÇÕES -->
+                <div class="post-menu">
+                  <button class="menu-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                  </button>
+
+                  <div class="menu-options oculto">
+                    <button class="menu-item" data-action="denunciar" data-id="<?= $post['id'] ?>">
+                      Denunciar postagem
+                    </button>
+                    <hr>
+                    <button class="menu-item" data-action="favoritar" data-id="<?= $post['id'] ?>">
+                      Favoritar
+                    </button>
+                    <hr>
+                    <button class="menu-item" data-action="copiar" data-id="<?= $post['id'] ?>">
+                      Copiar link
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
+
             <div class="post-body">
               <img id="img-post" id-obra="<?= $post['id_obra'] ?>" tipo-obra="<?= $post['obra_tipo'] ?>" src="" alt="Imagem post">
               <div class="post-content">
@@ -116,11 +150,13 @@ $posts = postagensFeitas();
                 </div>
               </div>
             </div>
+
             <div class="post-buttons">
               <div class="comment-button">
                 <i class="fas fa-comment-dots"></i>
               </div>
-                            <div class="vote-buttons" data-id="<?= $post['id'] ?>">
+
+              <div class="vote-buttons" data-id="<?= $post['id'] ?>">
                 <button class="like-btn">
                 <i class="fas fa-arrow-up"></i>
                   <span class="like-text">Curtir</span>
@@ -133,17 +169,16 @@ $posts = postagensFeitas();
                 <span class="dislike-count">0</span>
               </div>
             </div>
+
           </div>
         <?php endforeach; ?>
       <?php endif; ?>
     </section>
+
     <section class="right">
       <aside class="sidebar-right">
-        <div class="top-icons">
-          <i class="fas fa-bell"></i>
-          <i class="fas fa-cog"></i>
-        </div>
-        <h5 id="h">hashtags</h5>
+    
+        <h3 id="h">hashtags</h3>
         <div class="hashtags">
           <a href="#" class="tag">#HistóriadoBrasil</a>
           <a href="#" class="tag">#1984</a>
@@ -152,24 +187,60 @@ $posts = postagensFeitas();
           <a href="#" class="tag">#Neofascismo</a>
           <a href="#" class="tag">#Religião</a>
         </div>
+
         <h5 id="ob">Obras Populares:</h5>
         <div class="carousel-wrapper">
-          <button class="carousel-btn left">&#10094;</button>
           <div class="carousel" id="carousel">
             <img src="../imagens/central.jpg" alt="Imagem 1">
             <img src="../imagens/vento.jpg" alt="Imagem 2">
             <img src="../imagens/tale.jpg" alt="Imagem 3">
           </div>
-          <button class="carousel-btn right">&#10095;</button>
         </div>
-      </aside>
-    </section>
   </main>
+
+  
+<script>
+// Aqui vem lista que vai do PHP.
+const usuariosSugeridos = window.usuariosSugeridos || [];
+
+// Elementos
+const lista = document.querySelector(".lista-usuarios");
+const template = document.querySelector("#usuario-template");
+
+lista.innerHTML = "";
+
+// Se não houver usuários aparece 3 placeholders
+const quantidade = usuariosSugeridos.length > 0 ? usuariosSugeridos.length : 3;
+
+for (let i = 0; i < quantidade; i++) {
+    const clone = template.content.cloneNode(true);
+
+    const usuario = usuariosSugeridos[i];
+
+    clone.querySelector(".usuario-foto").src = usuario?.foto || "../imagens/padrao_usuario.png";
+    clone.querySelector(".usuario-nome").textContent = usuario?.nome || "Nome de usuário";
+
+    lista.appendChild(clone);
+}
+</script>
+
+<script>
+ document.addEventListener("click", function(event) {
+  const toggle = event.target.closest(".menu-toggle");
+  const postMenu = event.target.closest(".post-menu");
+
+  // Fechar todos os menus
+  document.querySelectorAll(".menu-options").forEach(m => m.classList.add("oculto"));
+
+  // Se clicou no botão de menu, abrir só o dele
+  if (toggle && postMenu) {
+    postMenu.querySelector(".menu-options").classList.toggle("oculto");
+  }
+});
+</script>
 
   <script src="../back-end/js/telainicial.js"></script>
   <script src="../back-end/js/apis-obras.js"></script>
 
-
 </body>
-
 </html>

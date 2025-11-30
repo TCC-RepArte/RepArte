@@ -64,84 +64,89 @@ header .logo img {
   padding: 1rem;
 }
 
+/* ==== SIDEBAR ESQUERDA (TWITTER STYLE) ==== */
+
+.left {
+    width: 260px;
+    padding: 10px;
+}
+
 .sidebar-left {
-  height: 580px;
-  background-color: #0f0e0f;
-  border-radius: 16px;
-  padding: 0;
-  overflow-y: auto;
-  position: sticky;
-  top: 100px;
-  display: flex;
-  flex-direction: column; 
-  margin-left: 10px;
-  margin-top: 10px;
+    padding: 15px;
+    border-radius: 20px;
+    height: 100%;
+    overflow-y: auto;
 }
 
-.left{
-
-  padding-right: 1rem;
-
+.titulo-lista {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 700;
 }
 
-.sidebar-left::-webkit-scrollbar {
-  height: 6px;
-  width: 6px;
-}
-
-.sidebar-left::-webkit-scrollbar-thumb {
-  background: #444444;
-  border-radius: 10px;
-}
-
-
-.user-principal {
-  background: #292829;
-  padding: 22px 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  border-radius: 20px;
-  border-bottom: 2px solid #5d5d5d;
-}
-
-.user-principal img {
-   width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.user-list {
+.lista-usuarios {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  width: 100%;
 }
 
-.user-item {
-  background-color: #171617;
-  padding: 10px;
-  border-radius: 10px;
+/* Cada usuário */
+.usuario-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  transition: background 0.3s;
-  cursor: pointer;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e6e6e6; /* linha estilo Twitter */
+  background: transparent; /* remove fundo cinza */
 }
 
-.user-item img {
-  width: 36px;
-  height: 36px;
+.usuario-seguir-btn {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 40px;
+  border: 1px solid #2f0351;
+  background: transparent;
+  color: #f7fafb;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.usuario-seguir-btn:hover {
+  background: #1f0285;
+  color: #fff;
+}
+
+.usuario-seguir-btn:active {
+  transform: scale(0.96);
+}
+
+.usuario-item:last-child {
+  border-bottom: none;
+}
+
+/* Foto redonda */
+.usuario-foto {
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   object-fit: cover;
+  background: #1a1919; 
 }
 
-.user-item:hover {
-  background-color: #512062;
+/* Nome */
+.usuario-nome {
+  font-size: 15px;
+  color: #0F1419;
+  font-weight: 500;
 }
+
+/* Quando não houver usuários, aparece o “placeholder” */
+.placeholder {
+  color: #536471;
+}
+
 
 .feed {
   position: relative;
@@ -334,6 +339,16 @@ header .logo img {
   margin-bottom: 1rem;
 }
 
+.btn-config i {
+    font-size: 1.55rem;
+    color: #e0d4ff; /* roxo clarinho discreto */
+    transition: 0.2s ease;}
+
+    .btn-config i:hover {
+    transform: rotate(20deg);
+    color: #ff6b0a; /* acento laranja suave */
+}
+
 .hashtags {
   display: flex;
   flex-wrap: wrap;
@@ -518,8 +533,28 @@ header {
 
 .header-controls {
   display: flex;
-  align-items: center;
-  margin-right: 20px;
+    align-items: center;
+    gap: 22px; /* Espaço entre icone e foto */
+    margin-right: 30px; /* Afasta do lado direito */
+}
+
+.btn-perfil {
+    display: flex;
+    align-items: center;
+}
+
+.foto-perfil-header {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff6b0a;
+    transition: 0.25s ease;
+}
+
+.foto-perfil-header:hover {
+    transform: scale(1.06);
+    border-color: #ffffff;
 }
 
 /* Design das postagens - Nova estrutura */
@@ -695,7 +730,7 @@ header {
 /* Estilos para truncamento de texto */
 .post-text-truncated {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp:3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -852,6 +887,56 @@ header {
   margin: 0;
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+
+.post-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+}
+
+.menu-options {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: #171616;
+  border: 1px solid #e58c07;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 6px 0;
+  width: 160px;
+  z-index: 20;
+}
+
+.menu-options.oculto {
+  display: none;
+}
+
+.menu-item {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 10px 14px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.menu-item:hover {
+  background: #3f2254;
+}
+
+.post-menu hr {
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid #e6e6e6;
 }
 
 /* Seção de comentários */
@@ -1383,4 +1468,188 @@ header {
 
 .post-actions button[type="submit"]:hover {
   background: #e55a00;
+}
+
+/* ================================
+      RESPONSIVIDADE – MOBILE
+   ================================ */
+
+@media (max-width: 1024px) {
+
+  /* Ajuste da área principal */
+  .main-container {
+    grid-template-columns: 0.8fr 2fr 1fr;
+    gap: 15px;
+  }
+
+  header {
+    padding: 0 15px;
+  }
+
+  .search-box {
+    width: 220px;
+  }
+
+  .foto-perfil-header {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 850px) {
+
+  /* Some com a coluna esquerda */
+  .left {
+    display: none;
+  }
+
+  .main-container {
+    grid-template-columns: 1fr 0.9fr;
+    gap: 15px;
+  }
+
+  .search-box {
+    width: 200px;
+  }
+
+  header {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 700px) {
+
+  /* Some com a coluna direita */
+  .right {
+    display: none;
+  }
+
+  .main-container {
+    grid-template-columns: 1fr;
+    padding: 0 10px;
+  }
+
+  header {
+    padding: 0 15px;
+    gap: 10px;
+  }
+
+  .header-controls {
+    gap: 10px;
+  }
+
+  .btn-config i {
+    font-size: 20px;
+  }
+
+  .foto-perfil-header {
+    width: 38px;
+    height: 38px;
+  }
+
+  .search-box {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 510px) {
+
+  /* Header mais compacto */
+  header {
+    padding: 0 12px;
+  }
+
+  .logo img {
+    width: 90px;
+  }
+
+  .search-box {
+    height: 36px;
+  }
+
+  .search-text {
+    font-size: 14px;
+  }
+
+  /* Caixa de criar post */
+  .create-post {
+    padding: 12px;
+  }
+
+  textarea.post {
+    font-size: 14px;
+  }
+
+  /* Postagens ajustadas */
+  .post {
+    padding: 12px;
+  }
+
+  .post-user-photo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .post-user h3 {
+    font-size: 15px;
+  }
+
+  /* Menu da postagem */
+  .menu-options {
+    width: 150px;
+    right: 0;
+  }
+
+  .menu-item {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  /* Botões de votação */
+  .vote-buttons button span {
+    display: none; /* só ícones no mobile */
+  }
+
+  .vote-buttons button i {
+    font-size: 20px;
+  }
+
+  .like-count,
+  .dislike-count {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 380px) {
+
+  header {
+    padding: 0 8px;
+  }
+
+  .logo img {
+    width: 80px;
+  }
+
+  .search-box {
+    max-width: 260px;
+  }
+
+  .create-post {
+    padding: 10px;
+  }
+
+  textarea.post {
+    font-size: 13px;
+  }
+
+  .post-buttons {
+    gap: 15px;
+  }
+
+  /* Carrossel popular */
+  .carousel img {
+    width: 85px;
+    height: 110px;
+  }
 }
