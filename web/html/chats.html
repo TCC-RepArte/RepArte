@@ -30,6 +30,34 @@
             <i class="bi bi-person-circle"></i> Terceiros
         </button>
 
+         <button class="chat-btn">
+            <i class="bi bi-person-circle"></i> Terceiros
+        </button>
+
+         <button class="chat-btn">
+            <i class="bi bi-person-circle"></i> Terceiros
+        </button>
+
+         <button class="chat-btn">
+            <i class="bi bi-person-circle"></i> Terceiros
+        </button>
+
+         <button class="chat-btn">
+            <i class="bi bi-person-circle"></i> Terceiros
+        </button>
+
+         <button class="chat-btn">
+            <i class="bi bi-person-circle"></i> Terceiros
+        </button>
+
+         <button class="chat-btn">
+            <i class="bi bi-person-circle"></i> Terceiros
+        </button>
+
+         <button class="chat-btn">
+            <i class="bi bi-person-circle"></i> Terceiros
+        </button>
+
     </div>
 </div>
 
@@ -37,7 +65,9 @@
 
 <div class="right-panel">
 
+
     <div class="header-chat">
+        <button class="menu-mobile-btn"><i class="bi bi-list"></i></button>
         <i class="bi bi-person-circle"></i>
         <span>Fulano</span>
     </div>
@@ -67,5 +97,18 @@
     </div>
 
 </div>
+<script>
+document.querySelector(".menu-mobile-btn").addEventListener("click", () => {
+    document.querySelector(".left-panel").classList.toggle("open");
+});
+
+// fecha o menu qnd clica numa conversa
+document.querySelectorAll(".chat-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelector(".left-panel").classList.remove("open");
+    });
+});
+</script>
+
 </body>
 </html>
