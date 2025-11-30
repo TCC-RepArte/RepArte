@@ -1,7 +1,9 @@
 <?php
 session_start();
+
 require_once 'php/config.php';
 require_once 'php/perfil_dados.php';
+include 'vlibras_include.php';
 
 if (!isset($_SESSION['id'])) {
     header("Location: login1.php");

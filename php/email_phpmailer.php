@@ -10,7 +10,7 @@ define('EMAIL_PORT', 587);
 define('EMAIL_SMTP_SECURE', 'tls');
 
 define('EMAIL_USERNAME', 'apikey'); // NÃO MUDE! Deve ser LITERAL "apikey"
-define('EMAIL_PASSWORD', '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'); // Sua API Key
+define('EMAIL_PASSWORD', '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'); // Sua API Key
 define('EMAIL_FROM', 'testereparte@gmail.com'); // Pode ser qualquer email
 define('EMAIL_FROM_NAME', 'RepArte Teste');
 

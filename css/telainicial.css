@@ -78,7 +78,7 @@ header .logo img {
 
 .sidebar-left {
   height: 580px;
-  background: linear-gradient(to bottom, #1a0b2e, #0f0e0f);
+  background: linear-gradient(to bottom, #1a0b2e, #0f0e0f 40%);
   border-radius: 16px;
   padding: 15px;
   overflow-y: auto;
@@ -1543,7 +1543,7 @@ header {
 
 .postagem-completa {
   max-width: 900px;
-  margin: 100px auto 40px;
+  margin: 20px auto 40px;
   padding: 0 20px;
 }
 
@@ -1770,7 +1770,7 @@ header {
 
 .obra-completa {
   max-width: 1000px;
-  margin: 100px auto 40px;
+  margin: 20px auto 40px;
   padding: 0 20px;
 }
 
@@ -2585,4 +2585,57 @@ header {
 
 .cancelar-resposta:hover {
   background: #888;
+}
+
+/* Container do ícone de opções para posicionamento relativo */
+.post-set-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* O balãozinho (menu dropdown) */
+.post-options-dropdown {
+  display: none;
+  /* Escondido por padrão */
+  position: absolute;
+  right: 0;
+  top: 100%;
+  /* Aparece logo abaixo do ícone */
+  background-color: #0f0e0f;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 5px 0;
+}
+
+/* Mostrar o menu quando passar o mouse no container */
+.post-set-container:hover .post-options-dropdown {
+  display: block;
+}
+
+/* Estilo dos links dentro do menu */
+.post-options-dropdown a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+/* Efeito hover nos itens do menu */
+.post-options-dropdown a:hover {
+  background-color: #f1f1f1;
+  color: #ff6600;
+  /* Cor laranja do tema */
+}
+
+/* Ícones dentro do menu para ficar bonitinho */
+.post-options-dropdown i {
+  margin-right: 8px;
+  width: 20px;
+  text-align: center;
 }

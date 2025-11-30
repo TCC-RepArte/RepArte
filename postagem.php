@@ -1,7 +1,9 @@
 <?php
 // Página para visualizar uma postagem específica
 session_start();
+
 require_once 'php/config.php';
+include 'vlibras_include.php';
 
 // Verifica se o ID da postagem foi fornecido
 if (!isset($_GET['id']) || empty($_GET['id'])) {

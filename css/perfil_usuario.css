@@ -9,7 +9,6 @@ body {
   background: linear-gradient(to right, #000000, #0d0419, #180730, #1a0637);
   min-height: 100vh;
   color: white;
-  padding-top: 100px;
 }
 
 header {
@@ -70,7 +69,7 @@ header .logo img {
   padding: 10px 20px;
   border-radius: 5px;
   text-decoration: none;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
@@ -80,7 +79,7 @@ header .logo img {
 .btn-logout:hover {
   background-color: #d32f2f;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .perfil-container {
@@ -410,4 +409,3 @@ header .logo img {
     padding: 8px 15px;
   }
 }
-

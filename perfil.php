@@ -33,6 +33,7 @@ header("Pragma: no-cache");
             border-radius: 8px;
             text-align: center;
         }
+
         .mensagem.sucesso {
             background-color: #d4edda;
             color: #155724;
@@ -59,15 +60,17 @@ header("Pragma: no-cache");
 
     <section>
         <div class="box">
-            <?php if(isset($_SESSION['erro_perfil'])): ?>
+            <?php if (isset($_SESSION['erro_perfil'])): ?>
                 <div class="mensagem erro">
-                    <?php echo $_SESSION['erro_perfil']; unset($_SESSION['erro_perfil']); ?>
+                    <?php echo $_SESSION['erro_perfil'];
+                    unset($_SESSION['erro_perfil']); ?>
                 </div>
             <?php endif; ?>
 
-            <?php if(isset($_SESSION['sucesso_perfil'])): ?>
+            <?php if (isset($_SESSION['sucesso_perfil'])): ?>
                 <div class="mensagem sucesso">
-                    <?php echo $_SESSION['sucesso_perfil']; unset($_SESSION['sucesso_perfil']); ?>
+                    <?php echo $_SESSION['sucesso_perfil'];
+                    unset($_SESSION['sucesso_perfil']); ?>
                 </div>
             <?php endif; ?>
 
@@ -75,7 +78,8 @@ header("Pragma: no-cache");
                 <div class="adc-img">
                     <button type="button" id="selft"><i id="ftperfil" class="bi bi-person-circle"><br>
                             <img id="imgselecionada" style="display: none;" src="" alt="">
-                            <input type="file" style="display: none;" id="envfoto" name="envft" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" /></i></button>
+                            <input type="file" style="display: none;" id="envfoto" name="envft"
+                                accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" /></i></button>
                 </div>
                 <div class="texto">
                     <div class="nomeexb">
@@ -128,7 +132,7 @@ header("Pragma: no-cache");
             if (file) {
                 // Validar se é uma imagem
                 const tiposPermitidos = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-                
+
                 if (!tiposPermitidos.includes(file.type)) {
                     alert('Por favor, selecione apenas arquivos de imagem (JPG, PNG, GIF ou WEBP)');
                     inpfoto.value = ''; // Limpar seleção

@@ -15,7 +15,7 @@ function criarLoadingPlaceholder(tipo = 'post-image') {
 
 // Função para determinar o tipo de imagem baseado no tipo de obra
 function determinarTipoImagem(tipoObra) {
-  switch(tipoObra) {
+  switch (tipoObra) {
     case 'musica':
       return 'square-size'; // 1:1 para músicas
     case 'filme':
@@ -35,7 +35,7 @@ async function carregarImagemComLoading(imgElement, obraId, tipoObra) {
   let loadingDiv = null;
   let loadingTimeout = null;
   let imageLoaded = false;
-  
+
   // Configura timeout para mostrar loading após 10 segundos
   loadingTimeout = setTimeout(() => {
     if (!imageLoaded) {
@@ -44,10 +44,10 @@ async function carregarImagemComLoading(imgElement, obraId, tipoObra) {
       imgElement.parentNode.appendChild(loadingDiv);
     }
   }, 10000); // 10 segundos
-  
+
   try {
     const obra = await obterDetalhesObra({ apiId: obraId, tipo: tipoObra });
-    
+
     // Quando a imagem carregar, remove o loading e cancela timeout
     imgElement.onload = () => {
       imageLoaded = true;
@@ -58,7 +58,7 @@ async function carregarImagemComLoading(imgElement, obraId, tipoObra) {
         loadingDiv.remove();
       }
     };
-    
+
     imgElement.onerror = () => {
       imageLoaded = true;
       if (loadingTimeout) {
@@ -68,10 +68,10 @@ async function carregarImagemComLoading(imgElement, obraId, tipoObra) {
         loadingDiv.remove();
       }
     };
-    
+
     imgElement.src = obra.imagem;
     imgElement.alt = obra.titulo;
-    
+
   } catch (error) {
     console.error('Erro ao carregar imagem:', error);
     imageLoaded = true;
@@ -120,7 +120,7 @@ async function carregarEstadoReacoes() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: postId })
       });
-      
+
       if (reacaoResponse.ok) {
         const reacaoData = await reacaoResponse.json();
         if (reacaoData.success && reacaoData.reacao) {
@@ -130,14 +130,14 @@ async function carregarEstadoReacoes() {
           estadosPosts[postId] = null;
         }
       }
-      
+
       // Carregar contadores de reações
       const contadorResponse = await fetch('php/contar_reacoes.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: postId })
       });
-      
+
       if (contadorResponse.ok) {
         const contadorData = await contadorResponse.json();
         if (contadorData.success) {
@@ -155,14 +155,14 @@ voteButtons.forEach(voteContainer => {
   const postId = voteContainer.dataset.id;
   const likeBtn = voteContainer.querySelector('.like-btn');
   const dislikeBtn = voteContainer.querySelector('.dislike-btn');
-  
+
   // Inicializar estado do post (será atualizado pelo carregarEstadoReacoes)
   estadosPosts[postId] = null;
-  
+
   // Event listener para curtir
   likeBtn.addEventListener('click', () => {
     const estadoAtual = estadosPosts[postId];
-    
+
     if (estadoAtual === 'like') {
       // Se já está curtido, remove a curtida
       estadosPosts[postId] = null;
@@ -170,15 +170,15 @@ voteButtons.forEach(voteContainer => {
       // Se não está curtido ou está descurtido, curte
       estadosPosts[postId] = 'like';
     }
-    
+
     atualizarBotoesPost(voteContainer, estadosPosts[postId]);
     enviarReacao(postId, estadosPosts[postId]);
   });
-  
+
   // Event listener para descurtir
   dislikeBtn.addEventListener('click', () => {
     const estadoAtual = estadosPosts[postId];
-    
+
     if (estadoAtual === 'dislike') {
       // Se já está descurtido, remove a descurtida
       estadosPosts[postId] = null;
@@ -186,11 +186,11 @@ voteButtons.forEach(voteContainer => {
       // Se não está descurtido ou está curtido, descurte
       estadosPosts[postId] = 'dislike';
     }
-    
+
     atualizarBotoesPost(voteContainer, estadosPosts[postId]);
     enviarReacao(postId, estadosPosts[postId]);
-                    });
-                });
+  });
+});
 
 // Função para atualizar a aparência dos botões baseado no estado
 function atualizarBotoesPost(voteContainer, estado) {
@@ -198,11 +198,11 @@ function atualizarBotoesPost(voteContainer, estado) {
   const dislikeBtn = voteContainer.querySelector('.dislike-btn');
   const likeText = voteContainer.querySelector('.like-text');
   const dislikeText = voteContainer.querySelector('.dislike-text');
-  
+
   // Remove classes ativas dos dois botões
   likeBtn.classList.remove('ativo');
   dislikeBtn.classList.remove('ativo');
-  
+
   // Aplicar estilos baseado no estado
   if (estado === 'like') {
     likeBtn.classList.add('ativo');
@@ -212,7 +212,7 @@ function atualizarBotoesPost(voteContainer, estado) {
     dislikeBtn.classList.add('ativo');
     dislikeText.textContent = 'Descurtido';
     likeText.textContent = 'Curtir';
-            } else {
+  } else {
     // Estado null - ambos desativados
     likeText.textContent = 'Curtir';
     dislikeText.textContent = 'Descurtir';
@@ -223,7 +223,7 @@ function atualizarBotoesPost(voteContainer, estado) {
 function atualizarContadores(voteContainer, likes, dislikes) {
   const likeCount = voteContainer.querySelector('.like-count');
   const dislikeCount = voteContainer.querySelector('.dislike-count');
-  
+
   if (likeCount) likeCount.textContent = likes;
   if (dislikeCount) dislikeCount.textContent = dislikes;
 }
@@ -231,19 +231,19 @@ function atualizarContadores(voteContainer, likes, dislikes) {
 // Função para enviar reação para o servidor
 async function enviarReacao(postId, estado) {
   let like = false, dislike = false;
-  
+
   if (estado === 'like') like = true;
   else if (estado === 'dislike') dislike = true;
-  
+
   try {
     const response = await fetch('php/reagir.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: postId, like: like, dislike: dislike })
     });
-    
+
     const data = await response.json();
-    
+
     if (!response.ok) {
       console.error('Erro na requisição:', response.status);
       alert('Erro ao processar reação. Tente novamente.');
@@ -260,12 +260,12 @@ async function enviarReacao(postId, estado) {
     console.error('Erro detalhado ao enviar reação:', error);
     console.error('Tipo do erro:', error.constructor.name);
     console.error('Mensagem:', error.message);
-    
+
     if (error.name === 'TypeError' && error.message.includes('fetch')) {
       alert('Erro de conexão: Não foi possível conectar ao servidor. Verifique se o WAMP está rodando.');
     } else if (error.name === 'SyntaxError') {
       alert('Erro: Resposta inválida do servidor. Verifique os logs.');
-        } else {
+    } else {
       alert('Erro: ' + error.message);
     }
   }
@@ -279,7 +279,7 @@ async function atualizarContadoresPost(postId) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: postId })
     });
-    
+
     if (response.ok) {
       const data = await response.json();
       if (data.success) {
@@ -300,73 +300,73 @@ async function atualizarContadoresPost(postId) {
 // Se o texto for muito longo, mostra apenas uma parte com botão "Ver mais..."
 function verificarTruncamentoTexto() {
   console.log('=== INICIANDO VERIFICAÇÃO DE TRUNCAMENTO ===');
-  
+
   const textContainers = document.querySelectorAll('.post-text-container');
   console.log('Encontrados', textContainers.length, 'containers de texto');
-  
+
   if (textContainers.length === 0) {
     console.log('❌ Nenhum container encontrado! Verificando se a página carregou...');
     console.log('Elementos .post encontrados:', document.querySelectorAll('.post').length);
     return;
   }
-  
+
   textContainers.forEach((container, index) => {
     console.log(`\n--- Container ${index} ---`);
     const textElement = container.querySelector('.post-text-truncated');
     const expandButton = container.querySelector('.expand-button');
-    
+
     console.log('Elemento de texto encontrado:', !!textElement);
     console.log('Botão expandir encontrado:', !!expandButton);
-    
+
     if (textElement && expandButton) {
       // Define um limite de caracteres para truncamento
       const limiteCaracteres = 200;
-      
+
       // Verifica se o texto já foi expandido pelo usuário
       const limiteAtual = parseInt(textElement.getAttribute('data-limite-atual') || '0');
       const foiExpandido = limiteAtual > limiteCaracteres;
-      
+
       // Se foi expandido pelo usuário, não re-truncar
       if (foiExpandido) {
         console.log(`ℹ️ Texto já foi expandido pelo usuário, mantendo estado atual`);
         return;
       }
-      
+
       // Obter texto original - se não existe, usar o atual
       let textoOriginalHTML = textElement.getAttribute('data-texto-original');
       if (!textoOriginalHTML) {
         textoOriginalHTML = textElement.innerHTML;
         textElement.setAttribute('data-texto-original', textoOriginalHTML);
       }
-      
+
       const textoOriginalTexto = textElement.textContent.trim();
-      
+
       console.log(`Texto original: "${textoOriginalTexto}"`);
       console.log(`Tamanho: ${textoOriginalTexto.length} caracteres`);
       console.log(`Limite: ${limiteCaracteres} caracteres`);
       console.log(`Limite atual: ${limiteAtual}, Foi expandido: ${foiExpandido}`);
-      
+
       // Verifica se precisa truncar por caracteres OU por largura
-      const precisaTruncar = textoOriginalTexto.length > limiteCaracteres || 
-                            verificarEstouroLargura(textElement);
-      
+      const precisaTruncar = textoOriginalTexto.length > limiteCaracteres ||
+        verificarEstouroLargura(textElement);
+
       if (precisaTruncar) {
         // Para textos com HTML, vamos usar uma abordagem mais simples
         // Criar um elemento temporário para trabalhar com o HTML
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = textoOriginalHTML;
-        
+
         // Obter o texto puro para truncamento
         const textoPuro = tempDiv.textContent || tempDiv.innerText || '';
         const textoTruncado = textoPuro.substring(0, limiteCaracteres) + '...';
-        
+
         // Se o HTML original tinha <br>, manter a estrutura
         if (textoOriginalHTML.includes('<br')) {
           // Criar HTML truncado mantendo algumas quebras de linha
           const linhas = textoOriginalHTML.split('<br');
           let textoTruncadoHTML = '';
           let contadorCaracteres = 0;
-          
+
           for (let i = 0; i < linhas.length && contadorCaracteres < limiteCaracteres; i++) {
             const linhaTexto = linhas[i].replace(/<[^>]*>/g, ''); // Remove outras tags
             if (contadorCaracteres + linhaTexto.length <= limiteCaracteres) {
@@ -378,63 +378,63 @@ function verificarTruncamentoTexto() {
               break;
             }
           }
-          
+
           textElement.innerHTML = textoTruncadoHTML;
         } else {
           // Texto simples, truncar normalmente
           textElement.innerHTML = textoTruncado.replace(/\n/g, '<br>');
         }
-        
+
         // Armazena o texto original no elemento
         textElement.setAttribute('data-texto-original', textoOriginalHTML);
         textElement.setAttribute('data-limite-atual', limiteCaracteres);
         expandButton.setAttribute('data-texto-original', textoOriginalHTML);
-        
+
         // Força a visibilidade do botão
         expandButton.style.display = 'inline-block';
         expandButton.style.visibility = 'visible';
         expandButton.style.opacity = '1';
         expandButton.classList.add('show');
-        
+
         // Configura o onclick do botão
         expandButton.onclick = () => expandirTexto(container.dataset.postId);
-        
+
         console.log(`✅ TRUNCADO: ${textoOriginalTexto.length} -> ${textElement.innerHTML.length} caracteres`);
         console.log(`Texto truncado: "${textElement.innerHTML}"`);
         console.log(`Botão expandir: display=${expandButton.style.display}, class=${expandButton.className}`);
+      } else {
+        // Se não precisa truncar, mas o botão não está visível, mostrar
+        if (textoOriginalTexto.length > limiteCaracteres || verificarEstouroLargura(textElement)) {
+          expandButton.style.display = 'inline-block';
+          expandButton.style.visibility = 'visible';
+          expandButton.style.opacity = '1';
+          expandButton.classList.add('show');
+          expandButton.onclick = () => expandirTexto(container.dataset.postId);
+
+          // Armazena o texto original
+          textElement.setAttribute('data-texto-original', textoOriginalHTML);
+          textElement.setAttribute('data-limite-atual', limiteCaracteres);
+          expandButton.setAttribute('data-texto-original', textoOriginalHTML);
+
+          console.log(`✅ Botão mostrado para texto que precisa truncar`);
         } else {
-          // Se não precisa truncar, mas o botão não está visível, mostrar
-          if (textoOriginalTexto.length > limiteCaracteres || verificarEstouroLargura(textElement)) {
-            expandButton.style.display = 'inline-block';
-            expandButton.style.visibility = 'visible';
-            expandButton.style.opacity = '1';
-            expandButton.classList.add('show');
-            expandButton.onclick = () => expandirTexto(container.dataset.postId);
-            
-            // Armazena o texto original
-            textElement.setAttribute('data-texto-original', textoOriginalHTML);
-            textElement.setAttribute('data-limite-atual', limiteCaracteres);
-            expandButton.setAttribute('data-texto-original', textoOriginalHTML);
-            
-            console.log(`✅ Botão mostrado para texto que precisa truncar`);
+          // Não esconder o botão se ele já está visível e tem onclick
+          if (expandButton.onclick && expandButton.classList.contains('show')) {
+            console.log(`ℹ️ Mantendo botão visível (já configurado)`);
           } else {
-            // Não esconder o botão se ele já está visível e tem onclick
-            if (expandButton.onclick && expandButton.classList.contains('show')) {
-              console.log(`ℹ️ Mantendo botão visível (já configurado)`);
-            } else {
-              expandButton.style.display = 'none';
-              expandButton.classList.remove('show');
-              console.log(`ℹ️ Não precisa truncar (${textoOriginalTexto.length} <= ${limiteCaracteres})`);
-            }
+            expandButton.style.display = 'none';
+            expandButton.classList.remove('show');
+            console.log(`ℹ️ Não precisa truncar (${textoOriginalTexto.length} <= ${limiteCaracteres})`);
           }
         }
+      }
     } else {
       console.log(`❌ Elementos não encontrados no container ${index}`);
       if (!textElement) console.log('  - Elemento .post-text-truncated não encontrado');
       if (!expandButton) console.log('  - Elemento .expand-button não encontrado');
     }
   });
-  
+
   console.log('=== FIM DA VERIFICAÇÃO ===\n');
 }
 
@@ -446,20 +446,20 @@ function verificarEstouroLargura(elemento) {
   tempElement.style.visibility = 'hidden';
   tempElement.style.whiteSpace = 'nowrap';
   tempElement.style.width = 'auto';
-  
+
   document.body.appendChild(tempElement);
-  
+
   const larguraTexto = tempElement.offsetWidth;
   const larguraContainer = elemento.parentElement.offsetWidth;
-  
+
   document.body.removeChild(tempElement);
-  
+
   const estourou = larguraTexto > larguraContainer;
-  
+
   if (estourou) {
     console.log(`⚠️ Texto estourou em largura: ${larguraTexto}px > ${larguraContainer}px`);
   }
-  
+
   return estourou;
 }
 
@@ -469,42 +469,42 @@ function verificarEstouroLargura(elemento) {
 function expandirTexto(postId) {
   console.log('=== EXPANDINDO TEXTO ===');
   console.log('Post ID:', postId);
-  
+
   const container = document.querySelector(`[data-post-id="${postId}"]`);
   if (!container) {
     console.error('❌ Container não encontrado para post', postId);
     return;
   }
-  
+
   const textElement = container.querySelector('.post-text-truncated');
   const expandButton = container.querySelector('.expand-button');
-  
+
   if (!textElement || !expandButton) {
     console.error('❌ Elementos não encontrados para post', postId);
     return;
   }
-  
+
   const textoOriginalHTML = textElement.getAttribute('data-texto-original') || expandButton.getAttribute('data-texto-original');
   const limiteAtual = parseInt(textElement.getAttribute('data-limite-atual') || '200');
-  
+
   console.log('Texto original HTML:', !!textoOriginalHTML);
   console.log('Limite atual:', limiteAtual);
-  
+
   if (!textoOriginalHTML) {
     console.error('❌ Texto original não encontrado para post', postId);
     return;
   }
-  
+
   // Obter texto puro do HTML original
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = textoOriginalHTML;
   const textoPuroOriginal = tempDiv.textContent || tempDiv.innerText || '';
   const novoLimite = limiteAtual + 100; // Aumenta 100 caracteres por vez
-  
+
   console.log('Texto puro original:', textoPuroOriginal.substring(0, 100) + '...');
   console.log('Tamanho original:', textoPuroOriginal.length);
   console.log('Novo limite:', novoLimite);
-  
+
   // Se o novo limite excede o texto original, mostra tudo
   if (novoLimite >= textoPuroOriginal.length) {
     textElement.innerHTML = textoOriginalHTML;
@@ -515,7 +515,7 @@ function expandirTexto(postId) {
   } else {
     // Expande progressivamente usando o texto original completo
     const textoTruncado = textoPuroOriginal.substring(0, novoLimite) + '...';
-    
+
     textElement.innerHTML = textoTruncado.replace(/\n/g, '<br>');
     textElement.setAttribute('data-limite-atual', novoLimite);
     expandButton.textContent = 'Ver mais...';
@@ -530,21 +530,21 @@ function contrairTexto(postId) {
   if (container) {
     const textElement = container.querySelector('.post-text-truncated');
     const expandButton = container.querySelector('.expand-button');
-    
+
     if (textElement && expandButton) {
       const textoOriginalHTML = textElement.getAttribute('data-texto-original') || expandButton.getAttribute('data-texto-original');
       if (textoOriginalHTML) {
         const limiteCaracteres = 200;
-        
+
         // Trunca o HTML original mantendo as tags <br>
         let textoTruncadoHTML = textoOriginalHTML;
-        
+
         // Se o HTML tem <br>, precisa truncar de forma inteligente
         if (textoOriginalHTML.includes('<br>')) {
           // Remove as tags <br> temporariamente para contar caracteres
           const textoLimpo = textoOriginalHTML.replace(/<br\s*\/?>/gi, '\n');
           const textoTruncadoLimpo = textoLimpo.substring(0, limiteCaracteres) + '...';
-          
+
           // Reconverte quebras de linha para <br>
           textoTruncadoHTML = textoTruncadoLimpo.replace(/\n/g, '<br>');
         } else {
@@ -553,7 +553,7 @@ function contrairTexto(postId) {
           const textoTruncadoTexto = textoOriginalTexto.substring(0, limiteCaracteres) + '...';
           textoTruncadoHTML = textoTruncadoTexto.replace(/\n/g, '<br>');
         }
-        
+
         textElement.innerHTML = textoTruncadoHTML;
         textElement.setAttribute('data-limite-atual', limiteCaracteres);
         expandButton.textContent = 'Ver mais...';
@@ -573,93 +573,93 @@ function contrairTexto(postId) {
 
 // Inicialização quando o DOM carrega
 // Executa todas as funções necessárias quando a página termina de carregar
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   console.log('DOM carregado - telainicial.js');
-  
+
   // Carregar imagens e estado das reações
   carregarImagens();
   carregarEstadoReacoes();
-  
+
   // Executar truncamento imediatamente
   verificarTruncamentoTexto();
-  
+
   // Verificar truncamento de texto após carregar as imagens
   setTimeout(() => {
     console.log('Executando truncamento após 500ms...');
     verificarTruncamentoTexto();
   }, 500);
-  
+
   // Tentar novamente após mais tempo
   setTimeout(() => {
     console.log('Executando truncamento após 1500ms...');
     verificarTruncamentoTexto();
   }, 1500);
-  
+
   // Tentar uma terceira vez
   setTimeout(() => {
     console.log('Executando truncamento após 3000ms...');
     verificarTruncamentoTexto();
   }, 3000);
-  
-// Função para debug dos botões
-function debugBotoes() {
-  console.log('=== DEBUG DOS BOTÕES ===');
-  const containers = document.querySelectorAll('.post-text-container');
-  
-  containers.forEach((container, index) => {
-    const textElement = container.querySelector('.post-text-truncated');
-    const expandButton = container.querySelector('.expand-button');
-    
-    console.log(`\n--- Container ${index} ---`);
-    console.log('Elemento texto:', !!textElement);
-    console.log('Botão:', !!expandButton);
-    
-    if (textElement && expandButton) {
-      const textoOriginal = textElement.getAttribute('data-texto-original');
-      const limiteAtual = textElement.getAttribute('data-limite-atual');
-      const textoAtual = textElement.textContent.trim();
-      
-      console.log('Texto original armazenado:', !!textoOriginal);
-      console.log('Limite atual:', limiteAtual);
-      console.log('Texto atual:', textoAtual.substring(0, 50) + '...');
-      console.log('Tamanho atual:', textoAtual.length);
-      
-      console.log('Botão display:', expandButton.style.display);
-      console.log('Botão visibility:', expandButton.style.visibility);
-      console.log('Botão opacity:', expandButton.style.opacity);
-      console.log('Botão classes:', expandButton.className);
-      console.log('Botão onclick:', !!expandButton.onclick);
-      
-      // Testar clique
-      console.log('Testando clique...');
-      if (expandButton.onclick) {
-        expandButton.onclick();
-        console.log('Clique executado');
-      } else {
-        console.log('❌ Sem onclick definido');
-      }
-    }
-  });
-  
-  console.log('=== FIM DEBUG ===');
-}
 
-// Adicionar função global para teste
-window.testarTruncamento = verificarTruncamentoTexto;
-window.debugBotoes = debugBotoes;
-  
+  // Função para debug dos botões
+  function debugBotoes() {
+    console.log('=== DEBUG DOS BOTÕES ===');
+    const containers = document.querySelectorAll('.post-text-container');
+
+    containers.forEach((container, index) => {
+      const textElement = container.querySelector('.post-text-truncated');
+      const expandButton = container.querySelector('.expand-button');
+
+      console.log(`\n--- Container ${index} ---`);
+      console.log('Elemento texto:', !!textElement);
+      console.log('Botão:', !!expandButton);
+
+      if (textElement && expandButton) {
+        const textoOriginal = textElement.getAttribute('data-texto-original');
+        const limiteAtual = textElement.getAttribute('data-limite-atual');
+        const textoAtual = textElement.textContent.trim();
+
+        console.log('Texto original armazenado:', !!textoOriginal);
+        console.log('Limite atual:', limiteAtual);
+        console.log('Texto atual:', textoAtual.substring(0, 50) + '...');
+        console.log('Tamanho atual:', textoAtual.length);
+
+        console.log('Botão display:', expandButton.style.display);
+        console.log('Botão visibility:', expandButton.style.visibility);
+        console.log('Botão opacity:', expandButton.style.opacity);
+        console.log('Botão classes:', expandButton.className);
+        console.log('Botão onclick:', !!expandButton.onclick);
+
+        // Testar clique
+        console.log('Testando clique...');
+        if (expandButton.onclick) {
+          expandButton.onclick();
+          console.log('Clique executado');
+        } else {
+          console.log('❌ Sem onclick definido');
+        }
+      }
+    });
+
+    console.log('=== FIM DEBUG ===');
+  }
+
+  // Adicionar função global para teste
+  window.testarTruncamento = verificarTruncamentoTexto;
+  window.debugBotoes = debugBotoes;
+
   // Função para forçar truncamento (teste)
-  window.forcarTruncamento = function() {
+  window.forcarTruncamento = function () {
     console.log('=== FORÇANDO TRUNCAMENTO ===');
     const textContainers = document.querySelectorAll('.post-text-container');
     textContainers.forEach((container, index) => {
       const textElement = container.querySelector('.post-text-truncated');
       const expandButton = container.querySelector('.expand-button');
-      
+
       if (textElement && expandButton) {
         const textoOriginal = textElement.textContent.trim();
         const limiteCaracteres = 50; // Limite muito baixo para forçar
-        
+
         if (textoOriginal.length > limiteCaracteres) {
           const textoTruncado = textoOriginal.substring(0, limiteCaracteres) + '...';
           textElement.textContent = textoTruncado;
@@ -674,9 +674,9 @@ window.debugBotoes = debugBotoes;
       }
     });
   };
-  
+
   // Função para mostrar todos os botões expandir
-  window.mostrarTodosBotoes = function() {
+  window.mostrarTodosBotoes = function () {
     console.log('=== MOSTRANDO TODOS OS BOTÕES ===');
     const expandButtons = document.querySelectorAll('.expand-button');
     expandButtons.forEach((btn, index) => {
@@ -708,12 +708,12 @@ window.debugBotoes = debugBotoes;
   // Configurar hover para botões de configuração dos posts
   const botoesPosts = document.querySelectorAll('.post-set');
   botoesPosts.forEach(botao => {
-    botao.onmouseover = function(){
+    botao.onmouseover = function () {
       botao.style.color = '#ff6600';
     }
 
   });
-  
+
   // Remover qualquer painel existente para evitar duplicatas
   const painelExistente = document.getElementById('painel-busca-obras');
   if (painelExistente) {
@@ -789,29 +789,29 @@ window.debugBotoes = debugBotoes;
 
   // Configurar eventos dos checkboxes
   opcoesLabels.forEach(label => {
-    label.addEventListener('click', function(e) {
+    label.addEventListener('click', function (e) {
       // Se clicou diretamente no checkbox, não fazer nada (comportamento padrão)
       if (e.target.type === 'checkbox') {
         return;
       }
-      
+
       // Se clicou no label, alternar o checkbox
       const checkbox = label.querySelector('input[type="checkbox"]');
       if (checkbox) {
         checkbox.checked = !checkbox.checked;
-        
+
         // Adicionar/remover classe visual
         if (checkbox.checked) {
           label.classList.add('checked');
         } else {
           label.classList.remove('checked');
         }
-        
+
         // Disparar evento de mudança para outros listeners
         checkbox.dispatchEvent(new Event('change'));
       }
     });
-    
+
     // Adicionar classe visual inicial baseada no estado do checkbox
     const checkbox = label.querySelector('input[type="checkbox"]');
     if (checkbox && checkbox.checked) {
@@ -821,38 +821,38 @@ window.debugBotoes = debugBotoes;
 
   // Eventos de mudança nos checkboxes
   checkboxesTipos.forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
+    checkbox.addEventListener('change', function () {
       const label = checkbox.closest('.opcao-filtro');
       if (checkbox.checked) {
         label.classList.add('checked');
       } else {
         label.classList.remove('checked');
       }
-      
+
       // Usar debounce para atualizar busca
       debounceCheckboxes();
     });
   });
 
   // Eventos dos botões de controle
-  btnTodos.addEventListener('click', function() {
+  btnTodos.addEventListener('click', function () {
     checkboxesTipos.forEach(checkbox => {
       checkbox.checked = true;
       const label = checkbox.closest('.opcao-filtro');
       label.classList.add('checked');
     });
-    
+
     // Usar debounce para atualizar busca
     debounceCheckboxes();
   });
 
-  btnNenhum.addEventListener('click', function() {
+  btnNenhum.addEventListener('click', function () {
     checkboxesTipos.forEach(checkbox => {
       checkbox.checked = false;
       const label = checkbox.closest('.opcao-filtro');
       label.classList.remove('checked');
     });
-    
+
     // Usar debounce para atualizar busca
     debounceCheckboxes();
   });
@@ -878,11 +878,11 @@ window.debugBotoes = debugBotoes;
     // Garantir que temos os checkboxes atualizados
     const checkboxes = painelBuscaObras.querySelectorAll('input[type="checkbox"]');
     console.log(`Encontrados ${checkboxes.length} checkboxes`);
-    
+
     const selecionados = Array.from(checkboxes)
       .filter(checkbox => checkbox.checked)
       .map(checkbox => checkbox.value);
-    
+
     console.log(`Tipos selecionados:`, selecionados);
     return selecionados;
   }
@@ -902,7 +902,7 @@ window.debugBotoes = debugBotoes;
     timeoutCheckboxes = setTimeout(() => {
       console.log('Checkboxes alterados - atualizando busca...');
       atualizarContadorTipos();
-      
+
       // Se há um termo de busca, realizar nova busca
       const termoBusca = buscaObraInput.value.trim();
       if (termoBusca.length >= 2) {
@@ -921,7 +921,7 @@ window.debugBotoes = debugBotoes;
       if (buscaObraInput) {
         buscaObraInput.focus();
       }
-        } else {
+    } else {
       console.error("Painel de busca não encontrado!");
     }
   }
@@ -946,17 +946,17 @@ window.debugBotoes = debugBotoes;
   // Controle de busca para evitar múltiplas execuções
   let buscaEmAndamento = false;
   let ultimoTermoBusca = '';
-  
+
   // Controle de debounce para checkboxes
   let timeoutCheckboxes;
 
   // Função para realizar busca
   async function realizarBusca() {
     const termoBusca = buscaObraInput.value.trim();
-    
+
     // Aguardar um pouco para garantir que os checkboxes foram atualizados
     await new Promise(resolve => setTimeout(resolve, 50));
-    
+
     const tiposSelecionados = getTiposSelecionados();
 
     // Evitar buscas duplicadas
@@ -970,7 +970,7 @@ window.debugBotoes = debugBotoes;
 
     console.log("Realizando busca para:", termoBusca);
     console.log("Tipos incluídos:", tiposSelecionados);
-        
+
     if (termoBusca === '') {
       resultadosBuscaEl.innerHTML = `
         <div style="width:100%;height:100%;display:flex;justify-content:center;align-items:center;">
@@ -1009,7 +1009,7 @@ window.debugBotoes = debugBotoes;
       const resultado = await buscarObras(termoBusca, tiposSelecionados);
 
       console.log("Resultado da busca:", resultado);
-      
+
       if (resultado.mensagem) {
         resultadosBuscaEl.innerHTML = `
           <div style="width:100%;height:100%;display:flex;justify-content:center;align-items:center;">
@@ -1058,11 +1058,11 @@ window.debugBotoes = debugBotoes;
       `;
       return;
     }
-    
+
     // Verificar se há problemas com a API de arte
     const problemasArte = resultados.filter(r => r.id === 'arte_indisponivel' || r.id === 'arte_erro');
     const temProblemasArte = problemasArte.length > 0;
-    
+
     // Configuração da paginação
     const itensPorPagina = 3;
     const totalPaginas = Math.ceil(resultados.length / itensPorPagina);
@@ -1136,7 +1136,7 @@ window.debugBotoes = debugBotoes;
         '<span style="background:#9C27B0;color:white;font-size:9px;padding:1px 3px;border-radius:3px;margin-left:3px;">SÉRIE</span>' :
         '';
 
-                    html += `
+      html += `
         <li style="display:flex;align-items:center;padding:6px;border-radius:6px;margin-bottom:5px;background:#2a2a2a;transition:background 0.2s;cursor:pointer;width:100%;max-width:100%;box-sizing:border-box;flex:1;" 
             class="resultado-item" data-id="${obra.apiId}" data-tipo="${obra.tipo}" title="${obra.titulo}">
           <img src="${obra.imagem}" referrerpolicy="no-referrer" alt="${obra.titulo}" 
@@ -1149,7 +1149,7 @@ window.debugBotoes = debugBotoes;
                             </div>
                         </li>
                     `;
-                });
+    });
 
     // Se tiver menos de 3 itens, adicionar espaços vazios para manter a altura consistente
     const itemsFaltantes = 3 - resultadosPagina.length;
@@ -1157,7 +1157,7 @@ window.debugBotoes = debugBotoes;
       html += `<li style="height:72px;margin-bottom:5px;flex:1;"></li>`;
     }
 
-                html += '</ul>';
+    html += '</ul>';
     conteudoEl.innerHTML = html;
 
     // Reconectar os eventos de clique
@@ -1211,8 +1211,8 @@ window.debugBotoes = debugBotoes;
 
       item.addEventListener('mouseout', () => {
         item.style.background = '#2a2a2a';
-                    });
-                });
+      });
+    });
   }
 
   // Função para exibir detalhes da obra
@@ -1643,10 +1643,10 @@ window.debugBotoes = debugBotoes;
         const novaPagina = paginaAtual + 1;
         mostrarPagina(window.ultimosResultadosBusca, novaPagina, 3);
         atualizarBotoesPagina(novaPagina, totalPaginas);
-            }
-        });
-    }
-    
+      }
+    });
+  }
+
   // Função para gerar botões de página
   function gerarBotoesPagina(totalPaginas, paginaAtual) {
     let html = '';
@@ -1723,7 +1723,7 @@ window.debugBotoes = debugBotoes;
   }
 
   // Função global para selecionar obra (compatibilidade)
-  window.selecionarObra = function(apiId, tipo, titulo, autor, ano, imagem) {
+  window.selecionarObra = function (apiId, tipo, titulo, autor, ano, imagem) {
     selecionarObraCompleta({
       apiId: apiId,
       tipo: tipo,
@@ -1739,9 +1739,9 @@ window.debugBotoes = debugBotoes;
 
   // Busca automática com debounce
   let timeoutBusca;
-  buscaObraInput.addEventListener('input', function() {
+  buscaObraInput.addEventListener('input', function () {
     clearTimeout(timeoutBusca);
-    
+
     // Se o campo estiver vazio, limpar resultados
     if (buscaObraInput.value.trim() === '') {
       ultimoTermoBusca = ''; // Reset do último termo
@@ -1752,7 +1752,7 @@ window.debugBotoes = debugBotoes;
       `;
       return;
     }
-    
+
     // Aguardar 800ms após parar de digitar antes de buscar
     timeoutBusca = setTimeout(() => {
       const termoAtual = buscaObraInput.value.trim();
@@ -1761,7 +1761,7 @@ window.debugBotoes = debugBotoes;
       }
     }, 800);
   });
-  
+
   buscaObraInput.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -1803,7 +1803,7 @@ async function criarIDPost(tamanho) {
 
     const response = await fetch(url, {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'X-Requested-With': 'XMLHttpRequest'
@@ -1812,7 +1812,7 @@ async function criarIDPost(tamanho) {
     });
 
     console.log("Status da resposta:", response.status);
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -1837,5 +1837,36 @@ async function criarIDPost(tamanho) {
   } catch (error) {
     console.error("Erro ao gerar ID:", error);
     return { success: false, message: "Erro ao comunicar com o servidor" };
+  }
+}
+
+// Função para copiar o link da postagem
+function copiarLink(event, idPost) {
+  event.preventDefault(); // Evita que a página suba pro topo
+
+  // Define a base da URL (mude para o seu domínio real quando for pro ar)
+  const baseUrl = "https://reparte.free.nf/";
+  // const baseUrl = window.location.origin + "/RepArte/"; // Use essa linha se estiver testando localmente e comente a de cima
+
+  const link = `${baseUrl}postagem.php?id=${idPost}`;
+
+  // Copia para a área de transferência
+  navigator.clipboard.writeText(link).then(() => {
+    alert("Link copiado: " + link);
+  }).catch(err => {
+    console.error('Erro ao copiar: ', err);
+  });
+}
+
+// Função placeholder para abrir modal de denúncia (implementar modal depois)
+function abrirDenuncia(event, idItem, tipo) {
+  event.preventDefault();
+
+  const motivo = prompt("Qual o motivo da denúncia?");
+  if (motivo) {
+    // Enviar para o PHP salvar no banco (precisaria de um AJAX ou form aqui)
+    alert("Denúncia enviada para análise. Obrigado.");
+    // Exemplo de redirecionamento simples para salvar:
+    // window.location.href = `php/salvar_denuncia.php?tipo=${tipo}&id=${idItem}&motivo=${encodeURIComponent(motivo)}`;
   }
 }

@@ -4,6 +4,7 @@
 session_start();
 require 'php/perfil_dados.php';
 require 'php/telainicial_post.php';
+require 'php/vlibras_config.php';
 
 // Tranformando o $row em $perfil, qual vai puxar valores de colunas
 $perfil = buscaUsuario();
@@ -31,13 +32,15 @@ $posts = postagensFeitas();
     <div class="search-box">
       <form action="busca.php" method="GET" style="display: flex; width: 100%; align-items: center;">
         <button type="submit" class="search-icon" style="background: none; border: none; cursor: pointer;">🔍</button>
-        <input type="text" name="q" class="search-text" placeholder="Procure uma obra, usuário ou hashtag...">
+        <input type="text" class="search-text" placeholder="Procure uma obra, usuário ou hashtag...">
       </form>
     </div>
 
-    <div class="header-actions" style="display: flex; gap: 15px; margin-right: 20px;">
-      <a href="chats.php" class="btn-chat" title="Chat">
-        <i class="fas fa-comments" style="color: white; font-size: 1.5rem;"></i>
+    <div class="header-actions">
+      <i class="fas fa-bell"></i>
+      <a href="configuracoes.php" style="color: inherit; text-decoration: none;"><i class="fas fa-cog"></i></a>
+      <a href="chats.php" class="btn-chat" style="color: white" title="Chat">
+        <i class="fas fa-comments"></i>
       </a>
     </div>
 
@@ -103,7 +106,41 @@ $posts = postagensFeitas();
                 <a href="postagem.php?id=<?= $post['id'] ?>" class="fullscreen-icon" title="Ver postagem completa">
                   <i class="fas fa-expand"></i>
                 </a>
-                <i class="post-set fa-solid fa-bars"></i>
+                <!-- Container para o menu de opções do post -->
+                <div class="post-set-container">
+                  <i class="post-set fa-solid fa-bars" style="color: rgb(255, 102, 0);"></i>
+
+                  <!-- Menu Dropdown (Balãozinho) -->
+                  <div class="post-options-dropdown">
+                    <!-- Copiar Link -->
+                    <a href="#" onclick="copiarLink(event, '<?= $post['id'] ?>')">
+                      <i class="fas fa-link"></i> Copiar Link
+                    </a>
+
+                    <!-- Favoritar (Lógica futura) -->
+                    <a href="#">
+                      <i class="far fa-star"></i> Favoritar
+                    </a>
+
+                    <!-- Adicionar à Lista (Lógica futura) -->
+                    <a href="#">
+                      <i class="fas fa-list"></i> Salvar
+                    </a>
+
+                    <!-- Deletar: Só aparece se o usuário for o dono do post -->
+                    <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $post['id_usuario']): ?>
+                      <a href="php/deletar_post.php?id=<?= $post['id'] ?>"
+                        onclick="return confirm('Tem certeza que deseja deletar este post?')">
+                        <i class="fas fa-trash" style="color: red;"></i> Deletar
+                      </a>
+                    <?php endif; ?>
+
+                    <!-- Denunciar -->
+                    <a href="#" onclick="abrirDenuncia(event, '<?= $post['id'] ?>', 'postagem')">
+                      <i class="fas fa-flag"></i> Denunciar
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="post-body">
@@ -146,11 +183,7 @@ $posts = postagensFeitas();
     </section>
     <section class="right">
       <aside class="sidebar-right">
-        <div class="top-icons">
-          <i class="fas fa-bell"></i>
-          <a href="configuracoes.php" style="color: inherit; text-decoration: none;"><i class="fas fa-cog"></i></a>
-        </div>
-        <h5 id="h">hashtags</h5>
+        <h5 id="h">Hashtags:</h5>
         <div class="hashtags">
           <a href="busca.php?q=%23HistóriadoBrasil" class="tag">#HistóriadoBrasil</a>
           <a href="busca.php?q=%231984" class="tag">#1984</a>
@@ -176,6 +209,7 @@ $posts = postagensFeitas();
   <script src="js/telainicial.js"></script>
   <script src="js/apis-obras.js"></script>
 
+  <?php renderizarVLibras(); ?>
 
 </body>
 

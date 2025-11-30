@@ -107,8 +107,7 @@ unset($_SESSION['val_recuperacao']);
                     </div>
 
                     <button type="submit" class="btn-registrarse">Verificar Código</button>
-                    <a href="emailesqueceu.php"><button type="button" class="btn-entrar">Solicitar Novo
-                            Código</button></a>
+                    <button type="button" class="btn-entrar" onclick="solicitarNovoCodigo()">Reenviar Código</button>
                 </form>
 
                 <p style="text-align: center; margin-top: 15px;">
@@ -123,6 +122,35 @@ unset($_SESSION['val_recuperacao']);
         document.getElementById('codigo').addEventListener('input', function (e) {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
+
+        // Função para reenviar código (chamada pelo botão)
+        async function solicitarNovoCodigo() {
+            const email = document.querySelector('input[name="email"]').value;
+            const mensagemDiv = document.getElementById('mensagem-js');
+
+            mensagemDiv.innerHTML = '<div class="mensagem-info">Enviando novo código...</div>';
+
+            try {
+                const response = await fetch('php/enviar_link_recuperacao.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'usuario_email=' + encodeURIComponent(email)
+                });
+
+                mensagemDiv.innerHTML = '<div class="mensagem-sucesso">Novo código enviado para seu email!</div>';
+                
+                // Limpar mensagem após 3 segundos
+                setTimeout(() => {
+                    mensagemDiv.innerHTML = '';
+                }, 3000);
+            } catch (error) {
+                console.error('Erro:', error);
+                mensagemDiv.innerHTML = '<div class="mensagem-erro">Erro ao enviar código. Tente novamente.</div>';
+            }
+        }
     </script>
 </body>
+
 </html>

@@ -9,6 +9,7 @@ if (!isset($_SESSION['id'])) {
 
 require_once 'php/perfil_dados.php';
 $perfil = buscaUsuario();
+include 'vlibras_include.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -47,7 +48,7 @@ $perfil = buscaUsuario();
             <a href="seguranca.php" class="menu-btn">
                 <i class="bi bi-lock"></i> Segurança
             </a>
-            <a href="#" class="menu-btn">
+            <a href="acessibilidade.php" class="menu-btn">
                 <i class="bi bi-universal-access"></i> Acessibilidade
             </a>
             <a href="#" onclick="confirmarLogout()" class="menu-btn">

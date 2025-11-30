@@ -8,7 +8,7 @@ define('TMDB_API_KEY', 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNGY1NWJmYmRkYWU5MTRlMTI
 define('SPOTIFY_CLIENT_ID', '9a234ae20b4b4dd09866c1d22c56f5bb');
 define('SPOTIFY_CLIENT_SECRET', '4ac381f6be504327b2ab6d8ce73f69f7');
 
-$con = new mysqli("sql103.infinityfree.com", "if0_40154094", 'reparte321', "if0_40154094_reparte");
+$con = new mysqli("localhost", "root", '', "if0_40154094_reparte");
 
 // Composer autoload (opcional - pode não estar disponível em hospedagem gratuita)
 if (file_exists(__DIR__ . '/../vendor/autoload.php')) {

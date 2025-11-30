@@ -1,6 +1,10 @@
 <?php
 // Página para visualizar uma obra específica
+
+session_start();
 require_once 'php/config.php';
+include 'vlibras_include.php';
+
 
 // Verifica se o ID da obra foi fornecido
 if (!isset($_GET['id']) || empty($_GET['id'])) {
@@ -19,7 +23,7 @@ try {
     $stmt->execute();
     $result = $stmt->get_result();
     $obraData = $result->fetch_assoc();
-    
+
     if ($obraData && $obraData['tipo']) {
         $obraTipo = $obraData['tipo'];
         error_log("Obra ID: $obraId, Tipo encontrado na tabela obras: $obraTipo");
@@ -51,13 +55,13 @@ try {
             WHERE p.id_obra = ?
             ORDER BY p.data_post DESC
             LIMIT 10";
-    
+
     $stmt = $con->prepare($sql);
     $stmt->bind_param("s", $obraId);
     $stmt->execute();
     $result = $stmt->get_result();
     $analises = $result->fetch_all(MYSQLI_ASSOC);
-    
+
 } catch (Exception $e) {
     $analises = [];
 }
@@ -70,7 +74,7 @@ try {
             FROM postagens p
             LEFT JOIN votos v ON p.id = v.id_postagem
             WHERE p.id_obra = ?";
-    
+
     $stmt = $con->prepare($sql);
     $stmt->bind_param("s", $obraId);
     $stmt->execute();
@@ -79,9 +83,11 @@ try {
 } catch (Exception $e) {
     $stats = ['total_analises' => 0, 'media_likes' => 0];
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -89,6 +95,7 @@ try {
     <link rel="stylesheet" href="css/telainicial.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <header>
         <div class="logo">
@@ -142,7 +149,8 @@ try {
                             <div class="analise-card">
                                 <div class="analise-header">
                                     <div class="analise-user">
-                                        <img src="<?= htmlspecialchars($analise['foto']) ?>" alt="Foto do Usuário" class="analise-user-photo" />
+                                        <img src="<?= htmlspecialchars($analise['foto']) ?>" alt="Foto do Usuário"
+                                            class="analise-user-photo" />
                                         <span class="analise-username"><?= htmlspecialchars($analise['usuario']) ?></span>
                                     </div>
                                     <span class="analise-data"><?= date('d/m/Y H:i', strtotime($analise['data'])) ?></span>
@@ -186,24 +194,24 @@ try {
         async function carregarDadosObra() {
             const obraId = '<?= $obraId ?>';
             const obraTipo = '<?= $obraTipo ?>';
-            
+
             try {
                 console.log('=== CARREGANDO DADOS DA OBRA ===');
                 console.log('Obra ID:', obraId);
                 console.log('Obra Tipo:', obraTipo);
-                
-                const obra = await obterDetalhesObra({ 
-                    apiId: obraId, 
-                    tipo: obraTipo 
+
+                const obra = await obterDetalhesObra({
+                    apiId: obraId,
+                    tipo: obraTipo
                 });
-                
+
                 console.log('✅ Dados da obra carregados:', obra);
                 console.log('Título:', obra.titulo);
                 console.log('Autor:', obra.autor);
                 console.log('Ano:', obra.ano);
                 console.log('Imagem:', obra.imagem);
                 console.log('Descrição:', obra.descricao);
-                
+
                 // Determinar cores baseadas no tipo da obra
                 let corPrimaria, corSecundaria;
                 switch (obraTipo) {
@@ -231,9 +239,9 @@ try {
                         corPrimaria = '#ff6600';
                         corSecundaria = '#cc5200';
                 }
-                
+
                 console.log('Cores aplicadas para', obraTipo, ':', corPrimaria);
-                
+
                 // Aplicar cores à imagem da obra
                 const imgElement = document.getElementById('obra-imagem');
                 if (imgElement) {
@@ -243,7 +251,7 @@ try {
                 } else {
                     console.error('❌ Elemento obra-imagem não encontrado');
                 }
-                
+
                 // Aplicar cores ao tipo da obra
                 const tipoElement = document.getElementById('obra-tipo');
                 if (tipoElement) {
@@ -253,7 +261,7 @@ try {
                 } else {
                     console.error('❌ Elemento obra-tipo não encontrado');
                 }
-                
+
                 // Aplicar cores aos stats
                 const statItems = document.querySelectorAll('.stat-item');
                 statItems.forEach(item => {
@@ -263,21 +271,21 @@ try {
                     }
                 });
                 console.log('✅ Cores aplicadas nos stats:', statItems.length, 'itens');
-                
+
                 // Aplicar cores ao título das análises
                 const analisesTitle = document.querySelector('.analises-section h2 i');
                 if (analisesTitle) {
                     analisesTitle.style.color = corPrimaria;
                     console.log('✅ Cor aplicada no título das análises');
                 }
-                
+
                 // Aplicar cores aos botões de ver análise
                 const btnVerAnalise = document.querySelectorAll('.btn-ver-analise');
                 btnVerAnalise.forEach(btn => {
                     btn.style.background = corPrimaria;
                 });
                 console.log('✅ Cores aplicadas nos botões:', btnVerAnalise.length, 'botões');
-                
+
                 // Aplicar cores aos cards de análise no hover
                 const analiseCards = document.querySelectorAll('.analise-card');
                 analiseCards.forEach(card => {
@@ -289,14 +297,14 @@ try {
                     });
                 });
                 console.log('✅ Event listeners aplicados nos cards:', analiseCards.length, 'cards');
-                
+
                 // Atualiza a imagem com loading (apenas após 10 segundos)
                 const imgElement2 = document.getElementById('obra-imagem');
                 if (imgElement2 && obra.imagem) {
                     let loadingDiv = null;
                     let loadingTimeout = null;
                     let imageLoaded = false;
-                    
+
                     // Configura timeout para mostrar loading após 10 segundos
                     loadingTimeout = setTimeout(() => {
                         if (!imageLoaded) {
@@ -305,7 +313,7 @@ try {
                             imgElement2.parentNode.appendChild(loadingDiv);
                         }
                     }, 10000); // 10 segundos
-                    
+
                     // Quando a imagem carregar, remove o loading e cancela timeout
                     imgElement2.onload = () => {
                         imageLoaded = true;
@@ -316,7 +324,7 @@ try {
                             loadingDiv.remove();
                         }
                     };
-                    
+
                     imgElement2.onerror = () => {
                         imageLoaded = true;
                         if (loadingTimeout) {
@@ -326,14 +334,14 @@ try {
                             loadingDiv.remove();
                         }
                     };
-                    
+
                     imgElement2.src = obra.imagem;
                     imgElement2.alt = obra.titulo;
                     console.log('✅ Imagem atualizada:', obra.imagem);
                 } else {
                     console.error('❌ Erro ao atualizar imagem');
                 }
-                
+
                 // Atualiza o título
                 const tituloElement = document.getElementById('obra-titulo');
                 if (tituloElement && obra.titulo) {
@@ -342,14 +350,14 @@ try {
                 } else {
                     console.error('❌ Erro ao atualizar título');
                 }
-                
+
                 // Atualiza o título da página
                 const pageTitleElement = document.getElementById('page-title');
                 if (pageTitleElement && obra.titulo) {
                     pageTitleElement.textContent = `${obra.titulo} - RepArte`;
                     console.log('✅ Título da página atualizado:', obra.titulo);
                 }
-                
+
                 // Atualiza o ano
                 if (obra.ano) {
                     const anoElement = document.getElementById('obra-ano');
@@ -358,7 +366,7 @@ try {
                         console.log('✅ Ano atualizado:', obra.ano);
                     }
                 }
-                
+
                 // Atualiza o autor/criador - só mostra se existir
                 const autorElement = document.getElementById('obra-autor');
                 if (autorElement) {
@@ -371,7 +379,7 @@ try {
                         console.log('ℹ️ Autor oculto (não encontrado)');
                     }
                 }
-                
+
                 // Atualiza a descrição
                 if (obra.descricao) {
                     const descricaoElement = document.getElementById('obra-descricao');
@@ -380,48 +388,48 @@ try {
                         console.log('✅ Descrição atualizada');
                     }
                 }
-                
+
                 // Atualiza o tipo
                 const tipoElement2 = document.getElementById('obra-tipo');
                 if (tipoElement2) {
                     tipoElement2.textContent = obra.tipo || obraTipo;
                     console.log('✅ Tipo atualizado:', obra.tipo || obraTipo);
                 }
-                
+
                 console.log('=== CARREGAMENTO CONCLUÍDO COM SUCESSO ===');
-                
+
             } catch (error) {
                 console.error('❌ ERRO ao carregar dados da obra:', error);
                 console.error('Tipo detectado:', obraTipo);
                 console.error('ID da obra:', obraId);
-                
+
                 // Fallback para dados básicos
                 const tituloElement = document.getElementById('obra-titulo');
                 if (tituloElement) {
                     tituloElement.textContent = 'Obra ID: ' + obraId + ' (Tipo: ' + obraTipo + ')';
                 }
-                
+
                 const descricaoElement = document.getElementById('obra-descricao');
                 if (descricaoElement) {
                     descricaoElement.textContent = 'Não foi possível carregar os detalhes desta obra. Erro: ' + error.message;
                 }
-                
+
                 // Imagem placeholder
                 const imgElement = document.getElementById('obra-imagem');
                 if (imgElement) {
                     imgElement.src = 'https://placehold.co/400x600/333333/FFFFFF?text=Sem+Imagem';
                 }
-                
+
                 // Aplicar cores mesmo com erro
                 aplicarCoresTema(obraTipo);
             }
         }
-        
+
         // Função para aplicar cores após carregamento completo
         function aplicarCoresTema(obraTipo) {
             console.log('=== APLICANDO CORES TEMA ===');
             console.log('Tipo recebido:', obraTipo);
-            
+
             let corPrimaria, corSecundaria;
             switch (obraTipo) {
                 case 'filme':
@@ -448,9 +456,9 @@ try {
                     corPrimaria = '#ff6600';
                     corSecundaria = '#cc5200';
             }
-            
+
             console.log('Cores definidas:', corPrimaria, corSecundaria);
-            
+
             // Aplicar cores à imagem da obra
             const imgElement = document.getElementById('obra-imagem');
             if (imgElement) {
@@ -460,7 +468,7 @@ try {
             } else {
                 console.error('❌ Elemento obra-imagem não encontrado');
             }
-            
+
             // Aplicar cores ao tipo da obra
             const tipoElement = document.getElementById('obra-tipo');
             if (tipoElement) {
@@ -470,7 +478,7 @@ try {
             } else {
                 console.error('❌ Elemento obra-tipo não encontrado');
             }
-            
+
             // Aplicar cores aos stats
             const statItems = document.querySelectorAll('.stat-item');
             statItems.forEach(item => {
@@ -480,7 +488,7 @@ try {
                 }
             });
             console.log('✅ Cores aplicadas nos stats:', statItems.length, 'itens');
-            
+
             // Aplicar cores ao título das análises
             const analisesTitle = document.querySelector('.analises-section h2 i');
             if (analisesTitle) {
@@ -489,14 +497,14 @@ try {
             } else {
                 console.error('❌ Elemento título das análises não encontrado');
             }
-            
+
             // Aplicar cores aos botões de ver análise
             const btnVerAnalise = document.querySelectorAll('.btn-ver-analise');
             btnVerAnalise.forEach(btn => {
                 btn.style.background = corPrimaria;
             });
             console.log('✅ Cores aplicadas nos botões:', btnVerAnalise.length, 'botões');
-            
+
             // Aplicar cores aos cards de análise no hover
             const analiseCards = document.querySelectorAll('.analise-card');
             analiseCards.forEach(card => {
@@ -509,23 +517,23 @@ try {
             });
             console.log('✅ Event listeners aplicados nos cards:', analiseCards.length, 'cards');
         }
-        
+
         // Inicialização
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             console.log('=== INICIANDO CARREGAMENTO DA OBRA ===');
             console.log('Obra ID:', '<?= $obraId ?>');
             console.log('Obra Tipo detectado:', '<?= $obraTipo ?>');
             console.log('Tipo da URL:', '<?= $_GET['tipo'] ?? 'não definido' ?>');
-            
+
             // Verificar se a função obterDetalhesObra existe
             if (typeof obterDetalhesObra === 'function') {
                 console.log('✅ Função obterDetalhesObra encontrada');
             } else {
                 console.error('❌ Função obterDetalhesObra NÃO encontrada');
             }
-            
+
             carregarDadosObra();
-            
+
             // Aplicar cores após um pequeno delay para garantir que todos os elementos estejam carregados
             setTimeout(() => {
                 console.log('Aplicando cores para tipo:', '<?= $obraTipo ?>');
@@ -534,4 +542,5 @@ try {
         });
     </script>
 </body>
+
 </html>

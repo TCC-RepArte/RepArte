@@ -6,6 +6,9 @@ if (!isset($_SESSION['id'])) {
     header("Location: login1.php");
     exit();
 }
+
+require_once 'php/config.php';
+include 'vlibras_include.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

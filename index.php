@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap" rel="stylesheet">
     <title>ReParte</title>
 </head>
+
 <body>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget("https://vlibras.gov.br/app");
+    </script>
+
     <div id="bg-fixo"></div>
     <header>
         <div class="interface">
@@ -44,7 +57,9 @@
                 <div class="flex">
                     <div class="txt-topo-site">
                         <h1>O <span class="destaque">melhor</span> amigo <br>dos seus estudos!</h1>
-                        <p>Nossa campanha tem como principal intuito oferecer <span class="destaque">apoio</span> gratuito para estudantes e redatores que buscam aprimorar suas <span class="destaque">habilidades</span> de escrita e argumentação</p>
+                        <p>Nossa campanha tem como principal intuito oferecer <span class="destaque">apoio</span>
+                            gratuito para estudantes e redatores que buscam aprimorar suas <span
+                                class="destaque">habilidades</span> de escrita e argumentação</p>
                         <div class="search-box search-box-custom">
                             <span class="search-icon">🔍</span>
                             <input type="text" class="search-text" placeholder="Pesquisar tema...">
@@ -70,8 +85,14 @@
         <div class="interface">
             <h2>Sobre nós</h2>
             <p>
-                Nosso projeto nasceu da vontade de tornar o acesso ao conhecimento mais <b>democrático</b> e acessível para todos os estudantes que estão se preparando para os vestibulares no Brasil. Sabemos o quanto a construção de um bom repertório sociocultural é essencial para uma boa redação e desempenho geral nas provas, e é por isso que criamos este <b>espaço gratuito e colaborativo</b>.<br><br>
-                Este site é parte do nosso <b>Trabalho de Conclusão de Curso (TCC)</b>, fruto de muita pesquisa, dedicação e debates sobre os desafios do ensino no país e as barreiras enfrentadas por tantos estudantes. Nosso objetivo é que este projeto continue crescendo e ajudando cada vez mais pessoas, <b>promovendo o acesso ao conhecimento</b> de forma aberta e transformadora.
+                Nosso projeto nasceu da vontade de tornar o acesso ao conhecimento mais <b>democrático</b> e acessível
+                para todos os estudantes que estão se preparando para os vestibulares no Brasil. Sabemos o quanto a
+                construção de um bom repertório sociocultural é essencial para uma boa redação e desempenho geral nas
+                provas, e é por isso que criamos este <b>espaço gratuito e colaborativo</b>.<br><br>
+                Este site é parte do nosso <b>Trabalho de Conclusão de Curso (TCC)</b>, fruto de muita pesquisa,
+                dedicação e debates sobre os desafios do ensino no país e as barreiras enfrentadas por tantos
+                estudantes. Nosso objetivo é que este projeto continue crescendo e ajudando cada vez mais pessoas,
+                <b>promovendo o acesso ao conhecimento</b> de forma aberta e transformadora.
             </p>
         </div>
     </section>
@@ -96,7 +117,8 @@
             </div>
 
             <div class="line-footer borda">
-                <p><a href="https://g.co/kgs/KGJ2CLJ">Av. Pereira Barreto, 400 - Baeta Neves, São Bernardo do Campo - SP, 09751-000</a></p>
+                <p><a href="https://g.co/kgs/KGJ2CLJ">Av. Pereira Barreto, 400 - Baeta Neves, São Bernardo do Campo -
+                        SP, 09751-000</a></p>
                 <p><a href="tel:+5511968464237">+55 (11) 96846-4237</a></p>
             </div>
         </div>
@@ -109,18 +131,19 @@
         <div class="btn-fechar">
             <i class="bi bi-x"></i>
         </div>
-           <nav>
-                <ul>
-                    <li><a href="#sobre-nos">Sobre Nós</a></li>
-                    <li><a href="#cont">Contato</a></li>
-                    <li><a href="#">Mobile</a></li>
-                    <li><a href="login1.php">Login</a></li>
-                    <li><a href="cadastro.php">Cadastro</a></li>
-                </ul>
-            </nav>
+        <nav>
+            <ul>
+                <li><a href="#sobre-nos">Sobre Nós</a></li>
+                <li><a href="#cont">Contato</a></li>
+                <li><a href="#">Mobile</a></li>
+                <li><a href="login1.php">Login</a></li>
+                <li><a href="cadastro.php">Cadastro</a></li>
+            </ul>
+        </nav>
     </div>
     <div class="overlay-menu" id="overlay-menu">
 
     </div>
 </body>
+
 </html>

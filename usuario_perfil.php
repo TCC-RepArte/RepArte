@@ -1,5 +1,8 @@
 <?php
+
 session_start();
+require 'php/config.php';
+include 'vlibras_include.php';
 
 // Verificar se o usuário está logado
 if (!isset($_SESSION['id'])) {
@@ -35,6 +38,7 @@ if (!$perfil) {
 
 $postagens = buscarPostagensUsuario($id_usuario) ?? [];
 $comentarios = buscarComentariosUsuario($id_usuario) ?? [];
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -127,7 +131,8 @@ $comentarios = buscarComentariosUsuario($id_usuario) ?? [];
         <div class="tab-panels" id="tab-content">
           <!-- Conteúdo de Atividade (padrão) -->
           <h2 style="grid-column: 1 / -1; color: var(--text); font-size: 20px; margin: 20px 0 10px;">Postagens de
-            <?= htmlspecialchars($perfil['nomexi'] ?? $perfil['usuario']) ?></h2>
+            <?= htmlspecialchars($perfil['nomexi'] ?? $perfil['usuario']) ?>
+          </h2>
 
           <?php if (!empty($postagens)): ?>
             <?php foreach ($postagens as $post): ?>
@@ -141,7 +146,7 @@ $comentarios = buscarComentariosUsuario($id_usuario) ?? [];
                   <?= htmlspecialchars($post['obra_titulo']) ?> • <?= date('d/m/Y', strtotime($post['data_post'])) ?>
                 </div>
                 <div class="meta" style="margin-top: 8px; font-size: 12px;">
-                  <?= htmlspecialchars(substr($post['texto'], 0, 100)) ?>    <?= strlen($post['texto']) > 100 ? '...' : '' ?>
+                  <?= htmlspecialchars(substr($post['texto'], 0, 100)) ?>     <?= strlen($post['texto']) > 100 ? '...' : '' ?>
                 </div>
               </div>
             <?php endforeach; ?>

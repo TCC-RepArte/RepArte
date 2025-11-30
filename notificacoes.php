@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once 'php/config.php';
+include 'vlibras_include.php';
 
 // Verificar se o usuário está logado
 if (!isset($_SESSION['id'])) {

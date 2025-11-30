@@ -1,5 +1,7 @@
 <?php
 session_start();
+require 'php/config.php';
+include 'vlibras_include.php';
 
 // Verificar se o usuário está logado
 if (!isset($_SESSION['id'])) {
@@ -23,6 +25,7 @@ if (!$perfil) {
 // Buscar postagens e comentários
 $postagens = buscarPostagensUsuario($_SESSION['id']) ?? [];
 $comentarios = buscarComentariosUsuario($_SESSION['id']) ?? [];
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -129,7 +132,7 @@ $comentarios = buscarComentariosUsuario($_SESSION['id']) ?? [];
                   <?= htmlspecialchars($post['obra_titulo']) ?> • <?= date('d/m/Y', strtotime($post['data_post'])) ?>
                 </div>
                 <div class="meta" style="margin-top: 8px; font-size: 12px;">
-                  <?= htmlspecialchars(substr($post['texto'], 0, 100)) ?>    <?= strlen($post['texto']) > 100 ? '...' : '' ?>
+                  <?= htmlspecialchars(substr($post['texto'], 0, 100)) ?>     <?= strlen($post['texto']) > 100 ? '...' : '' ?>
                 </div>
               </div>
             <?php endforeach; ?>
