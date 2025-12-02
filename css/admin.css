@@ -1,0 +1,156 @@
+.admin-container {
+    padding: 120px 5% 50px; /* Espaço pro header fixo */
+    max-width: 1200px;
+    margin: 0 auto;
+    color: white;
+}
+
+.admin-card {
+    background: #1a0b2e;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    border: 1px solid #333;
+}
+
+.admin-card h2 {
+    color: #ff6600;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-form {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    background: #130922;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #aaa;
+    font-weight: bold;
+}
+
+.form-group input, .form-group select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #0f0e0f;
+    color: white;
+    min-width: 250px;
+    font-size: 14px;
+}
+
+.btn-delete {
+    background: #ff3b3b;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    height: 42px;
+}
+
+.btn-delete:hover {
+    background: #d32f2f;
+    transform: translateY(-2px);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.admin-table th, .admin-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+.admin-table th {
+    color: #ff6600;
+    font-weight: bold;
+    background: #130922;
+}
+
+.admin-table tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.badge-postagem { background: rgba(33, 150, 243, 0.2); color: #2196F3; border: 1px solid #2196F3; }
+.badge-comentario { background: rgba(255, 193, 7, 0.2); color: #FFC107; border: 1px solid #FFC107; }
+.badge-usuario { background: rgba(156, 39, 176, 0.2); color: #9C27B0; border: 1px solid #9C27B0; }
+
+.btn-action {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 5px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.btn-ban { background: #ff3b3b; }
+.btn-ban:hover { background: #d32f2f; }
+
+.btn-ignore { background: #444; }
+.btn-ignore:hover { background: #666; }
+
+.btn-link {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 13px;
+    margin-left: 8px;
+    transition: color 0.2s;
+}
+.btn-link:hover { color: #ff6600; }
+
+.btn-voltar {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    background: #2b2146;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+.btn-voltar:hover {
+    background: #ff6600;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-style: italic;
+}

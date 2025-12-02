@@ -682,11 +682,31 @@ header {
   cursor: pointer;
 }
 
-.post-set {
-  color: #666;
-  font-size: 16px;
+/* Efeito de hover para o ícone de opções (três barrinhas) */
+.post-set:hover {
+  color: #ff6600 !important;
+  /* Força a cor laranja */
+  transform: scale(1.1);
+  /* Aumenta levemente */
   cursor: pointer;
-  transition: color 0.3s ease;
+}
+
+/* Garante que a transição funcione */
+.post-set {
+  transition: all 0.3s ease;
+  display: inline-block;
+  /* Importante para o transform funcionar */
+  color: #666 !important;
+}
+
+/* Efeito de hover para o ícone de expandir (fullscreen) */
+.fullscreen-icon:hover i {
+  color: #ff6600;
+  transform: scale(1.1);
+}
+
+.fullscreen-icon i {
+  transition: all 0.3s ease;
 }
 
 .post-body {
@@ -2638,4 +2658,33 @@ header {
   margin-right: 8px;
   width: 20px;
   text-align: center;
+}
+
+/* Overlay específico para denúncia */
+.overlay-denuncia {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 9998;
+  /* Um pouco abaixo do painel que costuma ser 9999 ou mais */
+  backdrop-filter: blur(3px);
+}
+
+/* Ajuste específico para o painel de denúncia caso precise sobrescrever algo do painel-busca-obras */
+#painel-denuncia {
+  z-index: 9999;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  /* Um pouco menor que o de obras */
+  background-color: #130922;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
 }

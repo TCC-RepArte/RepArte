@@ -283,9 +283,13 @@ async function atualizarContadoresPost(postId) {
     if (response.ok) {
       const data = await response.json();
       if (data.success) {
-        const voteContainer = document.querySelector(`[data-id="${postId}"]`);
+        // Procura especificamente pela div de botões de voto com este ID
+        const voteContainer = document.querySelector(`.vote-buttons[data-id="${postId}"]`);
+
         if (voteContainer) {
           atualizarContadores(voteContainer, data.likes, data.dislikes);
+        } else {
+          console.warn(`Container de votos não encontrado para o post ${postId}`);
         }
       }
     }
@@ -579,6 +583,8 @@ document.addEventListener('DOMContentLoaded', function () {
   // Carregar imagens e estado das reações
   carregarImagens();
   carregarEstadoReacoes();
+  carregarFavoritosIniciais();
+  carregarImagensCarousel();
 
   // Executar truncamento imediatamente
   verificarTruncamentoTexto();
@@ -704,15 +710,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const anoInput = document.querySelector('.ano_obra');
   const tipoInput = document.querySelector('.tipo_obra');
   const imagemInput = document.querySelector('.img_obra');
-
-  // Configurar hover para botões de configuração dos posts
-  const botoesPosts = document.querySelectorAll('.post-set');
-  botoesPosts.forEach(botao => {
-    botao.onmouseover = function () {
-      botao.style.color = '#ff6600';
-    }
-
-  });
 
   // Remover qualquer painel existente para evitar duplicatas
   const painelExistente = document.getElementById('painel-busca-obras');
@@ -1858,15 +1855,286 @@ function copiarLink(event, idPost) {
   });
 }
 
-// Função placeholder para abrir modal de denúncia (implementar modal depois)
+// Variáveis globais para controle da denúncia
+let itemDenunciaAtual = null;
+let tipoDenunciaAtual = null;
+
+// Função para abrir o painel de denúncia
 function abrirDenuncia(event, idItem, tipo) {
   event.preventDefault();
 
-  const motivo = prompt("Qual o motivo da denúncia?");
-  if (motivo) {
-    // Enviar para o PHP salvar no banco (precisaria de um AJAX ou form aqui)
-    alert("Denúncia enviada para análise. Obrigado.");
-    // Exemplo de redirecionamento simples para salvar:
-    // window.location.href = `php/salvar_denuncia.php?tipo=${tipo}&id=${idItem}&motivo=${encodeURIComponent(motivo)}`;
+  itemDenunciaAtual = idItem;
+  tipoDenunciaAtual = tipo;
+
+  // Verifica se o painel já existe, se não, cria
+  let painel = document.getElementById('painel-denuncia');
+  let overlay = document.querySelector('.overlay-denuncia');
+
+  if (!painel) {
+    criarPainelDenuncia();
+    painel = document.getElementById('painel-denuncia');
+    overlay = document.querySelector('.overlay-denuncia');
   }
+
+  // Limpa o campo de texto
+  document.getElementById('motivo-denuncia').value = '';
+
+  // Mostra o painel
+  painel.style.display = 'block';
+  overlay.style.display = 'block';
+}
+
+// Função para criar o HTML do painel de denúncia (injetado dinamicamente)
+function criarPainelDenuncia() {
+  // Overlay (fundo escuro)
+  const overlay = document.createElement('div');
+  overlay.className = 'overlay-denuncia';
+  overlay.style.display = 'none'; // Começa escondido
+  document.body.appendChild(overlay);
+
+  // Painel
+  const painel = document.createElement('div');
+  painel.id = 'painel-denuncia';
+  painel.className = 'painel-busca-obras'; // Reutilizando classe base para estrutura similar
+  painel.style.display = 'none'; // Começa escondido
+  painel.style.height = 'auto'; // Altura automática para ajustar ao conteúdo
+  painel.style.maxHeight = '90vh';
+
+  painel.innerHTML = `
+        <div class="painel-cabecalho" style="background-color: #ff6600;">
+            <h3 style="color: white;"><i class="fas fa-exclamation-triangle"></i> Denunciar Conteúdo</h3>
+            <button class="fechar-painel" onclick="fecharDenuncia()" style="color: white;">×</button>
+        </div>
+        <div class="painel-conteudo" style="padding: 20px;">
+            <p style="color: #ddd; margin-bottom: 15px;">Por favor, descreva o motivo da sua denúncia. Isso nos ajuda a manter a comunidade segura.</p>
+            
+            <div class="form-group">
+                <textarea id="motivo-denuncia" rows="5" placeholder="Descreva o motivo da denúncia aqui..." 
+                    style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #1a1a1a; color: white; resize: vertical;"></textarea>
+            </div>
+            
+            <div class="botoes-acao" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button onclick="fecharDenuncia()" style="padding: 8px 15px; background: #444; color: white; border: none; border-radius: 4px; cursor: pointer;">Cancelar</button>
+                <button onclick="enviarDenuncia()" style="padding: 8px 15px; background: #ff6600; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Enviar Denúncia</button>
+            </div>
+        </div>
+    `;
+
+  document.body.appendChild(painel);
+
+  // Fechar ao clicar no overlay
+  overlay.addEventListener('click', fecharDenuncia);
+}
+
+// Função para fechar o painel
+function fecharDenuncia() {
+  const painel = document.getElementById('painel-denuncia');
+  const overlay = document.querySelector('.overlay-denuncia');
+
+  if (painel) painel.style.display = 'none';
+  if (overlay) overlay.style.display = 'none';
+
+  itemDenunciaAtual = null;
+  tipoDenunciaAtual = null;
+}
+
+// Função para enviar a denúncia via AJAX
+async function enviarDenuncia() {
+  const motivo = document.getElementById('motivo-denuncia').value.trim();
+
+  if (!motivo) {
+    alert('Por favor, descreva o motivo da denúncia.');
+    return;
+  }
+
+  if (!itemDenunciaAtual || !tipoDenunciaAtual) {
+    alert('Erro ao identificar o item denunciado.');
+    return;
+  }
+
+  try {
+
+    const idGeradoObj = await criarID(15, 'php/verificar_id_denuncia.php');
+
+    if (!idGeradoObj || !idGeradoObj.success) {
+      // Fallback se der erro ou se o script não existir ainda: gera localmente
+      console.warn("Usando ID local (fallback)");
+      var idDenuncia = Math.random().toString(36).substr(2, 9);
+    } else {
+      var idDenuncia = idGeradoObj.id; // Supondo que o criarID retorna o ID no objeto
+    }
+
+    const response = await fetch('php/salvar_denuncia.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id_denuncia: idDenuncia || 'TEMP-' + Date.now(), // Envia o ID gerado
+        id_item: itemDenunciaAtual,
+        tipo: tipoDenunciaAtual,
+        motivo: motivo
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      alert('Denúncia enviada com sucesso! Obrigado por colaborar.');
+      fecharDenuncia();
+    } else {
+      alert('Erro ao enviar denúncia: ' + (data.error || 'Erro desconhecido'));
+    }
+
+  } catch (error) {
+    console.error('Erro:', error);
+    alert('Erro de conexão ao enviar denúncia.');
+  }
+}
+
+// Função para favoritar/desfavoritar
+async function toggleFavorito(event, postId) {
+  event.preventDefault(); // Impede que o link pule para o topo da página
+
+  // Pega os elementos da tela que vamos mudar (icone e texto)
+  const icon = document.getElementById(`fav-icon-${postId}`);
+  const text = document.getElementById(`fav-text-${postId}`);
+
+  try {
+    // Manda o pedido para o PHP
+    const response = await fetch('php/favoritar.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id_post: postId })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      // Se o PHP disse que deu certo, atualizamos a tela
+      if (data.status === 'favoritado') {
+        // Mudou para favoritado: estrela cheia
+        icon.classList.remove('far');
+        icon.classList.add('fas');
+        text.textContent = 'Favoritado';
+      } else {
+        // Mudou para removido: estrela vazia
+        icon.classList.remove('fas');
+        icon.classList.add('far');
+        text.textContent = 'Favoritar';
+      }
+    } else {
+      console.error('Erro:', data.message);
+    }
+  } catch (error) {
+    console.error('Erro na requisição:', error);
+  }
+}
+
+// Função para verificar se um post específico está favoritado (baseado no seu exemplo)
+async function atualizarEstadoFavorito(postId) {
+  try {
+    const response = await fetch('php/verificar_favorito.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id_post: postId })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data.success) {
+        // Busca os elementos pelo ID único que colocamos no HTML
+        const icon = document.getElementById(`fav-icon-${postId}`);
+        const text = document.getElementById(`fav-text-${postId}`);
+
+        if (icon && text) {
+          if (data.favorito) {
+            // Está favoritado: Estrela cheia
+            icon.classList.remove('far');
+            icon.classList.add('fas');
+            text.textContent = 'Favoritado';
+          } else {
+            // Não está favoritado: Estrela vazia
+            icon.classList.remove('fas');
+            icon.classList.add('far');
+            text.textContent = 'Favoritar';
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.log('Erro ao verificar favorito:', error);
+  }
+}
+
+// Função que roda ao carregar a página para verificar todos os posts
+function carregarFavoritosIniciais() {
+  // Pega todos os botões que tenham a classe 'btn-favorito'
+  const botoes = document.querySelectorAll('.btn-favorito');
+
+  botoes.forEach(btn => {
+    const id = btn.getAttribute('data-id');
+    if (id) {
+      atualizarEstadoFavorito(id);
+    }
+  });
+}
+
+// --- Lógica do Carrossel de Obras Populares ---
+let scrollAmount = 0;
+
+function moverCarrossel(direcao) {
+  const carousel = document.getElementById('carousel');
+  const images = carousel.querySelectorAll('img');
+
+  if (images.length === 0) return;
+
+  // Tamanho de uma imagem + gap (ajuste conforme seu CSS)
+  // Assumindo largura média de 100px + 10px de gap
+  const step = 110;
+
+  // Largura total do conteúdo
+  const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+
+  if (direcao === 1) { // Direita
+    scrollAmount += step;
+    // Se chegou no fim, volta pro começo (Loop)
+    if (scrollAmount > maxScroll) {
+      scrollAmount = 0;
+    }
+  } else { // Esquerda
+    scrollAmount -= step;
+    // Se passou do começo, vai pro fim (Loop)
+    if (scrollAmount < 0) {
+      scrollAmount = maxScroll;
+    }
+  }
+
+  carousel.scrollTo({
+    top: 0,
+    left: scrollAmount,
+    behavior: 'smooth'
+  });
+}
+
+// Opcional: Auto-play (passa sozinho a cada 5 segundos)
+setInterval(() => {
+  moverCarrossel(1);
+}, 5000);
+
+// Função para carregar as imagens do carrossel (Obras Populares)
+async function carregarImagensCarousel() {
+  const imgs = document.querySelectorAll('.carousel-img');
+
+  const promessas = Array.from(imgs).map(async (img) => {
+    const id = img.getAttribute('data-id');
+    const tipo = img.getAttribute('data-tipo');
+
+    if (id && tipo) {
+      // Reutiliza a função de loading que já existe
+      await carregarImagemComLoading(img, id, tipo);
+    }
+  });
+
+  await Promise.all(promessas);
 }

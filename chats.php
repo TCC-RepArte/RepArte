@@ -79,8 +79,8 @@ if ($chat_id) {
     <style>
         .chat-container {
             display: flex;
-            height: calc(100vh - 100px);
-            margin-top: 100px;
+            height: calc(100vh - 150px);
+            margin-top: 20px;
             gap: 20px;
             padding: 0 20px;
         }

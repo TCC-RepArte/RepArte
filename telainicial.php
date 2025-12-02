@@ -10,6 +10,22 @@ require 'php/vlibras_config.php';
 $perfil = buscaUsuario();
 $posts = postagensFeitas();
 
+$hashtags_populares = buscarHashtagsPopulares();
+$obras_populares = buscarObrasPopulares();
+
+if (isset($_SESSION['id'])) {
+  $sql_fav = "SELECT id_post FROM favoritos WHERE id_usuario = ?";
+  $stmt_fav = $con->prepare($sql_fav);
+  $stmt_fav->bind_param("s", $_SESSION['id']);
+  $stmt_fav->execute();
+  $res_fav = $stmt_fav->get_result();
+
+  // Guardo cada ID encontrado na minha lista
+  while ($row_fav = $res_fav->fetch_assoc()) {
+    $meus_favoritos[] = $row_fav['id_post'];
+  }
+}
+
 ?>
 
 <head>
@@ -108,7 +124,7 @@ $posts = postagensFeitas();
                 </a>
                 <!-- Container para o menu de opções do post -->
                 <div class="post-set-container">
-                  <i class="post-set fa-solid fa-bars" style="color: rgb(255, 102, 0);"></i>
+                  <i class="post-set fa-solid fa-bars" style="color: rgb(255, 102, 0);" title="Opções"></i>
 
                   <!-- Menu Dropdown (Balãozinho) -->
                   <div class="post-options-dropdown">
@@ -117,9 +133,11 @@ $posts = postagensFeitas();
                       <i class="fas fa-link"></i> Copiar Link
                     </a>
 
-                    <!-- Favoritar (Lógica futura) -->
-                    <a href="#">
-                      <i class="far fa-star"></i> Favoritar
+                    <a href="#" class="btn-favorito" data-id="<?= $post['id'] ?>"
+                      onclick="toggleFavorito(event, '<?= $post['id'] ?>')">
+
+                      <i class="far fa-star" id="fav-icon-<?= $post['id'] ?>"></i>
+                      <span id="fav-text-<?= $post['id'] ?>">Favoritar</span>
                     </a>
 
                     <!-- Adicionar à Lista (Lógica futura) -->
@@ -184,28 +202,49 @@ $posts = postagensFeitas();
     <section class="right">
       <aside class="sidebar-right">
         <h5 id="h">Hashtags:</h5>
-        <div class="hashtags">
-          <a href="busca.php?q=%23HistóriadoBrasil" class="tag">#HistóriadoBrasil</a>
-          <a href="busca.php?q=%231984" class="tag">#1984</a>
-          <a href="busca.php?q=%23Literatura" class="tag">#Literatura</a>
-          <a href="busca.php?q=%23LadyGaga" class="tag">#LadyGaga</a>
-          <a href="busca.php?q=%23Neofascismo" class="tag">#Neofascismo</a>
-          <a href="busca.php?q=%23Religião" class="tag">#Religião</a>
+        <div class="hashtags" style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <?php if (!empty($hashtags_populares)): ?>
+            <?php foreach ($hashtags_populares as $tag): ?>
+              <!-- Remove o # se já vier do banco com ele -->
+              <?php $nome_tag = str_replace('#', '', $tag['nome']); ?>
+              <a href="hashtag.php?tag=<?= $nome_tag ?>" class="tag">#<?= $nome_tag ?></a>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <p style="color: #666; font-size: 12px;">Nenhuma hashtag ainda.</p>
+          <?php endif; ?>
         </div>
+
         <h5 id="ob">Obras Populares:</h5>
         <div class="carousel-wrapper">
-          <button class="carousel-btn left">&#10094;</button>
+          <button class="carousel-btn left" onclick="moverCarrossel(-1)">&#10094;</button>
+
           <div class="carousel" id="carousel">
-            <img src="images/central.jpg" alt="Imagem 1">
-            <img src="images/vento.jpg" alt="Imagem 2">
-            <img src="images/tale.jpg" alt="Imagem 3">
+            <?php if (!empty($obras_populares)): ?>
+              <?php foreach ($obras_populares as $obra): ?>
+                <a href="obra.php?id=<?= $obra['id'] ?>" title="<?= $obra['titulo'] ?>" style="position: relative; display: block;">
+                  <!-- Adicionei a classe 'carousel-img' e os data-attributes -->
+                  <img class="carousel-img" 
+                       src="images/placeholder_obra.jpg" 
+                       data-id="<?= $obra['id'] ?>" 
+                       data-tipo="<?= $obra['tipo'] ?>" 
+                       alt="<?= $obra['titulo'] ?>"
+                       style="min-width: 80px; height: 120px; object-fit: cover;">
+                </a>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <!-- Fallback se não tiver obras -->
+              <img src="images/central.jpg" alt="Exemplo">
+              <img src="images/vento.jpg" alt="Exemplo">
+            <?php endif; ?>
           </div>
-          <button class="carousel-btn right">&#10095;</button>
+
+          <button class="carousel-btn right" onclick="moverCarrossel(1)">&#10095;</button>
         </div>
       </aside>
     </section>
   </main>
 
+  <script src="js/criarID.js"></script>
   <script src="js/telainicial.js"></script>
   <script src="js/apis-obras.js"></script>
 

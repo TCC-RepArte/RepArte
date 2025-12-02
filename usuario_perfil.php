@@ -160,6 +160,7 @@ $comentarios = buscarComentariosUsuario($id_usuario) ?? [];
 
   </div>
 
+  <script src="js/perfil.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
 

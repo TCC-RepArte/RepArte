@@ -146,6 +146,7 @@ $comentarios = buscarComentariosUsuario($_SESSION['id']) ?? [];
 
   </div>
 
+  <script src="js/perfil.js"></script>  
   <script>
     document.addEventListener("DOMContentLoaded", () => {
 

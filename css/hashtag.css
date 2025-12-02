@@ -1,0 +1,113 @@
+/* Apenas ajustes específicos da página Hashtag */
+
+/* Banner */
+.hashtag-banner {
+    background: linear-gradient(180deg, #1a0637 0%, #050505 100%);
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+    /* Espaço do header */
+    margin-bottom: 20px;
+}
+
+.hashtag-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hash-symbol {
+    font-size: 80px;
+    color: #ff6600;
+    font-weight: 800;
+}
+
+.hashtag-title h1 {
+    font-size: 50px;
+    color: white;
+    font-weight: 700;
+}
+
+/* Layout de Colunas (igual ao telainicial, mas sem a esquerda) */
+.hashtag-container {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    /* Feed + Sidebar Direita */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+}
+
+/* Box Genérico da Sidebar */
+.sidebar-box {
+    background-color: #121212 !important;
+    /* Força o fundo escuro */
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border: none !important;
+}
+
+/* Quando não tem posts */
+.no-posts {
+    background-color: #121212 !important;
+    /* Força o fundo escuro */
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    color: #888;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Sidebar Direita (ajustes para caber os filtros) */
+.sidebar-hashtag {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Filtros */
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group label {
+    display: block;
+    color: #aaa;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    background: #0f0e0f;
+    color: white;
+    border: 1px solid #444;
+}
+
+/* Mini Carrossel */
+.mini-carousel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.mini-carousel img {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+    .hashtag-container {
+        grid-template-columns: 1fr;
+    }
+}
