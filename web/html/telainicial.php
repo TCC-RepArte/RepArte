@@ -35,7 +35,7 @@ $posts = postagensFeitas();
     <div class="header-controls">
 
         <!-- Ícone de configurações -->
-        <a href="../front-end/configuracoes.php" class="btn-config">
+        <a href="../html/configuracoes.html" class="btn-config">
             <i class="fas fa-cog"></i>
         </a>
 

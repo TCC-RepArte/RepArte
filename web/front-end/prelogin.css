@@ -34,9 +34,12 @@ body::before {
 
 .flex {
   display: flex;
+  flex-direction: row-reverse;
 }
 
 .interface {
+  display: flex;
+  flex-direction: row;
   max-width: 1280px;
   margin: 0 auto;
   position: relative;
@@ -317,6 +320,7 @@ section.topo-do-site .flex {
 
 .carrossel-obra {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 18px;
   margin-left: 80px;
@@ -333,6 +337,7 @@ section.topo-do-site .flex {
   cursor: pointer;
   box-shadow: 0 2px 12px #000a;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   transition: background 0.2s, color 0.2s;
@@ -530,6 +535,8 @@ footer .line-footer {
     font-size: 36px;
     width: 44px;
     height: 44px;
+    display: flex;
+    flex-direction: row;
   }
 }
 
@@ -557,6 +564,7 @@ footer .line-footer {
   .logo{
     margin: 40px;
     justify-content: left;
+    position: fixed;
   }
   .btn-abrir-menu{
     display: block;
@@ -596,6 +604,22 @@ footer .line-footer {
 .topo-do-site p {
   font-size: 20px;
   text-align: justify;
+}
+.seta seta-esquerda{
+  display: flex;
+  flex-direction: row;
+   font-size: 36px;
+    width: 44px;
+    height: 44px;
+
+}
+.seta seta-direita{
+  display: flex;
+  flex-direction: row;
+   font-size: 36px;
+    width: 44px;
+    height: 44px;
+
 }
 }
 

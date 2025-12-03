@@ -87,10 +87,8 @@
                         <img src="../imagens/logo.png" alt="">
                     </div>
                     <div class="btn-social">
-                        <a href="#"><button><i class="bi bi-twitter-x"></i></button></a>
-                        <a href="#"><button><i class="bi bi-instagram"></i></button></a>
-                        <a href="#"><button><i class="bi bi-facebook"></i></button></a>
-                        <a href="#"><button><i class="bi bi-tiktok"></i></button></a>
+                        <a href="https://x.com/RepArtetcc?t=_xabIrCKfrAsyM2Fn5QemA&s=09"><button><i class="bi bi-twitter-x"></i></button></a>
+                        <a href="https://www.instagram.com/reparte_3y?igsh=MTF1aWNid3kyMWVi"><button><i class="bi bi-instagram"></i></button></a>
                     </div>
                 </div>
             </div>
