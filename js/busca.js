@@ -9,6 +9,9 @@ let estadoPaginacao = {
     indicesPaginas: [0] // Armazena o índice inicial de cada página: [0, 15, 32, ...]
 };
 
+// Armazena todas as obras carregadas para permitir filtragem local
+window.todasObrasCarregadas = [];
+
 // Retorna o ícone correto baseado no tipo de obra
 function getIconeTipo(tipo, subtipo) {
     if (tipo === 'filme') {
@@ -61,7 +64,7 @@ function openTab(evt, tabName) {
     }
 }
 
-// Executa busca automaticamente
+// Executa busca automaticamente (Local + API)
 async function realizarBuscaAutomatica() {
     const urlParams = new URLSearchParams(window.location.search);
     const termo = urlParams.get('q');
@@ -73,6 +76,7 @@ async function realizarBuscaAutomatica() {
 
     if (!container) return;
 
+    // Mostra o loading enquanto carrega
     container.innerHTML = `
         <div style="text-align:center;padding:60px;">
             <div style="width:40px;height:40px;border:4px solid rgba(255,102,0,0.2);border-radius:50%;border-top-color:#ff6600;animation:spin 1s ease-in-out infinite;margin:0 auto 15px;"></div>
@@ -82,25 +86,81 @@ async function realizarBuscaAutomatica() {
     `;
 
     try {
+        // 1. Processar obras locais (que vieram do PHP)
+        let obrasLocais = [];
+        if (window.obrasLocais && Array.isArray(window.obrasLocais)) {
+            obrasLocais = window.obrasLocais.map(obra => ({
+                id: obra.id,
+                tipo: obra.tipo || 'arte',
+                subtipo: obra.subtipo || '',
+                titulo: obra.titulo,
+                ano: obra.ano || 'N/A',
+                imagem: obra.img || obra.imagem || 'images/placeholder_obra.jpg',
+                autor: obra.autor || 'Desconhecido',
+                apiId: obra.id,
+                origem: 'local'
+            }));
+        }
+
+        // 2. Buscar na API (Externo)
         const resultado = await buscarObras(termo, tipos);
 
-        if (!resultado.resultados || resultado.resultados.length === 0) {
+        // 3. Juntar tudo (Locais + API) na mesma lista
+        const todasObras = [...obrasLocais, ...(resultado.resultados || [])];
+
+        // Salvar na variável global para filtragem
+        window.todasObrasCarregadas = todasObras;
+
+        // Se não achou nada em lugar nenhum
+        if (todasObras.length === 0) {
             container.innerHTML = '<p style="text-align:center;color:#aaa;padding:40px;">Nenhuma obra encontrada.</p>';
             return;
         }
 
-        // Inicializar estado
-        estadoPaginacao.obras = resultado.resultados;
-        estadoPaginacao.paginaAtual = 1;
-        estadoPaginacao.indicesPaginas = [0];
-
-        // Renderizar primeira página
-        renderizarPaginaDinamica(1);
+        // Aplicar filtros iniciais (todos marcados por padrão)
+        filtrarObras();
 
     } catch (error) {
         console.error('Erro na busca:', error);
         container.innerHTML = '<p style="text-align:center;color:#aaa;padding:40px;">Erro ao buscar obras.</p>';
     }
+}
+
+// Função para filtrar as obras com base nos checkboxes
+function filtrarObras() {
+    const checkboxes = document.querySelectorAll('.opcao-filtro input[type="checkbox"]');
+    const tiposSelecionados = Array.from(checkboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+
+    // Filtrar a lista completa
+    const obrasFiltradas = window.todasObrasCarregadas.filter(obra => {
+        // Se o tipo da obra estiver na lista de selecionados, retorna true
+        // Normaliza o tipo para minúsculo para garantir
+        const tipoObra = (obra.tipo || '').toLowerCase();
+        return tiposSelecionados.includes(tipoObra);
+    });
+
+    // Atualizar estado da paginação
+    estadoPaginacao.obras = obrasFiltradas;
+    estadoPaginacao.paginaAtual = 1;
+    estadoPaginacao.indicesPaginas = [0];
+
+    // Renderizar
+    const container = document.getElementById('obras-container-dinamico');
+    if (obrasFiltradas.length === 0) {
+        container.innerHTML = '<p style="text-align:center;color:#aaa;padding:40px;">Nenhuma obra encontrada com os filtros selecionados.</p>';
+        document.getElementById('paginacao-container-obras').innerHTML = '';
+    } else {
+        renderizarPaginaDinamica(1);
+    }
+}
+
+// Função para marcar/desmarcar todos os filtros
+function marcarTodosFiltros(marcar) {
+    const checkboxes = document.querySelectorAll('.opcao-filtro input[type="checkbox"]');
+    checkboxes.forEach(cb => cb.checked = marcar);
+    filtrarObras();
 }
 
 // Renderiza itens preenchendo o container até não caber mais
@@ -111,48 +171,32 @@ function renderizarPaginaDinamica(pagina) {
     // Limpar container
     container.innerHTML = '';
 
-    // Obter índice inicial desta página
-    // Se a página solicitada for maior que o que temos mapeado, usar o último índice conhecido
     if (pagina > estadoPaginacao.indicesPaginas.length) {
-        // Isso não deve acontecer normalmente, mas por segurança
         pagina = estadoPaginacao.indicesPaginas.length;
     }
 
     const indiceInicial = estadoPaginacao.indicesPaginas[pagina - 1];
     let indiceAtual = indiceInicial;
 
-    // Container dimensions
     const containerRect = container.getBoundingClientRect();
     const containerRight = containerRect.right;
 
-    // Criar fragmento para melhor performance
-    const fragment = document.createDocumentFragment();
-
-    // Loop para adicionar itens
     while (indiceAtual < estadoPaginacao.obras.length) {
         const obra = estadoPaginacao.obras[indiceAtual];
         const card = criarCardObra(obra);
 
-        // Adicionar ao container (real, não fragmento, para medir)
         container.appendChild(card);
 
-        // Verificar se o item ultrapassou o limite horizontal (indicando que foi para uma nova coluna fora da tela)
-        // No layout column-fill: auto com altura fixa, os itens preenchem col 1, depois col 2...
-        // Se o card estiver fora da largura do container, ele "transbordou"
         const cardRect = card.getBoundingClientRect();
 
-        // Margem de erro de 10px
         if (cardRect.left > containerRight - 10) {
-            // Remove o item que transbordou
             container.removeChild(card);
-            break; // Parar de adicionar
+            break;
         }
 
         indiceAtual++;
     }
 
-    // O próximo índice inicial (para a próxima página) é onde paramos
-    // Se ainda não mapeamos a próxima página, adicionar ao array
     if (pagina === estadoPaginacao.indicesPaginas.length && indiceAtual < estadoPaginacao.obras.length) {
         estadoPaginacao.indicesPaginas.push(indiceAtual);
     }
@@ -195,7 +239,6 @@ function criarCardObra(obra) {
         </a>
     `;
 
-    // Adicionar eventos de hover
     const card = div.querySelector('.obra-card');
     const overlay = div.querySelector('.obra-overlay');
 
@@ -217,11 +260,14 @@ function criarCardObra(obra) {
 function renderizarControlesPaginacao() {
     let container = document.getElementById('paginacao-container-obras');
 
-    // Se não existir, criar
     if (!container) {
+        // Se o container de paginação foi removido (ex: ao filtrar e não ter resultados), recriar
+        // Mas precisamos saber onde colocar. Ele deve estar dentro da div #obras, após o container dinâmico
+        // Como a estrutura mudou para ter sidebar, o container de paginação está dentro da div flex-column
+        const parent = document.getElementById('obras-container-dinamico').parentElement;
         container = document.createElement('div');
         container.id = 'paginacao-container-obras';
-        document.getElementById('obras').appendChild(container);
+        parent.appendChild(container);
     }
 
     const paginaAtual = estadoPaginacao.paginaAtual;
@@ -231,7 +277,6 @@ function renderizarControlesPaginacao() {
 
     let html = '<div style="display:flex;align-items:center;gap:10px;">';
 
-    // Botão Anterior
     html += `
         <button onclick="navegarPagina(${paginaAtual - 1})" 
                 ${paginaAtual === 1 ? 'disabled' : ''}
@@ -240,14 +285,12 @@ function renderizarControlesPaginacao() {
         </button>
     `;
 
-    // Indicador
     if (totalObras > 0) {
         html += `<span style="color:#888;font-size:14px;">Página ${paginaAtual} (${totalObras} obras)</span>`;
     } else {
         html += `<span style="color:#888;font-size:14px;">Nenhuma obra</span>`;
     }
 
-    // Botão Próxima
     html += `
         <button onclick="navegarPagina(${paginaAtual + 1})" 
                 ${!temMaisObras ? 'disabled' : ''}
@@ -263,9 +306,7 @@ function renderizarControlesPaginacao() {
 function navegarPagina(novaPagina) {
     if (novaPagina < 1) return;
 
-    // Se for próxima página e ainda não calculamos seu índice
     if (novaPagina > estadoPaginacao.indicesPaginas.length) {
-        // Só permite ir se tivermos obras restantes
         const ultimoIndice = estadoPaginacao.indicesPaginas[estadoPaginacao.indicesPaginas.length - 1];
         if (ultimoIndice >= estadoPaginacao.obras.length) return;
     }
@@ -273,7 +314,6 @@ function navegarPagina(novaPagina) {
     renderizarPaginaDinamica(novaPagina);
 }
 
-// Inicialização
 document.addEventListener('DOMContentLoaded', function () {
     if (typeof buscarObras === 'undefined') {
         console.error('ERRO: apis-obras.js não foi carregado!');
@@ -282,12 +322,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     realizarBuscaAutomatica();
 
-    // Recalcular layout ao redimensionar a janela
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
-            // Resetar paginação ao redimensionar pois o número de itens que cabem muda
             estadoPaginacao.indicesPaginas = [0];
             renderizarPaginaDinamica(1);
         }, 300);
@@ -296,5 +334,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 window.navegarPagina = navegarPagina;
 window.openTab = openTab;
+window.filtrarObras = filtrarObras;
+window.marcarTodosFiltros = marcarTodosFiltros;
 
 console.log('=== BUSCA.JS INICIALIZADO ===');

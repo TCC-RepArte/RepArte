@@ -1,0 +1,563 @@
+/* Estilos específicos para posts na página de perfil */
+
+/* Layout principal */
+.hashtag-container {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
+    max-width: 100%;
+    margin: 20px 0;
+    padding: 0;
+}
+
+.feed-hashtag {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Sidebar */
+.sidebar-hashtag {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 20px;
+    align-self: start;
+    height: fit-content;
+}
+
+.sidebar-box {
+    background-color: rgba(255, 255, 255, 0.02);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.filter-group label {
+    display: block;
+    color: var(--muted);
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.obras-box h3 {
+    margin-bottom: 15px;
+    color: var(--text);
+    font-size: 16px;
+}
+
+.no-posts {
+    background-color: rgba(255, 255, 255, 0.02);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    color: #888;
+}
+
+/* Estilos dos Posts */
+.post {
+    background: #0f0f10;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.post-header {
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+}
+
+.post-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.post-user a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: opacity 0.3s ease;
+}
+
+.post-user a:hover {
+    opacity: 0.8;
+}
+
+.post-user a:hover h3 {
+    color: #ff6600;
+}
+
+.post-user-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ff6600;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.post-user a:hover .post-user-photo {
+    transform: scale(1.1);
+}
+
+.post-user h3 {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+/* Ícones de ação */
+.fullscreen-icon {
+    color: #666;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.fullscreen-icon:hover i {
+    color: #ff6600;
+    transform: scale(1.1);
+}
+
+.fullscreen-icon i {
+    transition: all 0.3s ease;
+}
+
+/* Menu de opções do post */
+.post-set-container {
+    position: relative;
+    display: inline-block;
+}
+
+.post-set {
+    transition: all 0.3s ease;
+    display: inline-block;
+    color: #666 !important;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.post-set:hover {
+    color: #ff6600 !important;
+    transform: scale(1.1);
+}
+
+.post-options-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    min-width: 180px;
+    z-index: 1000;
+    margin-top: 5px;
+}
+
+.post-set-container:hover .post-options-dropdown {
+    display: block;
+}
+
+.post-options-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    color: #ccc;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.post-options-dropdown a:hover {
+    background: rgba(255, 102, 0, 0.1);
+    color: #ff6600;
+}
+
+.post-options-dropdown a i {
+    width: 16px;
+    text-align: center;
+}
+
+/* Corpo do post */
+.post-body {
+    padding: 25px;
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.obra-link {
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+#img-post {
+    width: 150px;
+    max-height: 220px;
+    object-fit: contain;
+    border-radius: 8px;
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.post-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+    overflow: hidden;
+    text-align: left;
+}
+
+.obra-title-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+.obra-title-link:hover {
+    color: #ff6600;
+}
+
+.obra-title-link p {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+    line-height: 1.3;
+}
+
+.post-text-container {
+    color: #ccc;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.post-text-truncated {
+    max-height: 100px;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.expand-button {
+    background: none;
+    border: none;
+    color: #ff6600;
+    cursor: pointer;
+    padding: 5px 0;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.expand-button:hover {
+    text-decoration: underline;
+}
+
+/* Botões do post */
+.post-buttons {
+    padding: 20px 25px;
+    border-top: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.comment-button {
+    background: transparent;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.comment-button:hover {
+    color: #ff6600;
+}
+
+/* Botões de reação */
+.vote-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.like-btn,
+.dislike-btn {
+    background: transparent;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.like-btn:hover {
+    color: #4CAF50;
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.dislike-btn:hover {
+    color: #f44336;
+    background: rgba(244, 67, 54, 0.1);
+}
+
+.like-btn.active {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.dislike-btn.active {
+    color: #f44336;
+    font-weight: bold;
+}
+
+.like-count,
+.dislike-count {
+    color: #999;
+    font-size: 14px;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+    .hashtag-container {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar-hashtag {
+        position: static;
+    }
+}
+
+/* Esconder o painel de obras do telainicial.js */
+.painel-busca-obras,
+.overlay {
+    display: none !important;
+}
+
+/* Sidebar e Boxes */
+.sidebar-hashtag {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 100px;
+    align-self: start;
+    height: fit-content;
+}
+
+.sidebar-box,
+.no-posts {
+    background-color: #0f0f10 !important;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border: none !important;
+}
+
+.no-posts {
+    padding: 40px;
+    text-align: center;
+    color: #888;
+}
+
+/* Filtros */
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group label {
+    display: block;
+    color: #aaa;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    background: #0f0e0f;
+    color: white;
+    border: 1px solid #444;
+}
+
+/* Mini Carrossel */
+.mini-carousel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.mini-carousel img {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Estilos para a aba de Favoritos (Masonry Layout - igual busca.php) */
+.favoritos-masonry {
+    column-count: 6;
+    column-gap: 15px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Responsividade do Masonry */
+@media (max-width: 1600px) {
+    .favoritos-masonry {
+        column-count: 5;
+    }
+}
+
+@media (max-width: 1300px) {
+    .favoritos-masonry {
+        column-count: 4;
+    }
+}
+
+@media (max-width: 1000px) {
+    .favoritos-masonry {
+        column-count: 3;
+    }
+}
+
+@media (max-width: 600px) {
+    .favoritos-masonry {
+        column-count: 2;
+    }
+}
+
+/* Cards dos favoritos */
+.favorito-card-wrapper {
+    break-inside: avoid;
+    margin-bottom: 15px;
+    display: inline-block;
+    width: 100%;
+}
+
+.favorito-card {
+    position: relative;
+    background: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.favorito-card:hover {
+    box-shadow: 0 8px 24px rgba(255, 102, 0, 0.4);
+    transform: translateY(-4px);
+}
+
+/* Badge do usuário no canto superior direito */
+.favorito-user-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 3;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #ff6600;
+    background: #1a1a1a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.favorito-user-badge img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Imagem da obra */
+.favorito-obra-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    background: #2a2a2a;
+    min-height: 200px;
+}
+
+/* Overlay com informações (aparece no hover) */
+.favorito-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 70%, transparent 100%);
+    padding: 15px 10px 10px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.favorito-card:hover .favorito-overlay {
+    transform: translateY(0);
+}
+
+.favorito-overlay h4 {
+    color: #fff;
+    font-size: 13px;
+    margin: 0;
+    font-weight: bold;
+    line-height: 1.3;
+}
+
+.favorito-overlay p {
+    color: #aaa;
+    font-size: 11px;
+    margin: 3px 0 0;
+    line-height: 1.2;
+}

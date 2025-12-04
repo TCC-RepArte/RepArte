@@ -76,6 +76,23 @@ try {
         $stmtInsert = $con->prepare($sqlInsert);
         $stmtInsert->bind_param("sss", $reacaoId, $userId, $comentarioId);
         $stmtInsert->execute();
+
+                
+        // Criar notificação para o dono do comentário
+        require_once 'criar_notificacao.php';
+        
+        $sqlDono = "SELECT id_usuario FROM comentarios WHERE id = ?";
+        $stmtDono = $con->prepare($sqlDono);
+        $stmtDono->bind_param("s", $comentarioId);
+        $stmtDono->execute();
+        $resultDono = $stmtDono->get_result();
+        
+        if ($rowDono = $resultDono->fetch_assoc()) {
+            $idDono = $rowDono['id_usuario'];
+            if ($idDono != $userId) {
+                criarNotificacao($idDono, $userId, 'reacao', $comentarioId, 'curtiu seu comentário');
+            }
+        }
         
         echo json_encode([
             'success' => true,

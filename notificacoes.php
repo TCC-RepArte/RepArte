@@ -64,26 +64,11 @@ if (!isset($_SESSION['id'])) {
             <div class="settings-list">
                 <div class="setting-item">
                     <div class="setting-info">
-                        <h3>Análises publicadas</h3>
-                        <p>Receba notificações quando alguém publicar uma nova análise.</p>
-                    </div>
-                    <div class="toggle active" onclick="this.classList.toggle('active')"></div>
-                </div>
-
-                <div class="setting-item">
-                    <div class="setting-info">
                         <h3>Comentários</h3>
                         <p>Seja notificado quando alguém comentar em suas postagens.</p>
                     </div>
-                    <div class="toggle active" onclick="this.classList.toggle('active')"></div>
-                </div>
-
-                <div class="setting-item">
-                    <div class="setting-info">
-                        <h3>Seguidores</h3>
-                        <p>Saiba quando alguém começar a te seguir.</p>
-                    </div>
-                    <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+                    <div class="toggle" id="toggle-comentarios" data-tipo="notif_comentarios"
+                        onclick="togglePreferencia(this)"></div>
                 </div>
 
                 <div class="setting-item">
@@ -91,25 +76,142 @@ if (!isset($_SESSION['id'])) {
                         <h3>Reações</h3>
                         <p>Receba alertas sobre curtidas e reações em seu conteúdo.</p>
                     </div>
-                    <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+                    <div class="toggle" id="toggle-reacoes" data-tipo="notif_reacoes" onclick="togglePreferencia(this)">
+                    </div>
                 </div>
 
                 <div class="setting-item">
                     <div class="setting-info">
-                        <h3>Chats</h3>
-                        <p>Notificações de novas mensagens diretas.</p>
+                        <h3>Respostas</h3>
+                        <p>Saiba quando alguém responder aos seus comentários.</p>
                     </div>
-                    <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+                    <div class="toggle" id="toggle-respostas" data-tipo="notif_respostas"
+                        onclick="togglePreferencia(this)"></div>
                 </div>
             </div>
 
             <div class="actions" style="margin-top: 30px; justify-content: flex-end;">
-                <button class="save">Salvar Preferências</button>
+                <button class="save" onclick="salvarPreferencias()">Salvar Preferências</button>
             </div>
         </main>
     </div>
 
     <script>
+        function confirmarLogout() {
+            Swal.fire({
+                title: "Tem certeza que deseja sair?",
+                text: "Você precisará fazer login novamente.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#ff6600",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sim, sair!",
+                cancelButtonText: "Cancelar",
+                background: "#1a1a1a",
+                color: "#fff"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'php/logout.php';
+                }
+            });
+        }
+    </script>
+
+    <script>
+        // Carregar preferências ao abrir a página
+        document.addEventListener('DOMContentLoaded', function () {
+            carregarPreferencias();
+        });
+
+        // Carregar preferências do banco
+        function carregarPreferencias() {
+            fetch('php/notificacoes_api.php?acao=buscar_preferencias')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.preferencias) {
+                        const pref = data.preferencias;
+
+                        // Ativar/desativar toggles conforme banco
+                        if (pref.notif_comentarios == 1) {
+                            document.getElementById('toggle-comentarios').classList.add('active');
+                        }
+                        if (pref.notif_reacoes == 1) {
+                            document.getElementById('toggle-reacoes').classList.add('active');
+                        }
+                        if (pref.notif_respostas == 1) {
+                            document.getElementById('toggle-respostas').classList.add('active');
+                        }
+                    } else {
+                        // Se não tem preferências, ativar tudo por padrão
+                        document.querySelectorAll('.toggle').forEach(toggle => {
+                            toggle.classList.add('active');
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar preferências:', error);
+                    // Em caso de erro, ativar tudo por padrão
+                    document.querySelectorAll('.toggle').forEach(toggle => {
+                        toggle.classList.add('active');
+                    });
+                });
+        }
+
+        // Toggle de preferência
+        function togglePreferencia(element) {
+            element.classList.toggle('active');
+        }
+
+        // Salvar preferências
+        function salvarPreferencias() {
+            const preferencias = {
+                notif_comentarios: document.getElementById('toggle-comentarios').classList.contains('active'),
+                notif_reacoes: document.getElementById('toggle-reacoes').classList.contains('active'),
+                notif_respostas: document.getElementById('toggle-respostas').classList.contains('active')
+            };
+
+            fetch('php/salvar_preferencias_notificacoes.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(preferencias)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: "Sucesso!",
+                            text: "Preferências salvas com sucesso!",
+                            icon: "success",
+                            confirmButtonColor: "#ff6600",
+                            background: "#1a1a1a",
+                            color: "#fff"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Erro!",
+                            text: "Erro ao salvar preferências.",
+                            icon: "error",
+                            confirmButtonColor: "#ff6600",
+                            background: "#1a1a1a",
+                            color: "#fff"
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    Swal.fire({
+                        title: "Erro!",
+                        text: "Erro ao salvar preferências.",
+                        icon: "error",
+                        confirmButtonColor: "#ff6600",
+                        background: "#1a1a1a",
+                        color: "#fff"
+                    });
+                });
+        }
+
         function confirmarLogout() {
             Swal.fire({
                 title: "Tem certeza que deseja sair?",

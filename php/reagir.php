@@ -90,6 +90,24 @@ if (isset($input['id'])) {
         $stmt->bind_param('ssss', $id_usuario, $id_conteudo, $id_reacao, $tipo);
         
         if ($stmt->execute()) {
+
+            // Criar notificação para o dono do post
+            require_once 'criar_notificacao.php';
+            
+            $sqlDono = "SELECT id_usuario FROM postagens WHERE id = ?";
+            $stmtDono = $con->prepare($sqlDono);
+            $stmtDono->bind_param("s", $id_conteudo);
+            $stmtDono->execute();
+            $resultDono = $stmtDono->get_result();
+            
+            if ($rowDono = $resultDono->fetch_assoc()) {
+                $idDono = $rowDono['id_usuario'];
+                if ($idDono != $id_usuario) {
+                    $tipoReacao = $tipo == 'like' ? 'curtiu' : 'descurtiu';
+                    criarNotificacao($idDono, $id_usuario, 'reacao', $id_conteudo, "$tipoReacao sua postagem");
+                }
+            }
+
             echo json_encode(['success' => true, 'action' => 'reacao_adicionada']);
         } else {
             echo json_encode(['success' => false, 'error' => 'Erro ao adicionar reação: ' . $con->error]);

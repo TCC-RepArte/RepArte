@@ -5,10 +5,12 @@ session_start();
 require 'php/perfil_dados.php';
 require 'php/telainicial_post.php';
 require 'php/vlibras_config.php';
+require 'php/buscar_usuarios.php';
 
 // Tranformando o $row em $perfil, qual vai puxar valores de colunas
 $perfil = buscaUsuario();
 $posts = postagensFeitas();
+$outros_usuarios = buscarOutrosUsuarios();
 
 $hashtags_populares = buscarHashtagsPopulares();
 $obras_populares = buscarObrasPopulares();
@@ -48,16 +50,33 @@ if (isset($_SESSION['id'])) {
     <div class="search-box">
       <form action="busca.php" method="GET" style="display: flex; width: 100%; align-items: center;">
         <button type="submit" class="search-icon" style="background: none; border: none; cursor: pointer;">🔍</button>
-        <input type="text" class="search-text" placeholder="Procure uma obra, usuário ou hashtag...">
+        <input type="text" name="q" class="search-text" placeholder="Procure uma obra, usuário ou hashtag...">
       </form>
     </div>
 
     <div class="header-actions">
-      <i class="fas fa-bell"></i>
+      <div class="notif-container">
+        <i class="fas fa-bell" id="notif-icon"></i>
+        <span class="notif-badge" id="notif-badge" style="display: none;">0</span>
+
+        <!-- Dropdown de notificações -->
+        <div class="notif-dropdown" id="notif-dropdown">
+          <div class="notif-header">
+            <h4>Notificações</h4>
+            <button class="marcar-todas-lidas" onclick="marcarTodasLidas()">Marcar todas como lidas</button>
+          </div>
+          <div class="notif-list" id="notif-list">
+            <div class="notif-empty">Carregando...</div>
+          </div>
+          <a href="notificacoes.php" class="notif-footer">Ver preferências</a>
+        </div>
+      </div>
       <a href="configuracoes.php" style="color: inherit; text-decoration: none;"><i class="fas fa-cog"></i></a>
-      <a href="chats.php" class="btn-chat" style="color: white" title="Chat">
-        <i class="fas fa-comments"></i>
-      </a>
+      <?php if (isset($_SESSION['id']) && $_SESSION['id'] === 'rFRCxqU-Yze'): ?>
+        <a href="admin.php" style="color: inherit; text-decoration: none;" title="Painel Admin">
+          <i class="fas fa-shield-alt"></i>
+        </a>
+      <?php endif; ?>
     </div>
 
   </header>
@@ -72,12 +91,19 @@ if (isset($_SESSION['id'])) {
           </div>
         </a>
         <div class="user-list">
-          <!-- Usuários estáticos por enquanto, idealmente viriam do BD -->
-          <div class="user-item"><img src="images/usuario2.png"> Usuário 1</div>
-          <div class="user-item"><img src="images/usuario1.png"> Usuário 2</div>
-          <div class="user-item"><img src="images/usuario7.png"> Usuário 3</div>
-          <div class="user-item"><img src="images/usuario8.png"> Usuário 4</div>
-          <div class="user-item"><img src="images/usuario9.png"> Usuário 5</div>
+          <?php if (!empty($outros_usuarios)): ?>
+            <?php foreach ($outros_usuarios as $usuario): ?>
+              <a href="usuario_perfil.php?id=<?= $usuario['id'] ?>" class="user-item"
+                style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                <img src="<?= $usuario['caminho'] ?>"
+                  alt="<?= htmlspecialchars($usuario['nomexi'] ?? $usuario['usuario']) ?>">
+                <span class="user-name"><?= htmlspecialchars($usuario['nomexi'] ?? $usuario['usuario']) ?></span>
+              </a>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <p style="color: #666; font-size: 12px; text-align: center; padding: 20px 0;">Nenhum outro usuário cadastrado
+              ainda.</p>
+          <?php endif; ?>
         </div>
       </aside>
     </section>
@@ -86,8 +112,17 @@ if (isset($_SESSION['id'])) {
       <div class="create-post">
         <form action="php/criar_postagens.php" method="post">
           <div class="textarea-container">
-            <textarea name="titulo_post" rows="1" class="t1 post" placeholder="Escreva o título..."></textarea>
-            <textarea name="texto" class="t2 post" placeholder="Escreva sua análise... #hashtag"></textarea>
+            <textarea name="titulo_post" rows="1" class="t1 post" placeholder="Título"></textarea>
+            <textarea name="texto" class="t2 post" placeholder="Escreva a sua análise..."></textarea>
+
+            <!-- Botão de seleção de obra (quadrado cinza com +) -->
+            <div id="obra-preview-btn" class="obra-preview-button">
+              <i class="fas fa-plus"></i>
+              <img src="" alt="Obra selecionada" style="display: none;">
+              <button type="button" class="remover-obra-btn" title="Remover obra">×</button>
+            </div>
+
+            <!-- Campos hidden para armazenar dados da obra -->
             <input type="hidden" class="id_obra" name="id">
             <input type="hidden" class="tit_obra" name="titulo">
             <input type="hidden" class="ano_obra" name="ano">
@@ -97,16 +132,13 @@ if (isset($_SESSION['id'])) {
             <input type="hidden" class="img_obra" name="img">
           </div>
           <div class="buttons-row">
-            <button id="buscar-obra-btn" class="btn-buscar-obra">
-              <i class="fas fa-search"></i>Buscar Obra
-            </button>
             <div class="post-actions">
-              <button type="submit">Anexar</button>
-              <button>Enviar</button>
+              <button type="submit">Enviar</button>
             </div>
           </div>
         </form>
       </div>
+
       <?php if (!empty($posts)): ?>
         <?php foreach ($posts as $post): ?>
           <div class="post">
@@ -215,31 +247,27 @@ if (isset($_SESSION['id'])) {
         </div>
 
         <h5 id="ob">Obras Populares:</h5>
-        <div class="carousel-wrapper">
-          <button class="carousel-btn left" onclick="moverCarrossel(-1)">&#10094;</button>
+        <?php if (!empty($obras_populares)): ?>
+          <div class="carousel-wrapper">
+            <button class="carousel-btn left" onclick="moverCarrossel(-1)">&#10094;</button>
 
-          <div class="carousel" id="carousel">
-            <?php if (!empty($obras_populares)): ?>
+            <div class="carousel" id="carousel">
               <?php foreach ($obras_populares as $obra): ?>
-                <a href="obra.php?id=<?= $obra['id'] ?>" title="<?= $obra['titulo'] ?>" style="position: relative; display: block;">
-                  <!-- Adicionei a classe 'carousel-img' e os data-attributes -->
-                  <img class="carousel-img" 
-                       src="images/placeholder_obra.jpg" 
-                       data-id="<?= $obra['id'] ?>" 
-                       data-tipo="<?= $obra['tipo'] ?>" 
-                       alt="<?= $obra['titulo'] ?>"
-                       style="min-width: 80px; height: 120px; object-fit: cover;">
+                <a href="obra.php?id=<?= $obra['id'] ?>" title="<?= $obra['titulo'] ?>"
+                  style="position: relative; display: block;">
+                  <img class="carousel-img" src="images/placeholder_obra.jpg" data-id="<?= $obra['id'] ?>"
+                    data-tipo="<?= $obra['tipo'] ?>" alt="<?= $obra['titulo'] ?>"
+                    style="min-width: 80px; height: 120px; object-fit: cover;">
                 </a>
               <?php endforeach; ?>
-            <?php else: ?>
-              <!-- Fallback se não tiver obras -->
-              <img src="images/central.jpg" alt="Exemplo">
-              <img src="images/vento.jpg" alt="Exemplo">
-            <?php endif; ?>
-          </div>
+            </div>
 
-          <button class="carousel-btn right" onclick="moverCarrossel(1)">&#10095;</button>
-        </div>
+            <button class="carousel-btn right" onclick="moverCarrossel(1)">&#10095;</button>
+          </div>
+        <?php else: ?>
+          <p style="color: #666; font-size: 12px; text-align: center; margin-top: 10px;">Nenhuma obra popular
+            ainda.</p>
+        <?php endif; ?>
       </aside>
     </section>
   </main>
@@ -247,6 +275,7 @@ if (isset($_SESSION['id'])) {
   <script src="js/criarID.js"></script>
   <script src="js/telainicial.js"></script>
   <script src="js/apis-obras.js"></script>
+  <script src="js/notificacoes.js"></script>
 
   <?php renderizarVLibras(); ?>
 

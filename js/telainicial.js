@@ -574,6 +574,149 @@ function contrairTexto(postId) {
   }
 }
 
+// Variáveis globais para armazenar referências
+window.selecionarObraCompleta = function (obra) {
+  console.log('=== SELECIONANDO OBRA ===');
+  console.log('Obra recebida:', obra);
+
+  // Buscar os campos hidden diretamente
+  const idInput = document.querySelector('.id_obra');
+  const tituloInput = document.querySelector('.tit_obra');
+  const autorInput = document.querySelector('.autor_obra');
+  const descricaoInput = document.querySelector('.descricao_obra');
+  const anoInput = document.querySelector('.ano_obra');
+  const tipoInput = document.querySelector('.tipo_obra');
+  const imagemInput = document.querySelector('.img_obra');
+
+  console.log('Campos encontrados:', {
+    idInput: !!idInput,
+    tituloInput: !!tituloInput,
+    autorInput: !!autorInput,
+    descricaoInput: !!descricaoInput,
+    anoInput: !!anoInput,
+    tipoInput: !!tipoInput,
+    imagemInput: !!imagemInput
+  });
+
+  // Preencher os campos hidden com os dados da obra
+  if (idInput) idInput.value = obra.apiId || '';
+  if (tituloInput) tituloInput.value = obra.titulo || '';
+  if (autorInput) autorInput.value = obra.autor || '';
+  if (descricaoInput) descricaoInput.value = obra.descricao || '';
+  if (anoInput) anoInput.value = obra.ano || '';
+  if (tipoInput) tipoInput.value = obra.tipo || '';
+  if (imagemInput) imagemInput.value = obra.imagem || '';
+
+  console.log('Valores preenchidos nos campos hidden');
+
+  // Atualizar o preview visual
+  const previewBtn = document.getElementById('obra-preview-btn');
+  console.log('Preview button encontrado:', !!previewBtn);
+
+  if (previewBtn) {
+    const previewImg = previewBtn.querySelector('img');
+    const iconePlus = previewBtn.querySelector('.fa-plus');
+
+    console.log('Elementos do preview:', {
+      img: !!previewImg,
+      iconePlus: !!iconePlus
+    });
+
+    if (previewImg) {
+      // Adicionar classe para indicar que tem obra
+      previewBtn.classList.add('com-obra');
+
+      // Atualizar imagem
+      previewImg.src = obra.imagem;
+      previewImg.alt = obra.titulo;
+      previewImg.style.display = 'block';
+
+      console.log('Imagem atualizada:', previewImg.src);
+
+      // Esconder o ícone de +
+      if (iconePlus) {
+        iconePlus.style.display = 'none';
+      }
+    }
+  }
+
+  // Fechar o painel - buscar elementos diretamente
+  const painelBuscaObras = document.getElementById('painel-busca-obras');
+  const overlay = document.querySelector('.overlay');
+
+  console.log('Elementos para fechar:', {
+    painel: !!painelBuscaObras,
+    overlay: !!overlay
+  });
+
+  if (painelBuscaObras) painelBuscaObras.style.display = 'none';
+  if (overlay) overlay.style.display = 'none';
+
+  console.log('✅ Obra selecionada com sucesso!');
+};
+
+// Função para remover a obra selecionada
+window.removerObraSelecionada = function (event) {
+  if (event) event.stopPropagation();
+
+  console.log('=== REMOVENDO OBRA ===');
+
+  // Buscar e limpar os campos hidden diretamente
+  const idInput = document.querySelector('.id_obra');
+  const tituloInput = document.querySelector('.tit_obra');
+  const autorInput = document.querySelector('.autor_obra');
+  const descricaoInput = document.querySelector('.descricao_obra');
+  const anoInput = document.querySelector('.ano_obra');
+  const tipoInput = document.querySelector('.tipo_obra');
+  const imagemInput = document.querySelector('.img_obra');
+
+  if (idInput) idInput.value = '';
+  if (tituloInput) tituloInput.value = '';
+  if (autorInput) autorInput.value = '';
+  if (descricaoInput) descricaoInput.value = '';
+  if (anoInput) anoInput.value = '';
+  if (tipoInput) tipoInput.value = '';
+  if (imagemInput) imagemInput.value = '';
+
+  console.log('Campos hidden limpos');
+
+  // Resetar o preview visual
+  const previewBtn = document.getElementById('obra-preview-btn');
+
+  if (previewBtn) {
+    const previewImg = previewBtn.querySelector('img');
+    const iconePlus = previewBtn.querySelector('.fa-plus');
+
+    // Remover classe
+    previewBtn.classList.remove('com-obra');
+
+    if (previewImg) {
+      // Esconder imagem
+      previewImg.src = '';
+      previewImg.alt = '';
+      previewImg.style.display = 'none';
+    }
+
+    // Mostrar o ícone de + novamente
+    if (iconePlus) {
+      iconePlus.style.display = 'block';
+    }
+
+    console.log('Preview resetado');
+  }
+
+  console.log('✅ Obra removida com sucesso!');
+};
+
+// Adicionar evento de clique no botão de remover
+const removerObraBtn = document.querySelector('.remover-obra-btn');
+if (removerObraBtn) {
+  removerObraBtn.addEventListener('click', function (e) {
+    e.stopPropagation(); // Evitar que abra o painel
+    removerObraSelecionada();
+  });
+}
+
 
 // Inicialização quando o DOM carrega
 // Executa todas as funções necessárias quando a página termina de carregar
@@ -861,7 +1004,22 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Obter botão de buscar obra na página principal
-  const buscarObraBtn = document.getElementById('buscar-obra-btn');
+  const buscarObraBtn = document.getElementById('obra-preview-btn');
+
+  // Adicionar evento de clique no botão de remover (dentro do DOMContentLoaded)
+  setTimeout(() => {
+    const removerObraBtn = document.querySelector('.remover-obra-btn');
+    if (removerObraBtn) {
+      removerObraBtn.addEventListener('click', function (e) {
+        e.stopPropagation(); // Evitar que abra o painel
+        removerObraSelecionada(e);
+      });
+      console.log('Evento do botão remover obra configurado!');
+    } else {
+      console.warn('Botão remover obra não encontrado!');
+    }
+  }, 100);
+
 
   // Configurar mensagem inicial centralizada
   resultadosBuscaEl.innerHTML = `
@@ -1400,6 +1558,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Adicionar hover ao botão
     const selecionarBtn = document.querySelector('.selecionar-para-analise');
+    console.log('Botão selecionar encontrado:', !!selecionarBtn);
+
     if (selecionarBtn) {
       selecionarBtn.obraData = obra;
 
@@ -1415,9 +1575,63 @@ document.addEventListener('DOMContentLoaded', function () {
         this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
       });
 
-      selecionarBtn.addEventListener('click', function () {
-        selecionarObraCompleta(obra);
-      });
+      selecionarBtn.addEventListener('click', function (event) {
+  event.stopPropagation();
+  event.preventDefault();
+
+  console.log('🔥 BOTÃO SELECIONAR CLICADO!');
+  console.log('Obra a ser selecionada:', obra);
+  
+  // EXECUTAR A LÓGICA DIRETAMENTE AQUI
+  console.log('=== SELECIONANDO OBRA ===');
+  
+  // Preencher campos hidden
+  const idInput = document.querySelector('.id_obra');
+  const tituloInput = document.querySelector('.tit_obra');
+  const autorInput = document.querySelector('.autor_obra');
+  const descricaoInput = document.querySelector('.descricao_obra');
+  const anoInput = document.querySelector('.ano_obra');
+  const tipoInput = document.querySelector('.tipo_obra');
+  const imagemInput = document.querySelector('.img_obra');
+  
+  if (idInput) idInput.value = obra.apiId || '';
+  if (tituloInput) tituloInput.value = obra.titulo || '';
+  if (autorInput) autorInput.value = obra.autor || '';
+  if (descricaoInput) descricaoInput.value = obra.descricao || '';
+  if (anoInput) anoInput.value = obra.ano || '';
+  if (tipoInput) tipoInput.value = obra.tipo || '';
+  if (imagemInput) imagemInput.value = obra.imagem || '';
+  
+  // Atualizar preview
+  const previewBtn = document.getElementById('obra-preview-btn');
+  if (previewBtn) {
+    const previewImg = previewBtn.querySelector('img');
+    const iconePlus = previewBtn.querySelector('.fa-plus');
+    
+    if (previewImg) {
+      previewBtn.classList.add('com-obra');
+      previewImg.src = obra.imagem;
+      previewImg.alt = obra.titulo;
+      previewImg.style.display = 'block';
+      
+      if (iconePlus) iconePlus.style.display = 'none';
+      
+      console.log('✅ IMAGEM ATUALIZADA:', obra.imagem);
+    }
+  }
+  
+  // Fechar painel
+  const painelBuscaObras = document.getElementById('painel-busca-obras');
+  const overlay = document.querySelector('.overlay');
+  if (painelBuscaObras) painelBuscaObras.style.display = 'none';
+  if (overlay) overlay.style.display = 'none';
+  
+  console.log('✅ OBRA SELECIONADA COM SUCESSO!');
+});
+
+      console.log('✅ Evento de clique adicionado ao botão selecionar');
+    } else {
+      console.error('❌ Botão selecionar NÃO encontrado!');
     }
 
     // Adicionar evento ao botão voltar 
@@ -2137,4 +2351,42 @@ async function carregarImagensCarousel() {
   });
 
   await Promise.all(promessas);
+}
+
+// Função para atualizar o preview da obra selecionada
+function atualizarPreviewObra(obra) {
+  const previewBtn = document.getElementById('obra-preview-btn');
+
+  if (!obra) {
+    // Resetar para o estado inicial (quadrado cinza com +)
+    previewBtn.classList.remove('has-obra');
+    previewBtn.innerHTML = '<i class="fas fa-plus"></i>';
+    return;
+  }
+
+  // Adicionar classe e mostrar imagem da obra
+  previewBtn.classList.add('has-obra');
+  previewBtn.innerHTML = `
+    <img src="${obra.img}" alt="${obra.titulo}">
+    <div class="remove-obra-btn" onclick="removerObraSelecionada(event)">
+      <i class="fas fa-times"></i>
+    </div>
+  `;
+}
+
+// Função para remover a obra selecionada
+function removerObraSelecionada(event) {
+  event.stopPropagation();
+
+  // Limpar os campos hidden
+  document.querySelector('.id_obra').value = '';
+  document.querySelector('.tit_obra').value = '';
+  document.querySelector('.ano_obra').value = '';
+  document.querySelector('.tipo_obra').value = '';
+  document.querySelector('.autor_obra').value = '';
+  document.querySelector('.descricao_obra').value = '';
+  document.querySelector('.img_obra').value = '';
+
+  // Resetar o preview
+  atualizarPreviewObra(null);
 }

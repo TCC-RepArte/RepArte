@@ -48,9 +48,9 @@ unset($_SESSION['erros_recuperacao']);
         </div>
       <?php endif; ?>
 
-      <p class="info">Enviaremos um link para redefinir a sua senha.</p>
+      <p class="info">Enviaremos um código para redefinir a sua senha.</p>
 
-      <button type="submit" class="btn">Enviar link</button>
+      <button type="submit" class="btn">Enviar código</button>
     </form>
 
     <p style="text-align: center; margin-top: 20px;">

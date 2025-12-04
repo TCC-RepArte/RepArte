@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/preloginmenu.js" defer></script>
+    <script src="js/apis-obras.js" defer></script>
+    <script src="js/index-pesquisa.js" defer></script>
     <link rel="stylesheet" href="css/prelogin.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +39,6 @@
                 <ul>
                     <li><a href="#sobre-nos">Sobre Nós</a></li>
                     <li><a href="#cont">Contato</a></li>
-                    <li><a href="#">Mobile</a></li>
                 </ul>
             </nav>
             <div class="btn-Login">
@@ -62,7 +63,7 @@
                                 class="destaque">habilidades</span> de escrita e argumentação</p>
                         <div class="search-box search-box-custom">
                             <span class="search-icon">🔍</span>
-                            <input type="text" class="search-text" placeholder="Pesquisar tema...">
+                            <input type="text" class="search-text" placeholder="Pesquisar obra...">
                         </div>
                     </div>
                     <div class="carrossel-obra">

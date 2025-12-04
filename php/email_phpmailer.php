@@ -9,9 +9,9 @@ define('EMAIL_HOST', 'smtp.sendgrid.net');
 define('EMAIL_PORT', 587);
 define('EMAIL_SMTP_SECURE', 'tls');
 
-define('EMAIL_USERNAME', 'apikey'); // NÃO MUDE! Deve ser LITERAL "apikey"
-define('EMAIL_PASSWORD', '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'); // Sua API Key
-define('EMAIL_FROM', 'testereparte@gmail.com'); // Pode ser qualquer email
+define('EMAIL_USERNAME', 'apikey');
+define('EMAIL_PASSWORD', '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');
+define('EMAIL_FROM', 'testereparte@gmail.com');
 define('EMAIL_FROM_NAME', 'RepArte Teste');
 
 

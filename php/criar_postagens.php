@@ -37,9 +37,12 @@ if (!empty($_SERVER['REQUEST_METHOD'] === 'POST')) {
             if (!empty($matches[1])) {
                 $hashtags = array_unique($matches[1]);
                 foreach ($hashtags as $tag) {
+                    // Adicionar # ao nome da tag antes de salvar
+                    $tag_com_hash = '#' . $tag;
+
                     // Verificar se hashtag existe
                     $stmt_tag = $con->prepare("SELECT id FROM hashtags WHERE nome = ?");
-                    $stmt_tag->bind_param("s", $tag);
+                    $stmt_tag->bind_param("s", $tag_com_hash);
                     $stmt_tag->execute();
                     $res_tag = $stmt_tag->get_result();
 
@@ -50,7 +53,7 @@ if (!empty($_SERVER['REQUEST_METHOD'] === 'POST')) {
                     } else {
                         // Criar nova hashtag
                         $stmt_new = $con->prepare("INSERT INTO hashtags (nome, contagem) VALUES (?, 1)");
-                        $stmt_new->bind_param("s", $tag);
+                        $stmt_new->bind_param("s", $tag_com_hash);
                         $stmt_new->execute();
                         $tag_id = $con->insert_id;
                     }

@@ -1,23 +1,40 @@
-/* Apenas ajustes específicos da página Hashtag */
+/* Reset global simples */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-/* Banner */
+/* 
+   Ajuste do Body:
+   - Remove o padding-top para o banner colar no topo.
+   - Define a cor de fundo correta.
+*/
+body {
+    background: #0f0e0f !important;
+    padding-top: 0px !important;
+}
+
 .hashtag-banner {
-    background: linear-gradient(180deg, #1a0637 0%, #050505 100%);
-    height: 250px;
+    position: relative;
+    background: linear-gradient(180deg, #1a0637 0%, #0f0e0f 100%);
+    height: 330px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 80px;
-    /* Espaço do header */
+    width: 100%;
     margin-bottom: 20px;
+    margin-top: 0;
 }
 
 .hashtag-title {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-top: 60px;
 }
+
 
 .hash-symbol {
     font-size: 80px;
@@ -31,43 +48,40 @@
     font-weight: 700;
 }
 
-/* Layout de Colunas (igual ao telainicial, mas sem a esquerda) */
+/* Layout Principal */
 .hashtag-container {
     display: grid;
     grid-template-columns: 1fr 300px;
-    /* Feed + Sidebar Direita */
     gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px 40px;
 }
 
-/* Box Genérico da Sidebar */
-.sidebar-box {
-    background-color: #121212 !important;
-    /* Força o fundo escuro */
+/* Sidebar e Boxes */
+.sidebar-hashtag {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 100px;
+    align-self: start;
+    height: fit-content;
+}
+
+.sidebar-box,
+.no-posts {
+    background-color: #0f0e0f !important;
     border-radius: 16px;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     border: none !important;
 }
 
-/* Quando não tem posts */
 .no-posts {
-    background-color: #121212 !important;
-    /* Força o fundo escuro */
     padding: 40px;
-    border-radius: 16px;
     text-align: center;
     color: #888;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-/* Sidebar Direita (ajustes para caber os filtros) */
-.sidebar-hashtag {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
 }
 
 /* Filtros */
@@ -110,4 +124,13 @@
     .hashtag-container {
         grid-template-columns: 1fr;
     }
+}
+
+.hashtag-banner {
+    margin-top: -92px;
+    padding-top: 192px;
+}
+
+.hashtag-container {
+    margin-top: 100px;
 }

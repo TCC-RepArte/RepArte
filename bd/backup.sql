@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 30, 2025 at 11:57 PM
+-- Generation Time: Dec 04, 2025 at 10:45 AM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `codigos_verificacao` (
   KEY `idx_email` (`email`),
   KEY `idx_codigo` (`codigo`),
   KEY `idx_expiracao` (`data_expiracao`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -65,15 +65,6 @@ CREATE TABLE IF NOT EXISTS `comentarios` (
   KEY `idx_nivel` (`nivel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `comentarios`
---
-
-INSERT INTO `comentarios` (`id_conteudo`, `id_usuario`, `id`, `tipo_conteudo`, `texto`, `data`, `data_edit`, `comentario_pai_id`, `nivel`) VALUES
-('68f247448db17', '7WhmT6p-Jmm', 'comment_68f247599bad', 'postagem', 'gosteiii', '2025-10-17 06:40:41', NULL, NULL, 0),
-('68f249f576c20', '1NYz7Fz-kGq', 'comment_68f24a0d01a2', 'postagem', 'nao gostei', '2025-10-17 06:52:13', NULL, NULL, 0),
-('68f24bcd3dbee', 'zHamNyo-1Tf', 'comment_68f24be9cf56', 'postagem', 'n gostei', '2025-10-17 07:00:09', NULL, NULL, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -95,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `configuracoes_usuario` (
 --
 
 INSERT INTO `configuracoes_usuario` (`id`, `id_usuario`, `vlibras_ativo`, `data_atualizacao`) VALUES
-(1, 'rFRCxqU-Yze', 1, '2025-11-30 14:46:34');
+(1, 'rFRCxqU-Yze', 1, '2025-12-04 07:34:54');
 
 -- --------------------------------------------------------
 
@@ -115,13 +106,6 @@ CREATE TABLE IF NOT EXISTS `denuncias` (
   KEY `id_denunciante` (`id_denunciante`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `denuncias`
---
-
-INSERT INTO `denuncias` (`id`, `id_denunciante`, `tipo_denuncia`, `id_item_denunciado`, `motivo`, `data_denuncia`) VALUES
-('7swVgrHDinuf-qvl', 'rFRCxqU-Yze', 'postagem', '68f24bcd3dbee', 'oi', '2025-11-30 18:28:24');
-
 -- --------------------------------------------------------
 
 --
@@ -137,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `favoritos` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_favorito` (`id_usuario`,`id_post`),
   KEY `id_post` (`id_post`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -190,30 +174,24 @@ INSERT INTO `login` (`usuario`, `email`, `senha`, `id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mensagens`
+-- Table structure for table `notificacoes`
 --
 
-DROP TABLE IF EXISTS `mensagens`;
-CREATE TABLE IF NOT EXISTS `mensagens` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_remetente` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `id_destinatario` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `mensagem` text COLLATE utf8mb4_general_ci NOT NULL,
-  `data_envio` datetime DEFAULT CURRENT_TIMESTAMP,
+DROP TABLE IF EXISTS `notificacoes`;
+CREATE TABLE IF NOT EXISTS `notificacoes` (
+  `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_usuario_destino` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_usuario_origem` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `tipo` enum('comentario','reacao','resposta') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_conteudo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `mensagem` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `lida` tinyint(1) DEFAULT '0',
+  `data_criacao` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `id_remetente` (`id_remetente`),
-  KEY `id_destinatario` (`id_destinatario`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `mensagens`
---
-
-INSERT INTO `mensagens` (`id`, `id_remetente`, `id_destinatario`, `mensagem`, `data_envio`, `lida`) VALUES
-(1, 'rFRCxqU-Yze', 'MxciYvJ-HgM', 'teste', '2025-11-30 10:02:23', 0),
-(2, 'jkg6Jp6-vzf', 'rFRCxqU-Yze', 'testando', '2025-11-30 10:03:21', 0),
-(3, 'rFRCxqU-Yze', 'jkg6Jp6-vzf', 'eaeeee', '2025-11-30 10:04:05', 0);
+  KEY `idx_usuario_destino` (`id_usuario_destino`),
+  KEY `idx_lida` (`lida`),
+  KEY `idx_data` (`data_criacao`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -232,15 +210,6 @@ CREATE TABLE IF NOT EXISTS `obras` (
   `data_criacao` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `obras`
---
-
-INSERT INTO `obras` (`id`, `titulo`, `autor`, `tipo`, `ano_lancamento`, `descricao`, `data_criacao`) VALUES
-('27qC3KK5wjQzyNenY53fep', 'F1', 'Hans Zimmer', 'musica', '2025', '', '2025-10-17 10:40:19'),
-('933260', 'A SubstÃ¢ncia', '', 'filme', '2024', 'Uma estrela em declÃ­nio descobre uma substÃ¢ncia misteriosa que lhe permite criar uma versÃ£o mais jovem e perfeita de si mesma. No entanto, o que parece ser uma soluÃ§Ã£o milagrosa para recuperar sua glÃ³ria logo se transforma em um pesadelo perturbador quando as consequÃªncias desta decisÃ£o comeÃ§am a se manifestar de formas sombrias e irreversÃ­veis.', '2025-10-17 10:59:41'),
-('9799', 'Velozes e Furiosos', '', 'filme', '2001', 'Um investigador da polÃ­cia se infiltra em uma turma de rachas suspeita de roubar caminhÃµes, mas acaba apaixonando-se pela irmÃ£ do lÃ­der.', '2025-10-17 10:51:49');
 
 -- --------------------------------------------------------
 
@@ -296,16 +265,6 @@ CREATE TABLE IF NOT EXISTS `postagens` (
   KEY `fk_obras_postagens` (`id_obra`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `postagens`
---
-
-INSERT INTO `postagens` (`id_usuario`, `id_obra`, `id`, `titulo`, `texto`, `data_post`, `data_edit`) VALUES
-('7WhmT6p-Jmm', '27qC3KK5wjQzyNenY53fep', '68f247435d7da', 'ayrton senna', 'gostei musica', '2025-10-17 10:40:19', NULL),
-('7WhmT6p-Jmm', '27qC3KK5wjQzyNenY53fep', '68f247448db17', 'ayrton senna', 'gostei musica', '2025-10-17 10:40:20', NULL),
-('1NYz7Fz-kGq', '9799', '68f249f576c20', 'toretto', 'gostei muito', '2025-10-17 10:51:49', NULL),
-('zHamNyo-1Tf', '933260', '68f24bcd3dbee', 'sue', 'gostei', '2025-10-17 10:59:41', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -320,6 +279,24 @@ CREATE TABLE IF NOT EXISTS `post_hashtags` (
   PRIMARY KEY (`id`),
   KEY `post_id` (`post_id`),
   KEY `hashtag_id` (`hashtag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `preferencias_notificacoes`
+--
+
+DROP TABLE IF EXISTS `preferencias_notificacoes`;
+CREATE TABLE IF NOT EXISTS `preferencias_notificacoes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `notif_comentarios` tinyint(1) DEFAULT '1',
+  `notif_reacoes` tinyint(1) DEFAULT '1',
+  `notif_respostas` tinyint(1) DEFAULT '1',
+  `data_atualizacao` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_usuario` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -341,16 +318,6 @@ CREATE TABLE IF NOT EXISTS `reacoes` (
   KEY `idx_conteudo` (`id_conteudo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `reacoes`
---
-
-INSERT INTO `reacoes` (`id_usuario`, `tipo_conteudo`, `id_conteudo`, `id`, `tipo`, `data`) VALUES
-('7WhmT6p-Jmm', 'postagem', '68f247448db17', '68f2474d4c856', 'dislike', '2025-10-17 06:40:30'),
-('1NYz7Fz-kGq', 'postagem', '68f249f576c20', '68f249fd52c4e', 'dislike', '2025-10-17 06:51:58'),
-('zHamNyo-1Tf', 'postagem', '68f24bcd3dbee', '68f24bd2d34c7', 'dislike', '2025-10-17 06:59:47'),
-('jkg6Jp6-vzf', 'comentario', 'comment_68f24a0d01a2', 'react_69279d65', 'like', '2025-11-26 16:37:57');
-
 -- --------------------------------------------------------
 
 --
@@ -369,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `recuperacao_senha` (
   KEY `id_usuario` (`id_usuario`),
   KEY `idx_token` (`token`),
   KEY `idx_expiracao` (`data_expiracao`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Constraints for dumped tables
@@ -387,13 +354,6 @@ ALTER TABLE `comentarios`
 --
 ALTER TABLE `configuracoes_usuario`
   ADD CONSTRAINT `fk_config_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `login` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `mensagens`
---
-ALTER TABLE `mensagens`
-  ADD CONSTRAINT `mensagens_ibfk_1` FOREIGN KEY (`id_remetente`) REFERENCES `login` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `mensagens_ibfk_2` FOREIGN KEY (`id_destinatario`) REFERENCES `login` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `perfil`

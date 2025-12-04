@@ -98,6 +98,25 @@ try {
     
     if ($result) {
         error_log("Comentário criado com sucesso: $commentId");
+
+        // Criar notificação para o dono do post
+        require_once 'criar_notificacao.php';
+        
+        // Buscar dono do post
+        $sqlDono = "SELECT id_usuario FROM postagens WHERE id = ?";
+        $stmtDono = $con->prepare($sqlDono);
+        $stmtDono->bind_param("s", $postId);
+        $stmtDono->execute();
+        $resultDono = $stmtDono->get_result();
+        
+        if ($rowDono = $resultDono->fetch_assoc()) {
+            $idDono = $rowDono['id_usuario'];
+            // Não notificar a si mesmo
+            if ($idDono != $userId) {
+                criarNotificacao($idDono, $userId, 'comentario', $postId, 'comentou em sua postagem');
+            }
+        }
+
         echo json_encode([
             'success' => true,
             'message' => 'Comentário criado com sucesso',

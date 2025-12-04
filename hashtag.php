@@ -95,33 +95,35 @@ while ($row = $res_obras->fetch_assoc()) {
 </head>
 
 <body>
-    <!-- Header -->
     <header>
         <div class="logo">
-            <a href="telainicial.php"><img src="images/logo.png" alt="Logo"></a>
+            <a href="telainicial.php"><img src="images/logo.png" alt="Logo do site"></a>
         </div>
+
         <div class="search-box">
-            <form action="busca.php" method="GET" style="display: flex; width: 100%;">
+            <form action="busca.php" method="GET" style="display: flex; width: 100%; align-items: center;">
                 <button type="submit" class="search-icon"
-                    style="background:none; border:none; color:white; cursor:pointer;">🔍</button>
-                <input type="text" name="q" placeholder="Procure uma obra..."
+                    style="background: none; border: none; cursor: pointer;">🔍</button>
+                <input type="text" name="q" class="search-text" placeholder="Procure uma obra, usuário ou hashtag..."
                     value="#<?= htmlspecialchars($tag_nome) ?>">
             </form>
         </div>
+
         <div class="header-actions">
-            <a href="telainicial.php" style="color: white; text-decoration: none; font-size: 20px;"><i
-                    class="fas fa-home"></i></a>
+            <i class="fas fa-bell"></i>
+            <a href="configuracoes.php" style="color: inherit; text-decoration: none;"><i class="fas fa-cog"></i></a>
+            <a href="chats.php" class="btn-chat" style="color: white" title="Chat">
+                <i class="fas fa-comments"></i>
+            </a>
         </div>
     </header>
 
-    <!-- Banner -->
     <div class="hashtag-banner">
         <div class="hashtag-title">
             <span class="hash-symbol">#</span>
             <h1><?= htmlspecialchars($tag_nome) ?></h1>
         </div>
     </div>
-
     <main class="hashtag-container">
         <!-- Feed -->
         <section class="feed-hashtag">
@@ -138,7 +140,8 @@ while ($row = $res_obras->fetch_assoc()) {
                             <div class="post-user">
                                 <a href="usuario_perfil.php?id=<?= $post['id_usuario'] ?>"
                                     style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
-                                    <img src="<?= $post['foto'] ?>" alt="Foto do Usuário V" class="post-user-photo" />
+                                    <img src="<?= !empty($post['caminho']) ? $post['caminho'] : $post['foto'] ?>"
+                                        alt="Foto do Usuário" class="post-user-photo" />
                                     <h3><?= $post['usuario'] ?></h3>
                                 </a>
                             </div>
@@ -284,9 +287,9 @@ while ($row = $res_obras->fetch_assoc()) {
         </aside>
     </main>
 
+    <script src="js/apis-obras.js"></script>
     <script src="js/telainicial.js"></script>
     <script>
-        // Força o carregamento das imagens ao abrir a página
         document.addEventListener('DOMContentLoaded', function () {
             if (typeof carregarImagensCarousel === 'function') {
                 carregarImagensCarousel();

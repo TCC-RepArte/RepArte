@@ -54,9 +54,9 @@ async function buscarFilmes(termoBusca) {
         subtipo: filme.genre_ids?.includes(99) ? 'documentário' : 'filme',
         titulo: filme.title,
         ano: filme.release_date ? filme.release_date.split('-')[0] : 'Desconhecido',
-        imagem: filme.poster_path 
-          ? `https://image.tmdb.org/t/p/w92${filme.poster_path}`
-          : 'https://placehold.co/92x138/333333/FFFFFF?text=Sem+Imagem',
+        imagem: filme.poster_path
+          ? `https://image.tmdb.org/t/p/w342${filme.poster_path}`
+          : 'https://placehold.co/342x513/333333/FFFFFF?text=Sem+Imagem',
         apiId: filme.id
       }));
     }
@@ -83,9 +83,9 @@ async function buscarSeries(termoBusca) {
         subtipo: serie.genre_ids?.includes(99) ? 'documentário' : 'série',
         titulo: serie.name,
         ano: serie.first_air_date ? serie.first_air_date.split('-')[0] : 'Desconhecido',
-        imagem: serie.poster_path 
-          ? `https://image.tmdb.org/t/p/w92${serie.poster_path}`
-          : 'https://placehold.co/92x138/333333/FFFFFF?text=Sem+Imagem',
+        imagem: serie.poster_path
+          ? `https://image.tmdb.org/t/p/w342${serie.poster_path}`
+          : 'https://placehold.co/342x513/333333/FFFFFF?text=Sem+Imagem',
         apiId: serie.id
       }));
     }
@@ -117,17 +117,17 @@ async function buscarLivros(termoBusca) {
           imagem: (() => {
             const img = volumeInfo.imageLinks || {};
             const prioridades = ['large', 'medium', 'thumbnail', 'smallThumbnail'];
-          
+
             for (const chave of prioridades) {
               let link = img[chave];
               if (typeof link === 'string' && link.startsWith('http')) {
                 return `proxy.php?url=${encodeURIComponent(link)}`;
               }
             }
-          
+
             return 'https://placehold.co/92x138/333333/FFFFFF?text=Sem+Capa';
           })(),
-          
+
           autor: volumeInfo.authors ? volumeInfo.authors.join(', ') : 'Autor desconhecido',
           apiId: livro.id
         };
@@ -149,19 +149,19 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
 // Evita sobrecarregar as APIs fazendo requisições em grupos pequenos
 async function processarEmLotes(array, tamanhoLote, funcaoProcessamento) {
   const resultados = [];
-  
+
   for (let i = 0; i < array.length; i += tamanhoLote) {
     const lote = array.slice(i, i + tamanhoLote);
     const promessasLote = lote.map(funcaoProcessamento);
     const resultadosLote = await Promise.all(promessasLote);
     resultados.push(...resultadosLote);
-    
+
     // Pequena pausa entre lotes para não sobrecarregar a API
     if (i + tamanhoLote < array.length) {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
   }
-  
+
   return resultados;
 }
 
@@ -172,26 +172,26 @@ async function fetchComRetry(url, maxTentativas = 2, delay = 1000) {
     try {
       console.log(`Tentativa ${tentativa}/${maxTentativas} para: ${url}`);
       const response = await fetch(url);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
       }
-      
+
       const data = await response.json();
-      
+
       // Verificar se há erro na resposta
       if (data.error) {
         throw new Error(data.error);
       }
-      
+
       return data;
     } catch (err) {
       console.warn(`Tentativa ${tentativa} falhou:`, err.message);
-      
+
       if (tentativa === maxTentativas) {
         throw err;
       }
-      
+
       // Aguardar antes da próxima tentativa
       await new Promise(resolve => setTimeout(resolve, delay * tentativa));
     }
@@ -204,23 +204,23 @@ async function buscarArte(termoBusca) {
   try {
     const searchUrl = `php/api-endpoints.php?action=search_art&query=${encodeURIComponent(termoBusca)}`;
     console.log('Buscando arte:', searchUrl);
-    
+
     // Tentar buscar com retry
     const searchData = await fetchComRetry(searchUrl, 2, 1000);
     console.log('Resposta da API de arte (pesquisa):', searchData);
-    
+
     if (searchData.total === 0 || !searchData.objectIDs) {
       return [];
     }
-    
+
     // Limitar a 10 objetos para evitar sobrecarga
     const objectIds = searchData.objectIDs.slice(0, 10);
-    
+
     // Função para buscar detalhes de um objeto com cache e retry
     const buscarDetalhesObjeto = async (id) => {
       const chaveCache = `arte_${id}`;
       const agora = Date.now();
-      
+
       // Verificar cache
       if (cacheArte.has(chaveCache)) {
         const { dados, timestamp } = cacheArte.get(chaveCache);
@@ -231,30 +231,30 @@ async function buscarArte(termoBusca) {
           cacheArte.delete(chaveCache);
         }
       }
-      
+
       try {
         const url = `php/api-endpoints.php?action=art_details&id=${id}`;
         const data = await fetchComRetry(url, 1, 500); // Apenas 1 retry para detalhes
-        
+
         // Armazenar no cache
         cacheArte.set(chaveCache, {
           dados: data,
           timestamp: agora
         });
-        
+
         return data;
       } catch (err) {
         console.warn(`Erro ao buscar detalhes da obra ${id}:`, err.message);
         return null;
       }
     };
-    
+
     // Processar em lotes de 2 para evitar sobrecarga
     const objetos = await processarEmLotes(objectIds, 2, buscarDetalhesObjeto);
     const objetosValidos = objetos.filter(objeto => objeto !== null);
-    
+
     console.log('Resposta da API de arte (objetos válidos):', objetosValidos.length);
-    
+
     // Se não conseguiu nenhum objeto válido, mostrar mensagem informativa
     if (objetosValidos.length === 0) {
       console.warn('Nenhuma obra de arte válida encontrada - API pode estar instável');
@@ -268,7 +268,7 @@ async function buscarArte(termoBusca) {
         apiId: 'arte_indisponivel'
       }];
     }
-    
+
     return objetosValidos.map(objeto => ({
       id: objeto.objectID,
       tipo: 'arte',
@@ -280,7 +280,7 @@ async function buscarArte(termoBusca) {
     }));
   } catch (err) {
     console.error('Erro ao buscar arte:', err);
-    
+
     // Retornar mensagem informativa em caso de erro
     return [{
       id: 'arte_erro',
@@ -338,22 +338,22 @@ function formatarDuracao(ms) {
 // Remove tags HTML e converte entidades HTML para texto legível
 function limparDescricaoHTML(htmlString) {
   if (!htmlString) return 'Sem descrição disponível';
-  
+
   // Criar um elemento temporário para processar o HTML
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = htmlString;
-  
+
   // Obter o texto puro sem tags HTML
   let textoLimpo = tempDiv.textContent || tempDiv.innerText || '';
-  
+
   // Limpar espaços extras e quebras de linha desnecessárias
   textoLimpo = textoLimpo.replace(/\s+/g, ' ').trim();
-  
+
   // Limitar o tamanho da descrição para evitar textos muito longos
   if (textoLimpo.length > 500) {
     textoLimpo = textoLimpo.substring(0, 500) + '...';
   }
-  
+
   return textoLimpo;
 }
 
@@ -361,12 +361,12 @@ function limparDescricaoHTML(htmlString) {
 // Busca informações completas de uma obra (filme, série, livro, etc.)
 async function obterDetalhesObra({ apiId, tipo }) {
   try {
-    
+
     console.log('Obtendo detalhes para:', tipo, apiId);
-    
+
     let url;
     let data;
-    
+
     switch (tipo) {
       case 'filme':
         url = `${API_ENDPOINTS.movieDetails}&id=${apiId}`;
@@ -388,38 +388,38 @@ async function obterDetalhesObra({ apiId, tipo }) {
       default:
         throw new Error('Tipo de obra não suportado');
     }
-    
+
     console.log('URL para obter detalhes:', url);
-    
+
     try {
       const response = await fetch(url);
       console.log('Status da resposta:', response.status);
-      
+
       if (!response.ok) {
         throw new Error(`Erro HTTP: ${response.status} - ${response.statusText}`);
       }
-      
+
       const responseText = await response.text();
       console.log('Resposta bruta:', responseText.substring(0, 100) + '...');
-      
+
       try {
         data = JSON.parse(responseText);
       } catch (parseError) {
         console.error('Erro ao analisar JSON:', parseError);
         throw new Error('Resposta inválida do servidor');
       }
-      
+
       console.log('Dados recebidos para detalhes:', data);
     } catch (fetchError) {
       console.error('Erro na requisição fetch:', fetchError);
       throw fetchError;
     }
-    
+
     if (data.error) {
       console.error('Erro retornado pela API:', data.error);
       throw new Error(data.error);
     }
-    
+
     switch (tipo) {
       case 'filme':
         return {
@@ -428,7 +428,7 @@ async function obterDetalhesObra({ apiId, tipo }) {
           subtipo: data.genres?.some(g => g.id === 99) ? 'documentário' : 'filme',
           titulo: data.title,
           ano: data.release_date ? data.release_date.split('-')[0] : 'Desconhecido',
-          imagem: data.poster_path 
+          imagem: data.poster_path
             ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
             : 'https://placehold.co/500x750/333333/FFFFFF?text=Sem+Imagem',
           descricao: data.overview,
@@ -442,7 +442,7 @@ async function obterDetalhesObra({ apiId, tipo }) {
           subtipo: data.genres?.some(g => g.id === 99) ? 'documentário' : 'série',
           titulo: data.name,
           ano: data.first_air_date ? data.first_air_date.split('-')[0] : 'Desconhecido',
-          imagem: data.poster_path 
+          imagem: data.poster_path
             ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
             : 'https://placehold.co/500x750/333333/FFFFFF?text=Sem+Imagem',
           descricao: data.overview,
@@ -476,16 +476,16 @@ async function obterDetalhesObra({ apiId, tipo }) {
           imagem: (() => {
             const img = volumeInfo.imageLinks || {};
             const prioridades = ['large', 'medium', 'thumbnail', 'smallThumbnail'];
-          
+
             for (const chave of prioridades) {
               let link = img[chave];
               if (typeof link === 'string' && link.startsWith('http')) {
                 return `proxy.php?url=${encodeURIComponent(link)}`;
               }
             }
-          
+
             return 'https://placehold.co/92x138/333333/FFFFFF?text=Sem+Capa';
-          })(),          
+          })(),
           descricao: limparDescricaoHTML(volumeInfo.description),
           genero: volumeInfo.categories ? volumeInfo.categories.join(', ') : 'Categoria desconhecida',
           apiId: data.id
@@ -536,34 +536,34 @@ async function buscarObras(termoBusca, tipos) {
     resultadosPorTipo.forEach(resultado => {
       resultados.push(...resultado);
     });
-    
+
     // Ordenar resultados por relevância do título
     const termoBuscaLowerCase = termoBusca.toLowerCase();
     resultados.sort((a, b) => {
       // Verificar correspondência exata no início do título
       const tituloA = a.titulo.toLowerCase();
       const tituloB = b.titulo.toLowerCase();
-      
+
       const aStartsWithTerm = tituloA.startsWith(termoBuscaLowerCase);
       const bStartsWithTerm = tituloB.startsWith(termoBuscaLowerCase);
-      
+
       if (aStartsWithTerm && !bStartsWithTerm) return -1;
       if (!aStartsWithTerm && bStartsWithTerm) return 1;
-      
+
       // Verificar se o termo está contido no título
       const aContainsTerm = tituloA.includes(termoBuscaLowerCase);
       const bContainsTerm = tituloB.includes(termoBuscaLowerCase);
-      
+
       if (aContainsTerm && !bContainsTerm) return -1;
       if (!aContainsTerm && bContainsTerm) return 1;
-      
+
       // Usar distância de Levenshtein para similaridade
       const distA = levenshteinDistance(tituloA, termoBuscaLowerCase);
       const distB = levenshteinDistance(tituloB, termoBuscaLowerCase);
-      
+
       return distA - distB; // Menor distância = maior relevância
     });
-    
+
     return {
       resultados: resultados
     };
@@ -573,4 +573,4 @@ async function buscarObras(termoBusca, tipos) {
       mensagem: 'Erro ao buscar obras. Por favor, tente novamente.'
     };
   }
-} 
+}
