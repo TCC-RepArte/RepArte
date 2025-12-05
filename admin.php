@@ -32,10 +32,38 @@ $result = $con->query($sql_denuncias);
 <body>
     <header>
         <div class="logo">
-            <img src="images/logo.png" alt="RepArte">
+            <a href="telainicial.php"><img src="images/logo.png" alt="RepArte"></a>
         </div>
+
+        <div class="search-box">
+            <form action="busca.php" method="GET" style="display: flex; width: 100%; align-items: center;">
+                <button type="submit" class="search-icon"
+                    style="background: none; border: none; cursor: pointer;">🔍</button>
+                <input type="text" name="q" class="search-text" placeholder="Procure uma obra, usuário ou hashtag...">
+            </form>
+        </div>
+
         <div class="header-actions">
-            <a href="telainicial.php" class="btn-voltar"><i class="fas fa-arrow-left"></i> Voltar para Home</a>
+            <div class="notif-container">
+                <i class="fas fa-bell" id="notif-icon"></i>
+                <span class="notif-badge" id="notif-badge" style="display: none;">0</span>
+
+                <!-- Dropdown de notificações -->
+                <div class="notif-dropdown" id="notif-dropdown">
+                    <div class="notif-header">
+                        <h4>Notificações</h4>
+                        <button class="marcar-todas-lidas" onclick="marcarTodasLidas()">Marcar todas como lidas</button>
+                    </div>
+                    <div class="notif-list" id="notif-list">
+                        <div class="notif-empty">Carregando...</div>
+                    </div>
+                    <a href="notificacoes.php" class="notif-footer">Ver preferências</a>
+                </div>
+            </div>
+            <a href="configuracoes.php" style="color: inherit; text-decoration: none;"><i class="fas fa-cog"></i></a>
+            <a href="admin.php" style="color: inherit; text-decoration: none;" title="Painel Admin">
+                <i class="fas fa-shield-alt"></i>
+            </a>
         </div>
     </header>
 
@@ -140,6 +168,7 @@ $result = $con->query($sql_denuncias);
             <?php endif; ?>
         </section>
     </main>
+    <script src="js/notificacoes.js"></script>
 </body>
 
 </html>

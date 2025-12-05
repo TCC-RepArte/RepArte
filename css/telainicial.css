@@ -2918,6 +2918,28 @@ header {
   color: #ff6600;
 }
 
+/* Efeito hover para ícone de configurações */
+.header-actions .fa-cog {
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.header-actions .fa-cog:hover {
+  color: #ff6600;
+  transform: scale(1.1);
+}
+
+/* Efeito hover para ícone de admin */
+.header-actions .fa-shield-alt {
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.header-actions .fa-shield-alt:hover {
+  color: #ff6600;
+  transform: scale(1.1);
+}
+
 .notif-dropdown {
   display: none;
   position: absolute;

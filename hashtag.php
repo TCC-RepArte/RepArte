@@ -109,12 +109,29 @@ while ($row = $res_obras->fetch_assoc()) {
             </form>
         </div>
 
-        <div class="header-actions">
-            <i class="fas fa-bell"></i>
+                <div class="header-actions">
+            <div class="notif-container">
+                <i class="fas fa-bell" id="notif-icon"></i>
+                <span class="notif-badge" id="notif-badge" style="display: none;">0</span>
+
+                <!-- Dropdown de notificações -->
+                <div class="notif-dropdown" id="notif-dropdown">
+                    <div class="notif-header">
+                        <h4>Notificações</h4>
+                        <button class="marcar-todas-lidas" onclick="marcarTodasLidas()">Marcar todas como lidas</button>
+                    </div>
+                    <div class="notif-list" id="notif-list">
+                        <div class="notif-empty">Carregando...</div>
+                    </div>
+                    <a href="notificacoes.php" class="notif-footer">Ver preferências</a>
+                </div>
+            </div>
             <a href="configuracoes.php" style="color: inherit; text-decoration: none;"><i class="fas fa-cog"></i></a>
-            <a href="chats.php" class="btn-chat" style="color: white" title="Chat">
-                <i class="fas fa-comments"></i>
-            </a>
+            <?php if (isset($_SESSION['id']) && $_SESSION['id'] === 'rFRCxqU-Yze'): ?>
+                <a href="admin.php" style="color: inherit; text-decoration: none;" title="Painel Admin">
+                    <i class="fas fa-shield-alt"></i>
+                </a>
+            <?php endif; ?>
         </div>
     </header>
 
@@ -289,6 +306,7 @@ while ($row = $res_obras->fetch_assoc()) {
 
     <script src="js/apis-obras.js"></script>
     <script src="js/telainicial.js"></script>
+    <script src="js/notificacoes.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             if (typeof carregarImagensCarousel === 'function') {
