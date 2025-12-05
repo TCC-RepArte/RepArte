@@ -173,42 +173,47 @@
     transform: scale(1.1);
 }
 
+/* O balãozinho (menu dropdown) - Estilo sincronizado com telainicial.css */
 .post-options-dropdown {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background: #1a1a1a;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    min-width: 180px;
-    z-index: 1000;
-    margin-top: 5px;
+    display: none !important;
+    position: absolute !important;
+    right: 0 !important;
+    top: 100% !important;
+    background-color: #0f0e0f !important;
+    min-width: 160px !important;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.6) !important;
+    z-index: 1000 !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    padding: 5px 0 !important;
 }
 
+/* Mostrar o menu quando passar o mouse no container */
 .post-set-container:hover .post-options-dropdown {
-    display: block;
+    display: block !important;
 }
 
+/* Estilo dos links dentro do menu */
 .post-options-dropdown a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    color: #ccc;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    font-size: 14px;
+    color: white !important;
+    padding: 12px 16px !important;
+    text-decoration: none !important;
+    display: block !important;
+    font-size: 14px !important;
+    transition: background 0.2s !important;
 }
 
+/* Efeito hover nos itens do menu */
 .post-options-dropdown a:hover {
-    background: rgba(255, 102, 0, 0.1);
-    color: #ff6600;
+    background-color: #f1f1f1 !important;
+    color: #ff6600 !important;
 }
 
-.post-options-dropdown a i {
-    width: 16px;
-    text-align: center;
+/* Ícones dentro do menu para ficar bonitinho */
+.post-options-dropdown i {
+    margin-right: 8px !important;
+    width: 20px !important;
+    text-align: center !important;
 }
 
 /* Corpo do post */
@@ -317,54 +322,69 @@
     color: #ff6600;
 }
 
-/* Botões de reação */
+/* Botões de reação - Estilo sincronizado com telainicial.css */
 .vote-buttons {
-    display: flex;
-    gap: 15px;
-    align-items: center;
+    display: flex !important;
+    gap: 15px !important;
+    align-items: center !important;
 }
 
 .like-btn,
 .dislike-btn {
-    background: transparent;
-    border: none;
-    color: #666;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 15px;
-    transition: all 0.3s ease;
-    padding: 5px 10px;
-    border-radius: 5px;
+    background: transparent !important;
+    border: none !important;
+    color: #666 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 15px !important;
+    transition: all 0.3s ease !important;
+    font-weight: 500 !important;
+    padding: 10px 15px !important;
+    border-radius: 20px !important;
 }
 
-.like-btn:hover {
-    color: #4CAF50;
-    background: rgba(76, 175, 80, 0.1);
-}
-
+.like-btn:hover,
 .dislike-btn:hover {
-    color: #f44336;
-    background: rgba(244, 67, 54, 0.1);
+    background: rgba(255, 102, 0, 0.1) !important;
+    color: #ff6600 !important;
 }
 
+.like-btn i,
+.dislike-btn i {
+    font-size: 16px !important;
+}
+
+.like-text,
+.dislike-text {
+    font-weight: 500 !important;
+}
+
+/* Estados ativos */
+.like-btn.ativo,
 .like-btn.active {
-    color: #4CAF50;
-    font-weight: bold;
+    background: #ff6600 !important;
+    color: #fff !important;
 }
 
+.dislike-btn.ativo,
 .dislike-btn.active {
-    color: #f44336;
-    font-weight: bold;
+    background: #ff6600 !important;
+    color: #fff !important;
 }
 
+/* Contador de reações */
 .like-count,
 .dislike-count {
-    color: #999;
-    font-size: 14px;
-    min-width: 20px;
-    text-align: center;
+    background: #333 !important;
+    color: #fff !important;
+    padding: 4px 8px !important;
+    border-radius: 12px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    min-width: auto !important;
+    text-align: center !important;
 }
 
 /* Responsivo */
