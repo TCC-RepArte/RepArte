@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../back-end/js/preloginmenu.js" defer></script>
-    <link rel="stylesheet" href="../front-end/prelogin.css">
+    <link rel="stylesheet" href="..//front-end/prelogin.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
@@ -81,22 +81,31 @@
     <section class="cont" id="cont"></section>
     <footer>
         <div class="interface">
+
             <div class="line-footer">
+
                 <div class="flex">
+
                     <div class="logo-footer">
                         <img src="../imagens/logo.png" alt="">
                     </div>
-                    <div class="btn-social">
-                        <a href="https://x.com/RepArtetcc?t=_xabIrCKfrAsyM2Fn5QemA&s=09"><button><i class="bi bi-twitter-x"></i></button></a>
-                        <a href="https://www.instagram.com/reparte_3y?igsh=MTF1aWNid3kyMWVi"><button><i class="bi bi-instagram"></i></button></a>
-                    </div>
-                </div>
-            </div>
 
-            <div class="line-footer borda">
+            
+                    <div class="line-footer borda">
                 <p><a href="https://g.co/kgs/KGJ2CLJ">Av. Pereira Barreto, 400 - Baeta Neves, São Bernardo do Campo - SP, 09751-000</a></p>
                 <p><a href="tel:+5511968464237">+55 (11) 96846-4237</a></p>
             </div>
+
+                </div>
+
+            </div>
+
+             <div class="btn-social">
+                        <a href="https://x.com/RepArtetcc?t=_xabIrCKfrAsyM2Fn5QemA&s=09"><button><i class="bi bi-twitter-x"></i></button></a>
+                        <a href="https://www.instagram.com/reparte_3y?igsh=MTF1aWNid3kyMWVi"><button><i class="bi bi-instagram"></i></button></a>
+                    </div>
+
+
         </div>
     </footer>
 

@@ -34,7 +34,7 @@ body::before {
 
 .flex {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
 }
 
 .interface {
@@ -66,7 +66,7 @@ header {
 }
 
 header .logo img{
-      width: 15vw;
+  width: 15vw;
   margin-left: 5%;
   flex: 1;
 }
@@ -414,7 +414,6 @@ section.topo-do-site .flex {
     flex-direction: column;
     gap: 40px;
   }
-
   .carrossel-obra {
     flex-direction: row;
     justify-content: center;
@@ -442,6 +441,7 @@ section.topo-do-site .flex {
 }
 
 .sobre-nos {
+ 
   background: #000000;
   margin-top: 0;
   padding: 56px 0 64px 0;
@@ -451,6 +451,8 @@ section.topo-do-site .flex {
 }
 
 .sobre-nos .interface {
+   display: flex;
+  flex-direction: column;
   max-width: 800px;
   margin: 0 auto;
   padding: 0 24px;
@@ -483,6 +485,9 @@ section.topo-do-site .flex {
   .sobre-nos .interface {
     padding: 0 8px;
   }
+  .carrossel-obra{
+    flex-direction: row;
+  }
 
   .sobre-nos h2 {
     font-size: 2rem;
@@ -502,8 +507,12 @@ section.topo-do-site .flex {
 }
 
 footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 30px 4%;
   background-color: #160b2e;
+
 }
 
 footer .line-footer p a {
@@ -513,16 +522,21 @@ footer .line-footer p a {
 }
 
 footer .flex {
-  justify-content: space-between;
+  
+  display: flex;
+  flex-direction: column;
 }
 
 footer .line-footer {
-  padding: 8px 0;
+ padding: 8px 0;
+  
 }
+
+
 
 @media (max-width: 600px) {
   .carrossel-obra {
-    flex-direction: column;
+    flex-direction: row;
     gap: 16px;
     margin-left: 0;
   }
@@ -556,7 +570,11 @@ footer .line-footer {
   header .logo img {
   width: 50vw;
   margin-left: 20%;
+  top: 0;
   flex: 1;
+}
+.carrossel-obra{
+  flex-direction: row;
 }
   .interface .menu {
     display: none;
