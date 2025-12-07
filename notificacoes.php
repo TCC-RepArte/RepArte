@@ -59,6 +59,13 @@ if (!isset($_SESSION['id'])) {
 
         <!-- Conteúdo principal -->
         <main class="content">
+            <div class="mobile-header">
+                <button class="menu-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h3>Notificações</h3>
+            </div>
+
             <h2 style="color: #fff; margin-bottom: 30px;">Notificações</h2>
 
             <div class="settings-list">
@@ -94,9 +101,18 @@ if (!isset($_SESSION['id'])) {
                 <button class="save" onclick="salvarPreferencias()">Salvar Preferências</button>
             </div>
         </main>
+
+        <div class="overlay" onclick="toggleSidebar()"></div>
     </div>
 
     <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
         function confirmarLogout() {
             Swal.fire({
                 title: "Tem certeza que deseja sair?",

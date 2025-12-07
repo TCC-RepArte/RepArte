@@ -5,12 +5,12 @@
 
 
 // SendGrid SMTP
-define('EMAIL_HOST', 'smtp.sendgrid.net');
+define('EMAIL_HOST', 'smtp.gmail.com');
 define('EMAIL_PORT', 587);
 define('EMAIL_SMTP_SECURE', 'tls');
 
-define('EMAIL_USERNAME', 'apikey');
-define('EMAIL_PASSWORD', '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');
+define('EMAIL_USERNAME', 'testereparte@gmail.com');
+define('EMAIL_PASSWORD', 'hqdu qufi qhvn porl');
 define('EMAIL_FROM', 'testereparte@gmail.com');
 define('EMAIL_FROM_NAME', 'RepArte Teste');
 
@@ -168,8 +168,8 @@ function templateRecuperacaoSenha($codigo, $nomeUsuario = '')
         <style>
             body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
             .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; }
-            .header { text-align: center; color: #667eea; margin-bottom: 30px; }
-            .codigo { background: #f0f0f0; border: 2px dashed #667eea; padding: 20px; text-align: center; font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #667eea; margin: 20px 0; border-radius: 10px; }
+            .header { text-align: center; color: #5e0083ff; margin-bottom: 30px; }
+            .codigo { background: #f0f0f0; border: 2px dashed #eb7d00ff; padding: 20px; text-align: center; font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #667eea; margin: 20px 0; border-radius: 10px; }
             .footer { text-align: center; color: #999; font-size: 12px; margin-top: 30px; }
             ul { line-height: 1.8; }
         </style>

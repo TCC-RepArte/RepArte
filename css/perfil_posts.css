@@ -387,16 +387,6 @@
     text-align: center !important;
 }
 
-/* Responsivo */
-@media (max-width: 900px) {
-    .hashtag-container {
-        grid-template-columns: 1fr;
-    }
-
-    .sidebar-hashtag {
-        position: static;
-    }
-}
 
 /* Esconder o painel de obras do telainicial.js */
 .painel-busca-obras,
@@ -580,4 +570,27 @@
     font-size: 11px;
     margin: 3px 0 0;
     line-height: 1.2;
+}
+
+/* Responsivo - MOVED TO END TO OVERRIDE STICKY */
+@media (max-width: 900px) {
+    .hashtag-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar-hashtag {
+        display: flex;
+        /* Ensure display is flex */
+        position: static !important;
+        /* Force static to override any sticky */
+        order: -1;
+        top: auto !important;
+        width: 100%;
+        /* Take full width on mobile */
+    }
+
+    .sidebar-box {
+        width: 100%;
+    }
 }

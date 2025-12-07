@@ -283,14 +283,166 @@ if (!empty($termo)) {
             left: 0;
             width: 100%;
             background: linear-gradient(to top, #1a0637 90%, transparent);
-            /* Fundo mais sólido para garantir visibilidade */
             z-index: 10;
+        }
+
+        /* ========== RESPONSIVIDADE ========== */
+        @media (max-width: 768px) {
+            body {
+                overflow: auto;
+                height: auto;
+            }
+
+            .busca-container {
+                margin: 70px auto 0;
+                height: auto;
+                min-height: calc(100vh - 70px);
+                padding: 0 10px 20px;
+            }
+
+            .busca-header h1 {
+                font-size: 18px;
+            }
+
+            .tabs-busca {
+                gap: 10px;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding-bottom: 5px;
+            }
+
+            .tabs-busca::-webkit-scrollbar {
+                display: none;
+            }
+
+            .tab-btn-busca {
+                font-size: 14px;
+                padding: 6px 12px;
+                flex-shrink: 0;
+            }
+
+            .tab-content-busca {
+                overflow: visible;
+                height: auto;
+            }
+
+            .layout-busca-obras {
+                flex-direction: column !important;
+                height: auto !important;
+                gap: 15px !important;
+            }
+
+            .filtros-sidebar {
+                width: 100% !important;
+                margin-bottom: 0 !important;
+                padding: 12px !important;
+            }
+
+            .filtros-sidebar h4 {
+                font-size: 14px !important;
+                margin-bottom: 10px !important;
+            }
+
+            .opcoes-filtro-busca {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .opcao-filtro {
+                font-size: 13px !important;
+                margin-bottom: 0 !important;
+            }
+
+            .controles-filtro {
+                margin-bottom: 10px !important;
+            }
+
+            /* Usar Grid ao invés de Columns no mobile */
+            #obras-container-dinamico {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
+                column-count: unset !important;
+                column-gap: unset !important;
+                height: auto !important;
+                width: 100% !important;
+                padding: 0 !important;
+                box-sizing: border-box !important;
+            }
+
+            .obra-card-wrapper {
+                margin-bottom: 0 !important;
+                width: 100% !important;
+            }
+
+            .layout-busca-obras>div:last-child {
+                width: 100% !important;
+                overflow: visible !important;
+                flex: 1 !important;
+                padding: 0 10px !important;
+                box-sizing: border-box !important;
+            }
+
+            #paginacao-container-obras {
+                position: relative !important;
+                margin-top: 15px;
+                height: auto !important;
+                padding: 10px 0;
+                background: transparent !important;
+            }
+
+            .result-item {
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .result-item img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .result-info h3 {
+                font-size: 14px;
+            }
+
+            .result-info p {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .busca-header h1 {
+                font-size: 16px;
+            }
+
+            .tab-btn-busca {
+                font-size: 13px;
+                padding: 5px 10px;
+            }
+
+            .opcoes-filtro-busca {
+                grid-template-columns: 1fr !important;
+            }
+
+            .result-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .result-item img {
+                align-self: center;
+                width: 60px;
+                height: 60px;
+            }
         }
     </style>
 </head>
 
 <body>
-        <header>
+    <header>
         <div class="logo">
             <a href="telainicial.php"><img src="images/logo.png" alt="Logo"></a>
         </div>

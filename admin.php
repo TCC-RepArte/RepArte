@@ -3,7 +3,6 @@ session_start();
 require 'php/config.php';
 
 // Verificação de segurança: Só o admin pode acessar
-// ID do admin: rFRCxqU-Yze
 if (!isset($_SESSION['id']) || $_SESSION['id'] !== 'rFRCxqU-Yze') {
     // Se não for admin, manda de volta pra home
     header("Location: telainicial.php");
@@ -17,6 +16,7 @@ $sql_denuncias = "SELECT d.*, l.usuario as denunciante_nome
                   ORDER BY d.data_denuncia DESC";
 $result = $con->query($sql_denuncias);
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -52,7 +52,8 @@ $result = $con->query($sql_denuncias);
                 <div class="notif-dropdown" id="notif-dropdown">
                     <div class="notif-header">
                         <h4>Notificações</h4>
-                        <button class="marcar-todas-lidas" onclick="marcarTodasLidas()">Marcar todas como lidas</button>
+                        <button class="marcar-todas-lidas" onclick="marcarTodasLidas()">Marcar todas como
+                            lidas</button>
                     </div>
                     <div class="notif-list" id="notif-list">
                         <div class="notif-empty">Carregando...</div>
@@ -69,6 +70,50 @@ $result = $con->query($sql_denuncias);
 
     <main class="admin-container">
         <h1><i class="fas fa-user-shield"></i> Painel de Controle</h1><br><br>
+
+        <!-- Seção de Busca de IDs -->
+        <section class="admin-card">
+            <h2><i class="fas fa-search"></i> Buscar IDs</h2>
+            <p>Encontre o ID de postagens, usuários ou comentários para realizar ações.</p><br>
+
+            <div class="search-form" style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                <div class="form-group" style="flex: 1; min-width: 150px;">
+                    <label>Tipo:</label>
+                    <select id="search-type"
+                        style="width: 100%; padding: 10px; border-radius: 5px; background: #222; color: white; border: 1px solid #444;">
+                        <option value="postagem">Postagem</option>
+                        <option value="usuario">Usuário</option>
+                        <option value="comentario">Comentário</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="flex: 1; min-width: 150px;">
+                    <label>Critério:</label>
+                    <select id="search-criteria"
+                        style="width: 100%; padding: 10px; border-radius: 5px; background: #222; color: white; border: 1px solid #444;">
+                        <!-- Preenchido via JS -->
+                    </select>
+                </div>
+
+                <div class="form-group" style="flex: 2; min-width: 200px;">
+                    <label>Busca:</label>
+                    <div class="search-input-container" style="display: flex; gap: 10px;">
+                        <input type="text" id="search-input" placeholder="Digite para buscar..."
+                            style="width: 100%; padding: 10px; border-radius: 5px; background: #222; color: white; border: 1px solid #444;">
+                        <button id="btn-search-id"
+                            style="background: #ff6600; color: white; border: none; padding: 0 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="search-results" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+                <!-- Resultados aparecerão aqui -->
+                <p style="color: #666; text-align: center; padding: 20px;">Os resultados da busca aparecerão
+                    aqui.</p>
+            </div>
+        </section>
 
         <!-- Seção de Exclusão Manual -->
         <section class="admin-card">
@@ -147,7 +192,8 @@ $result = $con->query($sql_denuncias);
                                             <input type="hidden" name="id_denuncia" value="<?= $row['id'] ?>">
                                             <!-- Para apagar a denúncia junto -->
                                             <button type="submit" class="btn-action btn-ban" title="Apagar Item e Denúncia"><i
-                                                    class="fas fa-check"></i> Aceitar (Apagar Item)</button>
+                                                    class="fas fa-check"></i> Aceitar
+                                                (Apagar Item)</button>
                                         </form>
 
                                         <!-- Botão para ignorar (apagar só a denúncia) -->
@@ -155,7 +201,8 @@ $result = $con->query($sql_denuncias);
                                             <input type="hidden" name="action" value="dismiss_report">
                                             <input type="hidden" name="id_denuncia" value="<?= $row['id'] ?>">
                                             <button type="submit" class="btn-action btn-ignore" title="Ignorar Denúncia"><i
-                                                    class="fas fa-times"></i> Ignorar</button>
+                                                    class="fas fa-times"></i>
+                                                Ignorar</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -169,6 +216,8 @@ $result = $con->query($sql_denuncias);
         </section>
     </main>
     <script src="js/notificacoes.js"></script>
+    <script src="js/admin_search.js"></script>
+
 </body>
 
 </html>

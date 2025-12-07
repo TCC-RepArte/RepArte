@@ -171,7 +171,7 @@ while ($row = $res_obras->fetch_assoc()) {
                                 <div class="post-set-container">
                                     <i class="post-set fa-solid fa-bars" style="color: rgb(255, 102, 0);" title="Opções"></i>
 
-                                    <!-- Menu Dropdown (Balãozinho) -->
+                                    <!-- Menu Dropdown -->
                                     <div class="post-options-dropdown">
                                         <!-- Copiar Link -->
                                         <a href="#" onclick="copiarLink(event, '<?= $post['id'] ?>')">
@@ -184,12 +184,7 @@ while ($row = $res_obras->fetch_assoc()) {
                                             <i class="far fa-star" id="fav-icon-<?= $post['id'] ?>"></i>
                                             <span id="fav-text-<?= $post['id'] ?>">Favoritar</span>
                                         </a>
-
-                                        <!-- Adicionar à Lista (Lógica futura) -->
-                                        <a href="#">
-                                            <i class="fas fa-list"></i> Salvar
-                                        </a>
-
+                                        
                                         <!-- Deletar: Só aparece se o usuário for o dono do post -->
                                         <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $post['id_usuario']): ?>
                                             <a href="php/deletar_post.php?id=<?= $post['id'] ?>"

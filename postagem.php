@@ -17,6 +17,7 @@ $postId = $_GET['id'];
 try {
     $sql = "SELECT 
                 p.id,
+                p.id_usuario,
                 p.titulo,
                 p.texto,
                 p.data_post as data,
@@ -105,12 +106,47 @@ try {
             <div class="post">
                 <div class="post-header">
                     <div class="post-user">
-                        <img src="<?= htmlspecialchars($post['foto']) ?>" alt="Foto do Usuário"
-                            class="post-user-photo" />
-                        <h3><?= htmlspecialchars($post['usuario']) ?></h3>
+                        <a href="usuario_perfil.php?id=<?= $post['id_usuario'] ?>"
+                            style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                            <img src="<?= htmlspecialchars($post['foto']) ?>" alt="Foto do Usuário"
+                                class="post-user-photo" />
+                            <h3><?= htmlspecialchars($post['usuario']) ?></h3>
+                        </a>
                     </div>
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <span class="post-data"><?= date('d/m/Y H:i', strtotime($post['data'])) ?></span>
+
+                        <!-- Container para o menu de opções do post -->
+                        <div class="post-set-container">
+                            <i class="post-set fa-solid fa-bars" style="color: rgb(255, 102, 0);" title="Opções"></i>
+
+                            <!-- Menu Dropdown -->
+                            <div class="post-options-dropdown">
+                                <!-- Copiar Link -->
+                                <a href="#" onclick="copiarLink(event, '<?= $post['id'] ?>')">
+                                    <i class="fas fa-link"></i> Copiar Link
+                                </a>
+
+                                <a href="#" class="btn-favorito" data-id="<?= $post['id'] ?>"
+                                    onclick="toggleFavorito(event, '<?= $post['id'] ?>')">
+                                    <i class="far fa-star" id="fav-icon-<?= $post['id'] ?>"></i>
+                                    <span id="fav-text-<?= $post['id'] ?>">Favoritar</span>
+                                </a>
+
+                                <!-- Deletar: Só aparece se o usuário for o dono do post -->
+                                <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $post['id_usuario']): ?>
+                                    <a href="php/deletar_post.php?id=<?= $post['id'] ?>"
+                                        onclick="return confirm('Tem certeza que deseja deletar este post?')">
+                                        <i class="fas fa-trash" style="color: red;"></i> Deletar
+                                    </a>
+                                <?php endif; ?>
+
+                                <!-- Denunciar -->
+                                <a href="#" onclick="abrirDenuncia(event, '<?= $post['id'] ?>', 'postagem')">
+                                    <i class="fas fa-flag"></i> Denunciar
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -437,7 +473,7 @@ try {
             console.log('Elemento comentariosList:', comentariosList);
 
             if (!comentariosList) {
-                console.error('❌ Elemento comentariosList não encontrado!');
+                console.error('Elemento comentariosList não encontrado!');
                 return;
             }
 
@@ -450,7 +486,7 @@ try {
                 console.log('Headers da resposta:', response.headers);
 
                 if (!response.ok) {
-                    console.error('❌ Erro HTTP:', response.status);
+                    console.error('Erro HTTP:', response.status);
                     const errorText = await response.text();
                     console.error('Texto do erro:', errorText);
                     comentariosList.innerHTML = '<div class="no-comments">Erro ao carregar comentários.</div>';
@@ -464,7 +500,7 @@ try {
                 try {
                     data = JSON.parse(responseText);
                 } catch (parseError) {
-                    console.error('❌ Erro ao fazer parse do JSON:', parseError);
+                    console.error('Erro ao fazer parse do JSON:', parseError);
                     console.error('Resposta que causou erro:', responseText);
                     comentariosList.innerHTML = '<div class="no-comments">Erro ao processar comentários.</div>';
                     return;
@@ -477,7 +513,7 @@ try {
 
                 if (data.success) {
                     if (data.comentarios && data.comentarios.length > 0) {
-                        console.log('✅ Renderizando comentários...');
+                        console.log('Renderizando comentários...');
 
                         // Renderiza comentários com curtidas
                         let html = '';
@@ -529,17 +565,17 @@ try {
                         }
 
                         comentariosList.innerHTML = html;
-                        console.log('✅ Comentários renderizados com sucesso');
+                        console.log('Comentários renderizados com sucesso');
                     } else {
-                        console.log('ℹ️ Nenhum comentário encontrado, mostrando mensagem');
+                        console.log('Nenhum comentário encontrado, mostrando mensagem');
                         comentariosList.innerHTML = '<div class="no-comments">Nenhum comentário ainda. Seja o primeiro a comentar!</div>';
                     }
                 } else {
-                    console.log('❌ Erro no success, mostrando mensagem de erro');
+                    console.log('Erro no success, mostrando mensagem de erro');
                     comentariosList.innerHTML = '<div class="no-comments">Erro ao carregar comentários.</div>';
                 }
             } catch (error) {
-                console.error('❌ Erro ao carregar comentários:', error);
+                console.error('Erro ao carregar comentários:', error);
                 comentariosList.innerHTML = '<div class="no-comments">Erro ao carregar comentários.</div>';
             }
         }
@@ -560,13 +596,13 @@ try {
                 setTimeout(() => {
                     if (comentarioInput) {
                         comentarioInput.focus();
-                        console.log('✅ Foco aplicado no input de comentários');
+                        console.log('Foco aplicado no input de comentários');
                     }
                 }, 500);
 
-                console.log('✅ Scroll para comentários executado');
+                console.log('Scroll para comentários executado');
             } else {
-                console.error('❌ Formulário de comentários não encontrado');
+                console.error('Formulário de comentários não encontrado');
             }
         }
 
@@ -875,7 +911,7 @@ try {
                         expandButton.classList.add('show');
                         expandButton.onclick = () => expandirTexto(container.dataset.postId);
 
-                        console.log(`✅ TRUNCADO: ${textoOriginalTexto.length} -> ${textElement.innerHTML.length} caracteres`);
+                        console.log(`TRUNCADO: ${textoOriginalTexto.length} -> ${textElement.innerHTML.length} caracteres`);
                         console.log(`Texto truncado: "${textElement.innerHTML}"`);
                         console.log(`Botão expandir: display=${expandButton.style.display}, class=${expandButton.className}`);
                     } else {
@@ -892,15 +928,15 @@ try {
                             textElement.setAttribute('data-limite-atual', limiteCaracteres);
                             expandButton.setAttribute('data-texto-original', textoOriginalHTML);
 
-                            console.log(`✅ Botão mostrado para texto que precisa truncar`);
+                            console.log(`Botão mostrado para texto que precisa truncar`);
                         } else {
                             // Não esconder o botão se ele já está visível e tem onclick
                             if (expandButton.onclick && expandButton.classList.contains('show')) {
-                                console.log(`ℹ️ Mantendo botão visível (já configurado)`);
+                                console.log(`Mantendo botão visível (já configurado)`);
                             } else {
                                 expandButton.style.display = 'none';
                                 expandButton.classList.remove('show');
-                                console.log(`ℹ️ Não precisa truncar (${textoOriginalTexto.length} <= ${limiteCaracteres})`);
+                                console.log(`Não precisa truncar (${textoOriginalTexto.length} <= ${limiteCaracteres})`);
                             }
                         }
                     }
@@ -927,7 +963,7 @@ try {
             const estourou = larguraTexto > larguraContainer;
 
             if (estourou) {
-                console.log(`⚠️ Texto estourou em largura: ${larguraTexto}px > ${larguraContainer}px`);
+                console.log(`Texto estourou em largura: ${larguraTexto}px > ${larguraContainer}px`);
             }
 
             return estourou;
@@ -940,7 +976,7 @@ try {
 
             const container = document.querySelector(`[data-post-id="${postId}"]`);
             if (!container) {
-                console.error('❌ Container não encontrado para post', postId);
+                console.error('Container não encontrado para post', postId);
                 return;
             }
 
@@ -948,7 +984,7 @@ try {
             const expandButton = container.querySelector('.expand-button');
 
             if (!textElement || !expandButton) {
-                console.error('❌ Elementos não encontrados para post', postId);
+                console.error('Elementos não encontrados para post', postId);
                 return;
             }
 
@@ -959,7 +995,7 @@ try {
             console.log('Limite atual:', limiteAtual);
 
             if (!textoOriginalHTML) {
-                console.error('❌ Texto original não encontrado para post', postId);
+                console.error('Texto original não encontrado para post', postId);
                 return;
             }
 
@@ -979,7 +1015,7 @@ try {
                 expandButton.textContent = 'Ver menos...';
                 expandButton.onclick = () => contrairTexto(postId);
                 textElement.removeAttribute('data-limite-atual');
-                console.log(`✅ Texto expandido completamente para post ${postId}`);
+                console.log(`Texto expandido completamente para post ${postId}`);
             } else {
                 // Expande progressivamente usando o texto original completo
                 const textoTruncado = textoPuroOriginal.substring(0, novoLimite) + '...';
@@ -987,7 +1023,7 @@ try {
                 textElement.innerHTML = textoTruncado.replace(/\n/g, '<br>');
                 textElement.setAttribute('data-limite-atual', novoLimite);
                 expandButton.textContent = 'Ver mais...';
-                console.log(`✅ Texto expandido progressivamente para post ${postId} (${novoLimite} chars)`);
+                console.log(`Texto expandido progressivamente para post ${postId} (${novoLimite} chars)`);
             }
         }
 
@@ -1026,7 +1062,7 @@ try {
                         textElement.setAttribute('data-limite-atual', limiteCaracteres);
                         expandButton.textContent = 'Ver mais...';
                         expandButton.onclick = () => expandirTexto(postId);
-                        console.log(`✅ Texto contraído para post ${postId}`);
+                        console.log(`Texto contraído para post ${postId}`);
                     }
                 }
             }
@@ -1117,6 +1153,119 @@ try {
                     submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar';
                 }
             });
+        });
+
+        // Função para copiar link do post
+        function copiarLink(event, postId) {
+            event.preventDefault();
+            const url = `${window.location.origin}/postagem.php?id=${postId}`;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('Link copiado para a área de transferência!');
+            }).catch(err => {
+                console.error('Erro ao copiar link:', err);
+                alert('Erro ao copiar link');
+            });
+        }
+
+        // Função para favoritar/desfavoritar post
+        async function toggleFavorito(event, postId) {
+            event.preventDefault();
+
+            try {
+                const response = await fetch('php/favoritar_post.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ post_id: postId })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const icon = document.getElementById(`fav-icon-${postId}`);
+                    const text = document.getElementById(`fav-text-${postId}`);
+
+                    if (data.action === 'added') {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        icon.style.color = '#ff6600';
+                        text.textContent = 'Favoritado';
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        icon.style.color = '';
+                        text.textContent = 'Favoritar';
+                    }
+                } else {
+                    alert('Erro ao favoritar: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Erro ao favoritar:', error);
+                alert('Erro ao favoritar post');
+            }
+        }
+
+        // Função para abrir modal de denúncia
+        function abrirDenuncia(event, id, tipo) {
+            event.preventDefault();
+
+            const motivo = prompt(`Por que você está denunciando ${tipo === 'postagem' ? 'esta postagem' : 'este comentário'}?\n\nEscreva o motivo:`);
+
+            if (motivo && motivo.trim()) {
+                fetch('php/criar_denuncia.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        tipo: tipo,
+                        id_conteudo: id,
+                        motivo: motivo.trim()
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Denúncia enviada com sucesso! Nossa equipe irá analisar.');
+                        } else {
+                            alert('Erro ao enviar denúncia: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                        alert('Erro ao enviar denúncia');
+                    });
+            }
+        }
+
+        // Verificar se o post está favoritado ao carregar a página
+        async function verificarFavoritos() {
+            const postId = '<?= $post['id'] ?>';
+
+            try {
+                const response = await fetch(`php/verificar_favorito.php?post_id=${postId}`);
+                const data = await response.json();
+
+                if (data.success && data.is_favorited) {
+                    const icon = document.getElementById(`fav-icon-${postId}`);
+                    const text = document.getElementById(`fav-text-${postId}`);
+
+                    if (icon && text) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        icon.style.color = '#ff6600';
+                        text.textContent = 'Favoritado';
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao verificar favoritos:', error);
+            }
+        }
+
+        // Chamar verificação de favoritos ao carregar
+        document.addEventListener('DOMContentLoaded', function () {
+            verificarFavoritos();
         });
     </script>
 </body>

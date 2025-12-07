@@ -184,3 +184,71 @@
     color: #666;
     font-style: italic;
 }
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 100px 15px 30px;
+    }
+
+    .admin-card {
+        padding: 20px;
+    }
+
+    .admin-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-group input,
+    .form-group select {
+        min-width: 100%;
+    }
+
+    .btn-delete {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .search-form {
+        flex-direction: column;
+    }
+
+    .search-form .form-group {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    .search-input-container {
+        flex-direction: column !important;
+    }
+
+    .search-form button {
+        width: 100% !important;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        white-space: nowrap;
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .btn-action {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .actions-cell {
+        min-width: 140px;
+    }
+}

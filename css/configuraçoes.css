@@ -38,6 +38,28 @@ body {
   overflow-y: auto;
 }
 
+/* --------- SISTEMA DE ABAS --------- */
+.tab-content {
+  display: none;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* --------- MENU LATERAL --------- */
 .sidebar {
   width: 300px;
@@ -307,4 +329,157 @@ body {
 
 .toggle.active::after {
   left: 27px;
+}
+
+/* --------- RESPONSIVIDADE & MOBILE MENU --------- */
+
+/* Elementos Mobile (Escondidos no Desktop) */
+.mobile-header {
+  display: none;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #333;
+}
+
+.mobile-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.menu-toggle {
+  background: transparent;
+  border: none;
+  color: #ff6600;
+  font-size: 24px;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.menu-toggle:active {
+  transform: scale(0.9);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 998;
+  display: none;
+  backdrop-filter: blur(3px);
+  transition: opacity 0.3s;
+}
+
+.overlay.active {
+  display: block;
+}
+
+/* Media Query para Mobile */
+@media (max-width: 900px) {
+
+  body {
+    align-items: flex-start;
+    /* Permite scroll se necessário */
+    padding: 0;
+  }
+
+  .container {
+    width: 100%;
+    height: 100vh;
+    /* Ocupa toda a altura */
+    max-width: 100%;
+    border-radius: 0;
+    /* Remove bordas arredondadas */
+    border: none;
+    box-shadow: none;
+    position: relative;
+  }
+
+  .mobile-header {
+    display: flex;
+    /* Mostra o header mobile */
+  }
+
+  /* Sidebar Off-Canvas */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    /* Escondido à esquerda */
+    width: 280px;
+    height: 100vh;
+    background: #0f0e0f;
+    z-index: 999;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.7);
+    padding-top: 20px;
+    overflow-y: auto;
+  }
+
+  .sidebar.active {
+    left: 0;
+    /* Mostra a sidebar */
+  }
+
+  /* Ajuste do conteúdo principal */
+  .content {
+    margin: 0;
+    /* Remove margem */
+    border-radius: 0;
+    /* Remove bordas arredondadas */
+    border: none;
+    height: 100%;
+    /* Ocupa altura total */
+    width: 100%;
+    padding: 20px;
+    background: #1a1a1a;
+    /* Mantém fundo padronizado */
+  }
+
+  /* Ajustes no Grid de Perfil (se houver) */
+  .profile {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+  }
+
+  .descricao,
+  .actions {
+    width: 100%;
+  }
+
+  .avatar {
+    margin-bottom: 20px;
+  }
+
+  .img {
+    width: 120px;
+    height: 120px;
+    font-size: 40px;
+  }
+
+  /* Ajuste para inputs ficarem full width */
+  .inputs {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .top-bar {
+    display: flex;
+    /* Show back button in mobile sidebar */
+    justify-content: flex-start;
+    /* Align left */
+    margin-bottom: 20px;
+  }
 }

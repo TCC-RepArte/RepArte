@@ -304,7 +304,7 @@ async function atualizarContadoresPost(postId) {
 // Se o texto for muito longo, mostra apenas uma parte com botão "Ver mais..."
 function verificarTruncamentoTexto() {
 
-    console.log('=== INICIO DA VERIFICAÇÃO ===\n');
+  console.log('=== INICIO DA VERIFICAÇÃO ===\n');
 
   const textContainers = document.querySelectorAll('.post-text-container');
   console.log('Encontrados', textContainers.length, 'containers de texto');
@@ -719,6 +719,25 @@ if (removerObraBtn) {
 // Executa todas as funções necessárias quando a página termina de carregar
 document.addEventListener('DOMContentLoaded', function () {
   console.log('DOM carregado - telainicial.js');
+
+  // Mobile Menu Logic
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const closeMenu = document.getElementById('close-menu');
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', function () {
+      mobileMenu.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling
+    });
+  }
+
+  if (closeMenu && mobileMenu) {
+    closeMenu.addEventListener('click', function () {
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = ''; // Restore scrolling
+    });
+  }
 
   // Carregar imagens e estado das reações
   carregarImagens();
@@ -2169,7 +2188,7 @@ async function enviarDenuncia() {
       console.warn("Usando ID local (fallback)");
       var idDenuncia = Math.random().toString(36).substr(2, 9);
     } else {
-      var idDenuncia = idGeradoObj.id; 
+      var idDenuncia = idGeradoObj.id;
     }
 
     const response = await fetch('php/salvar_denuncia.php', {
@@ -2330,10 +2349,16 @@ setInterval(() => {
 }, 5000);
 
 // Função para carregar as imagens do carrossel (Obras Populares)
+// Função para carregar as imagens do carrossel (Obras Populares) e Mobile
 async function carregarImagensCarousel() {
-  const imgs = document.querySelectorAll('.carousel-img');
+  // Seleciona imagens do carrossel desktop e do grid mobile
+  const imgsCarousel = document.querySelectorAll('.carousel-img');
+  const imgsMobile = document.querySelectorAll('.obra-mobile-item img');
 
-  const promessas = Array.from(imgs).map(async (img) => {
+  // Junta todas as imagens em um único array
+  const todasImagens = [...imgsCarousel, ...imgsMobile];
+
+  const promessas = todasImagens.map(async (img) => {
     const id = img.getAttribute('data-id');
     const tipo = img.getAttribute('data-tipo');
 

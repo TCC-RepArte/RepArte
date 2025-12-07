@@ -43,6 +43,10 @@ if (isset($_SESSION['id'])) {
 
 <body>
   <header>
+    <button class="menu-toggle" id="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </button>
+
     <div class="logo">
       <a href="#"><img src="images/logo.png" alt="Logo do site"></a>
     </div>
@@ -80,6 +84,73 @@ if (isset($_SESSION['id'])) {
     </div>
 
   </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-header">
+      <span class="mobile-menu-title">Menu</span>
+      <button class="close-menu" id="close-menu"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="mobile-menu-content">
+      <!-- Content injected via JS or duplicates of sidebars -->
+      <div class="mobile-section">
+        <h3><i class="fas fa-user-circle"></i> Meu Perfil</h3>
+        <a href="meu_perfil.php" class="mobile-link">
+          <div class="user-principal-mobile">
+            <img src="<?= $perfil['caminho'] ?>" alt="Seu Perfil">
+            <strong><?php echo $perfil['nomexi']; ?></strong>
+          </div>
+        </a>
+      </div>
+
+      <div class="mobile-section">
+        <h3><i class="fas fa-users"></i> Outros Usuários</h3>
+        <div class="user-list-mobile">
+          <?php if (!empty($outros_usuarios)): ?>
+            <?php foreach ($outros_usuarios as $usuario): ?>
+              <a href="usuario_perfil.php?id=<?= $usuario['id'] ?>" class="user-item">
+                <img src="<?= $usuario['caminho'] ?>"
+                  alt="<?= htmlspecialchars($usuario['nomexi'] ?? $usuario['usuario']) ?>">
+                <span><?= htmlspecialchars($usuario['nomexi'] ?? $usuario['usuario']) ?></span>
+              </a>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <p class="empty-msg">Nenhum outro usuário.</p>
+          <?php endif; ?>
+        </div>
+      </div>
+
+      <div class="mobile-section">
+        <h3><i class="fas fa-hashtag"></i> Hashtags</h3>
+        <div class="hashtags-mobile">
+          <?php if (!empty($hashtags_populares)): ?>
+            <?php foreach ($hashtags_populares as $tag): ?>
+              <?php $nome_tag = str_replace('#', '', $tag['nome']); ?>
+              <a href="hashtag.php?tag=<?= $nome_tag ?>" class="tag">#<?= $nome_tag ?></a>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <p class="empty-msg">Nenhuma hashtag.</p>
+          <?php endif; ?>
+        </div>
+      </div>
+
+      <div class="mobile-section">
+        <h3><i class="fas fa-palette"></i> Obras Populares</h3>
+        <div class="obras-mobile-grid">
+          <?php if (!empty($obras_populares)): ?>
+            <?php foreach ($obras_populares as $obra): ?>
+              <a href="obra.php?id=<?= $obra['id'] ?>" class="obra-mobile-item">
+                <img src="images/placeholder_obra.jpg" data-id="<?= $obra['id'] ?>" data-tipo="<?= $obra['tipo'] ?>"
+                  alt="<?= $obra['titulo'] ?>">
+                <span><?= mb_strimwidth($obra['titulo'], 0, 15, '...') ?></span>
+              </a>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <main class="main-container">
     <section class="left">

@@ -97,14 +97,14 @@ INSERT INTO `configuracoes_usuario` (`id`, `id_usuario`, `vlibras_ativo`, `data_
 DROP TABLE IF EXISTS `denuncias`;
 CREATE TABLE IF NOT EXISTS `denuncias` (
   `id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `id_denunciante` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_denunciante` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
   `tipo_denuncia` enum('comentario','usuario','postagem') COLLATE utf8mb4_general_ci NOT NULL,
   `id_item_denunciado` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `motivo` text COLLATE utf8mb4_general_ci,
   `data_denuncia` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `id_denunciante` (`id_denunciante`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -115,13 +115,13 @@ CREATE TABLE IF NOT EXISTS `denuncias` (
 DROP TABLE IF EXISTS `favoritos`;
 CREATE TABLE IF NOT EXISTS `favoritos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_usuario` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `id_post` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_usuario` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_post` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `data_favorito` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_favorito` (`id_usuario`,`id_post`),
   KEY `id_post` (`id_post`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -181,6 +181,7 @@ CREATE TABLE IF NOT EXISTS `notificacoes` (
   `data_criacao` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `idx_usuario_destino` (`id_usuario_destino`),
+  KEY `idx_usuario_origem` (`id_usuario_origem`),
   KEY `idx_lida` (`lida`),
   KEY `idx_data` (`data_criacao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -218,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `perfil` (
   `descri` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
   `data_perf` datetime NOT NULL,
   `vlibras_ativo` tinyint(1) DEFAULT '0',
-  KEY `idx_login` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -339,6 +340,26 @@ ALTER TABLE `configuracoes_usuario`
   ADD CONSTRAINT `fk_config_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `login` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `denuncias`
+--
+ALTER TABLE `denuncias`
+  ADD CONSTRAINT `fk_denuncias_login` FOREIGN KEY (`id_denunciante`) REFERENCES `login` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `favoritos`
+--
+ALTER TABLE `favoritos`
+  ADD CONSTRAINT `fk_favoritos_login` FOREIGN KEY (`id_usuario`) REFERENCES `login` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_favoritos_post` FOREIGN KEY (`id_post`) REFERENCES `postagens` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `notificacoes`
+--
+ALTER TABLE `notificacoes`
+  ADD CONSTRAINT `fk_notificacoes_destino` FOREIGN KEY (`id_usuario_destino`) REFERENCES `login` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_notificacoes_origem` FOREIGN KEY (`id_usuario_origem`) REFERENCES `login` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `perfil`
 --
 ALTER TABLE `perfil`
@@ -357,6 +378,12 @@ ALTER TABLE `postagens`
 ALTER TABLE `post_hashtags`
   ADD CONSTRAINT `post_hashtags_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `postagens` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `post_hashtags_ibfk_2` FOREIGN KEY (`hashtag_id`) REFERENCES `hashtags` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `preferencias_notificacoes`
+--
+ALTER TABLE `preferencias_notificacoes`
+  ADD CONSTRAINT `fk_pref_notif_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `login` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `reacoes`

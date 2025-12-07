@@ -122,7 +122,15 @@ body {
 /* Responsivo */
 @media (max-width: 900px) {
     .hashtag-container {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar-hashtag {
+        order: -1;
+        position: static;
+        /* Prevent sticky behavior on mobile */
+        top: auto;
     }
 }
 
