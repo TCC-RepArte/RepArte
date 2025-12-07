@@ -173,7 +173,7 @@
     transform: scale(1.1);
 }
 
-/* O balãozinho (menu dropdown) - Estilo sincronizado com telainicial.css */
+/* menu dropdown - Estilo sincronizado com telainicial.css */
 .post-options-dropdown {
     display: none !important;
     position: absolute !important;

@@ -43,7 +43,7 @@ async function carregarImagemComLoading(imgElement, obraId, tipoObra) {
       imgElement.parentNode.style.position = 'relative';
       imgElement.parentNode.appendChild(loadingDiv);
     }
-  }, 10000); // 10 segundos
+  }, 1000); // 10 segundos
 
   try {
     const obra = await obterDetalhesObra({ apiId: obraId, tipo: tipoObra });
@@ -93,7 +93,7 @@ async function carregarImagens() {
     const obraPost = img_post.getAttribute('id-obra');
     const tipoObraPost = img_post.getAttribute('tipo-obra');
 
-    // Usa o novo sistema de loading
+    // Usa o sistema de loading
     await carregarImagemComLoading(img_post, obraPost, tipoObraPost);
   });
 
@@ -257,16 +257,16 @@ async function enviarReacao(postId, estado) {
       }
     }
   } catch (error) {
-    console.error('Erro detalhado ao enviar reação:', error);
+    console.error('Erro ao enviar reação:', error);
     console.error('Tipo do erro:', error.constructor.name);
     console.error('Mensagem:', error.message);
 
     if (error.name === 'TypeError' && error.message.includes('fetch')) {
-      alert('Erro de conexão: Não foi possível conectar ao servidor. Verifique se o WAMP está rodando.');
+      console.log('Erro de conexão: Não foi possível conectar ao servidor.');
     } else if (error.name === 'SyntaxError') {
-      alert('Erro: Resposta inválida do servidor. Verifique os logs.');
+      console.log('Erro: Resposta inválida do servidor.');
     } else {
-      alert('Erro: ' + error.message);
+      console.log('Erro: ' + error.message);
     }
   }
 }
@@ -303,24 +303,21 @@ async function atualizarContadoresPost(postId) {
 // Limita o tamanho dos textos dos posts para manter o layout organizado
 // Se o texto for muito longo, mostra apenas uma parte com botão "Ver mais..."
 function verificarTruncamentoTexto() {
-  console.log('=== INICIANDO VERIFICAÇÃO DE TRUNCAMENTO ===');
+
+    console.log('=== INICIO DA VERIFICAÇÃO ===\n');
 
   const textContainers = document.querySelectorAll('.post-text-container');
   console.log('Encontrados', textContainers.length, 'containers de texto');
 
   if (textContainers.length === 0) {
-    console.log('❌ Nenhum container encontrado! Verificando se a página carregou...');
-    console.log('Elementos .post encontrados:', document.querySelectorAll('.post').length);
+    console.log('Nenhum container encontrado!');
     return;
   }
 
   textContainers.forEach((container, index) => {
-    console.log(`\n--- Container ${index} ---`);
+    console.log(`Container ${index}`);
     const textElement = container.querySelector('.post-text-truncated');
     const expandButton = container.querySelector('.expand-button');
-
-    console.log('Elemento de texto encontrado:', !!textElement);
-    console.log('Botão expandir encontrado:', !!expandButton);
 
     if (textElement && expandButton) {
       // Define um limite de caracteres para truncamento
@@ -332,7 +329,7 @@ function verificarTruncamentoTexto() {
 
       // Se foi expandido pelo usuário, não re-truncar
       if (foiExpandido) {
-        console.log(`ℹ️ Texto já foi expandido pelo usuário, mantendo estado atual`);
+        console.log(`Texto já foi expandido pelo usuário, mantendo estado atual`);
         return;
       }
 
@@ -355,7 +352,7 @@ function verificarTruncamentoTexto() {
         verificarEstouroLargura(textElement);
 
       if (precisaTruncar) {
-        // Para textos com HTML, vamos usar uma abordagem mais simples
+
         // Criar um elemento temporário para trabalhar com o HTML
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = textoOriginalHTML;
@@ -403,7 +400,7 @@ function verificarTruncamentoTexto() {
         // Configura o onclick do botão
         expandButton.onclick = () => expandirTexto(container.dataset.postId);
 
-        console.log(`✅ TRUNCADO: ${textoOriginalTexto.length} -> ${textElement.innerHTML.length} caracteres`);
+        console.log(`TRUNCADO: ${textoOriginalTexto.length} -> ${textElement.innerHTML.length} caracteres`);
         console.log(`Texto truncado: "${textElement.innerHTML}"`);
         console.log(`Botão expandir: display=${expandButton.style.display}, class=${expandButton.className}`);
       } else {
@@ -420,20 +417,20 @@ function verificarTruncamentoTexto() {
           textElement.setAttribute('data-limite-atual', limiteCaracteres);
           expandButton.setAttribute('data-texto-original', textoOriginalHTML);
 
-          console.log(`✅ Botão mostrado para texto que precisa truncar`);
+          console.log(` Botão mostrado para texto que precisa truncar`);
         } else {
           // Não esconder o botão se ele já está visível e tem onclick
           if (expandButton.onclick && expandButton.classList.contains('show')) {
-            console.log(`ℹ️ Mantendo botão visível (já configurado)`);
+            console.log(`Mantendo botão visível (já configurado)`);
           } else {
             expandButton.style.display = 'none';
             expandButton.classList.remove('show');
-            console.log(`ℹ️ Não precisa truncar (${textoOriginalTexto.length} <= ${limiteCaracteres})`);
+            console.log(`Não precisa truncar (${textoOriginalTexto.length} <= ${limiteCaracteres})`);
           }
         }
       }
     } else {
-      console.log(`❌ Elementos não encontrados no container ${index}`);
+      console.log(`Elementos não encontrados no container ${index}`);
       if (!textElement) console.log('  - Elemento .post-text-truncated não encontrado');
       if (!expandButton) console.log('  - Elemento .expand-button não encontrado');
     }
@@ -461,7 +458,7 @@ function verificarEstouroLargura(elemento) {
   const estourou = larguraTexto > larguraContainer;
 
   if (estourou) {
-    console.log(`⚠️ Texto estourou em largura: ${larguraTexto}px > ${larguraContainer}px`);
+    console.log(`Texto estourou em largura: ${larguraTexto}px > ${larguraContainer}px`);
   }
 
   return estourou;
@@ -476,7 +473,7 @@ function expandirTexto(postId) {
 
   const container = document.querySelector(`[data-post-id="${postId}"]`);
   if (!container) {
-    console.error('❌ Container não encontrado para post', postId);
+    console.error('Container não encontrado para post', postId);
     return;
   }
 
@@ -484,7 +481,7 @@ function expandirTexto(postId) {
   const expandButton = container.querySelector('.expand-button');
 
   if (!textElement || !expandButton) {
-    console.error('❌ Elementos não encontrados para post', postId);
+    console.error('Elementos não encontrados para post', postId);
     return;
   }
 
@@ -495,7 +492,7 @@ function expandirTexto(postId) {
   console.log('Limite atual:', limiteAtual);
 
   if (!textoOriginalHTML) {
-    console.error('❌ Texto original não encontrado para post', postId);
+    console.error('Texto original não encontrado para post', postId);
     return;
   }
 
@@ -515,7 +512,7 @@ function expandirTexto(postId) {
     expandButton.textContent = 'Ver menos...';
     expandButton.onclick = () => contrairTexto(postId);
     textElement.removeAttribute('data-limite-atual');
-    console.log(`✅ Texto expandido completamente para post ${postId}`);
+    console.log(`Texto expandido completamente para post ${postId}`);
   } else {
     // Expande progressivamente usando o texto original completo
     const textoTruncado = textoPuroOriginal.substring(0, novoLimite) + '...';
@@ -523,7 +520,7 @@ function expandirTexto(postId) {
     textElement.innerHTML = textoTruncado.replace(/\n/g, '<br>');
     textElement.setAttribute('data-limite-atual', novoLimite);
     expandButton.textContent = 'Ver mais...';
-    console.log(`✅ Texto expandido progressivamente para post ${postId} (${novoLimite} chars)`);
+    console.log(`Texto expandido progressivamente para post ${postId} (${novoLimite} chars)`);
   }
 }
 
@@ -562,15 +559,15 @@ function contrairTexto(postId) {
         textElement.setAttribute('data-limite-atual', limiteCaracteres);
         expandButton.textContent = 'Ver mais...';
         expandButton.onclick = () => expandirTexto(postId);
-        console.log(`✅ Texto contraído para post ${postId}`);
+        console.log(`Texto contraído para post ${postId}`);
       } else {
-        console.error('❌ Texto original não encontrado para post', postId);
+        console.error('Texto original não encontrado para post', postId);
       }
     } else {
-      console.error('❌ Elementos não encontrados para post', postId);
+      console.error('Elementos não encontrados para post', postId);
     }
   } else {
-    console.error('❌ Container não encontrado para post', postId);
+    console.error('Container não encontrado para post', postId);
   }
 }
 
@@ -652,7 +649,7 @@ window.selecionarObraCompleta = function (obra) {
   if (painelBuscaObras) painelBuscaObras.style.display = 'none';
   if (overlay) overlay.style.display = 'none';
 
-  console.log('✅ Obra selecionada com sucesso!');
+  console.log('Obra selecionada com sucesso!');
 };
 
 // Função para remover a obra selecionada
@@ -705,7 +702,7 @@ window.removerObraSelecionada = function (event) {
     console.log('Preview resetado');
   }
 
-  console.log('✅ Obra removida com sucesso!');
+  console.log('Obra removida com sucesso!');
 };
 
 // Adicionar evento de clique no botão de remover
@@ -785,7 +782,7 @@ document.addEventListener('DOMContentLoaded', function () {
           expandButton.onclick();
           console.log('Clique executado');
         } else {
-          console.log('❌ Sem onclick definido');
+          console.log('Sem onclick definido');
         }
       }
     });
@@ -1579,10 +1576,8 @@ document.addEventListener('DOMContentLoaded', function () {
         event.stopPropagation();
         event.preventDefault();
 
-        console.log('🔥 BOTÃO SELECIONAR CLICADO!');
         console.log('Obra a ser selecionada:', obra);
 
-        // EXECUTAR A LÓGICA DIRETAMENTE AQUI
         console.log('=== SELECIONANDO OBRA ===');
 
         // Preencher campos hidden
@@ -1616,7 +1611,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (iconePlus) iconePlus.style.display = 'none';
 
-            console.log('✅ IMAGEM ATUALIZADA:', obra.imagem);
+            console.log('IMAGEM ATUALIZADA:', obra.imagem);
           }
         }
 
@@ -1626,12 +1621,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (painelBuscaObras) painelBuscaObras.style.display = 'none';
         if (overlay) overlay.style.display = 'none';
 
-        console.log('✅ OBRA SELECIONADA COM SUCESSO!');
+        console.log('OBRA SELECIONADA COM SUCESSO!');
       });
 
-      console.log('✅ Evento de clique adicionado ao botão selecionar');
+      console.log('Evento de clique adicionado ao botão selecionar');
     } else {
-      console.error('❌ Botão selecionar NÃO encontrado!');
+      console.error('Botão selecionar NÃO encontrado!');
     }
 
     // Adicionar evento ao botão voltar 
@@ -2055,9 +2050,8 @@ async function criarIDPost(tamanho) {
 function copiarLink(event, idPost) {
   event.preventDefault(); // Evita que a página suba pro topo
 
-  // Define a base da URL (mude para o seu domínio real quando for pro ar)
+  // Define a base da URL 
   const baseUrl = "https://reparte.free.nf/";
-  // const baseUrl = window.location.origin + "/RepArte/"; // Use essa linha se estiver testando localmente e comente a de cima
 
   const link = `${baseUrl}postagem.php?id=${idPost}`;
 
@@ -2098,7 +2092,7 @@ function abrirDenuncia(event, idItem, tipo) {
   overlay.style.display = 'block';
 }
 
-// Função para criar o HTML do painel de denúncia (injetado dinamicamente)
+// Função para criar o HTML do painel de denúncia
 function criarPainelDenuncia() {
   // Overlay (fundo escuro)
   const overlay = document.createElement('div');
@@ -2171,11 +2165,11 @@ async function enviarDenuncia() {
     const idGeradoObj = await criarID(15, 'php/verificar_id_denuncia.php');
 
     if (!idGeradoObj || !idGeradoObj.success) {
-      // Fallback se der erro ou se o script não existir ainda: gera localmente
+      // Fallback se der erro
       console.warn("Usando ID local (fallback)");
       var idDenuncia = Math.random().toString(36).substr(2, 9);
     } else {
-      var idDenuncia = idGeradoObj.id; // Supondo que o criarID retorna o ID no objeto
+      var idDenuncia = idGeradoObj.id; 
     }
 
     const response = await fetch('php/salvar_denuncia.php', {
@@ -2210,7 +2204,7 @@ async function enviarDenuncia() {
 async function toggleFavorito(event, postId) {
   event.preventDefault(); // Impede que o link pule para o topo da página
 
-  // Pega os elementos da tela que vamos mudar (icone e texto)
+  // Pega os elementos da tela que vão ser mudados (icone e texto)
   const icon = document.getElementById(`fav-icon-${postId}`);
   const text = document.getElementById(`fav-text-${postId}`);
 
@@ -2225,7 +2219,7 @@ async function toggleFavorito(event, postId) {
     const data = await response.json();
 
     if (data.success) {
-      // Se o PHP disse que deu certo, atualizamos a tela
+      // Se o PHP disse que deu certo, atualiza a tela
       if (data.status === 'favoritado') {
         // Mudou para favoritado: estrela cheia
         icon.classList.remove('far');
@@ -2245,7 +2239,7 @@ async function toggleFavorito(event, postId) {
   }
 }
 
-// Função para verificar se um post específico está favoritado (baseado no seu exemplo)
+// Função para verificar se um post específico está favoritado
 async function atualizarEstadoFavorito(postId) {
   try {
     const response = await fetch('php/verificar_favorito.php', {
@@ -2294,7 +2288,7 @@ function carregarFavoritosIniciais() {
   });
 }
 
-// --- Lógica do Carrossel de Obras Populares ---
+// Carrossel de Obras Populares
 let scrollAmount = 0;
 
 function moverCarrossel(direcao) {
@@ -2303,8 +2297,7 @@ function moverCarrossel(direcao) {
 
   if (images.length === 0) return;
 
-  // Tamanho de uma imagem + gap (ajuste conforme seu CSS)
-  // Assumindo largura média de 100px + 10px de gap
+  // Tamanho de uma imagem + gap
   const step = 110;
 
   // Largura total do conteúdo
@@ -2331,7 +2324,7 @@ function moverCarrossel(direcao) {
   });
 }
 
-// Opcional: Auto-play (passa sozinho a cada 5 segundos)
+// Auto-play (passa sozinho a cada 5 segundos)
 setInterval(() => {
   moverCarrossel(1);
 }, 5000);

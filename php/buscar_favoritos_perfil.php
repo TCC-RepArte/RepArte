@@ -18,7 +18,6 @@ if (!$con || $con->connect_error) {
 }
 
 try {
-    // Primeiro, vamos descobrir a estrutura da tabela favoritos
     // Buscar colunas da tabela favoritos
     $check_sql = "SHOW COLUMNS FROM favoritos";
     $check_result = $con->query($check_sql);

@@ -1,7 +1,6 @@
 <?php
 /**
  * Script para adicionar VLibras em todas as páginas principais
- * Este arquivo deve ser incluído no final de cada página, antes do </body>
  */
 
 // Inclui o arquivo de configuração do VLibras

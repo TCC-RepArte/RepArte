@@ -102,7 +102,7 @@ body {
   color: #000;
 }
 
-/* --------- PERFIL (Exemplo de conteúdo) --------- */
+/* --------- PERFIL  --------- */
 .profile {
   display: grid;
   grid-template-columns: 1fr 1fr;

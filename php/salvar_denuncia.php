@@ -18,7 +18,7 @@ if (!$data) {
 
 $id_denunciante = $_SESSION['id'];
 $tipo_denuncia = $data['tipo'];
-$id_item_denunciado = $data['id_item']; // Agora tratado como string
+$id_item_denunciado = $data['id_item']; 
 $motivo = $data['motivo'];
 
 // Função simples para gerar ID se não vier do front (fallback)
@@ -48,7 +48,7 @@ function gerarIdDenuncia($con)
     return $id;
 }
 
-// Se o JS mandou um ID, usamos, senão geramos aqui
+// Se o JS não mandou um ID, gera aqui
 $id_denuncia = isset($data['id_denuncia']) ? $data['id_denuncia'] : gerarIdDenuncia($con);
 
 if (empty($motivo) || empty($id_item_denunciado) || empty($tipo_denuncia)) {
@@ -60,7 +60,7 @@ if (empty($motivo) || empty($id_item_denunciado) || empty($tipo_denuncia)) {
 $sql = "INSERT INTO denuncias (id, id_denunciante, tipo_denuncia, id_item_denunciado, motivo, data_denuncia) VALUES (?, ?, ?, ?, ?, NOW())";
 
 if ($stmt = $con->prepare($sql)) {
-    // sssss = 5 strings
+
     $stmt->bind_param("sssss", $id_denuncia, $id_denunciante, $tipo_denuncia, $id_item_denunciado, $motivo);
 
     if ($stmt->execute()) {

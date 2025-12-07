@@ -44,7 +44,7 @@ $comentarios = buscarComentariosUsuario($_SESSION['id']) ?? [];
 $postagens = buscarPostagensUsuario($_SESSION['id'], $desde, $mais) ?? [];
 $comentarios = buscarComentariosUsuario($_SESSION['id']) ?? [];
 
-// DEBUG - REMOVER DEPOIS
+// DEBUG
 echo "<script>console.log('ID DA SESSÃO: " . $_SESSION['id'] . "');</script>";
 echo "<script>console.log('TOTAL DE POSTAGENS: " . count($postagens) . "');</script>";
 if (!empty($postagens)) {
@@ -103,9 +103,6 @@ if (!empty($postagens)) {
 
               <div class="actions">
                 <button class="btn ghost" onclick="window.location.href='perfil.php'">Editar Perfil</button>
-                <button class="btn accent" onclick="window.location.href='chats.php'">
-                  <i class="bi bi-chat-dots"></i>
-                </button>
               </div>
             </div>
 
@@ -170,7 +167,7 @@ if (!empty($postagens)) {
                     <div class="post-set-container">
                       <i class="post-set fa-solid fa-bars" style="color: rgb(255, 102, 0);" title="Opções"></i>
 
-                      <!-- Menu Dropdown (Balãozinho) -->
+                      <!-- Menu Dropdown -->
                       <div class="post-options-dropdown">
                         <!-- Copiar Link -->
                         <a href="#" onclick="copiarLink(event, '<?= $post['id'] ?>')">
@@ -181,11 +178,6 @@ if (!empty($postagens)) {
                           onclick="toggleFavorito(event, '<?= $post['id'] ?>')">
                           <i class="far fa-star" id="fav-icon-<?= $post['id'] ?>"></i>
                           <span id="fav-text-<?= $post['id'] ?>">Favoritar</span>
-                        </a>
-
-                        <!-- Adicionar à Lista (Lógica futura) -->
-                        <a href="#">
-                          <i class="fas fa-list"></i> Salvar
                         </a>
 
                         <!-- Deletar: Só aparece se o usuário for o dono do post -->

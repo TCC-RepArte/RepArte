@@ -172,11 +172,6 @@ if (isset($_SESSION['id'])) {
                       <span id="fav-text-<?= $post['id'] ?>">Favoritar</span>
                     </a>
 
-                    <!-- Adicionar à Lista (Lógica futura) -->
-                    <a href="#">
-                      <i class="fas fa-list"></i> Salvar
-                    </a>
-
                     <!-- Deletar: Só aparece se o usuário for o dono do post -->
                     <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $post['id_usuario']): ?>
                       <a href="php/deletar_post.php?id=<?= $post['id'] ?>"

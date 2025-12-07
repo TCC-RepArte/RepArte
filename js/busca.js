@@ -1,4 +1,4 @@
-// Script para busca de obras via APIs externas com Layout Masonry Dinâmico
+// Script para busca de obras via APIs externas com Layout Masonry Dinâmico (Pinterest)
 console.log('=== BUSCA.JS CARREGADO (MASONRY DINÂMICO) ===');
 
 // Estado global da paginação
@@ -257,13 +257,11 @@ function criarCardObra(obra) {
     return div;
 }
 
+
 function renderizarControlesPaginacao() {
     let container = document.getElementById('paginacao-container-obras');
 
     if (!container) {
-        // Se o container de paginação foi removido (ex: ao filtrar e não ter resultados), recriar
-        // Mas precisamos saber onde colocar. Ele deve estar dentro da div #obras, após o container dinâmico
-        // Como a estrutura mudou para ter sidebar, o container de paginação está dentro da div flex-column
         const parent = document.getElementById('obras-container-dinamico').parentElement;
         container = document.createElement('div');
         container.id = 'paginacao-container-obras';

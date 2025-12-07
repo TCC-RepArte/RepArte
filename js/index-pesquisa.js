@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (termo.length >= 3) {
             timeoutPesquisa = setTimeout(() => {
                 pesquisarObras(termo);
-            }, 500); // Aguarda 500ms após parar de digitar
+            }, 300); // Aguarda 300ms após parar de digitar
         }
     });
 

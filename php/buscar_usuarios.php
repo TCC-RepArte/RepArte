@@ -1,6 +1,5 @@
 <?php
 // Arquivo para buscar outros usuários para a sidebar
-// NÃO incluir config.php nem session_start() aqui, pois já foram chamados antes
 
 // Função que busca usuários para exibir na sidebar, excluindo o usuário logado
 function buscarOutrosUsuarios($limite = 15)

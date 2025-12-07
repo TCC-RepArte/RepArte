@@ -25,7 +25,7 @@ if ($stmt->num_rows > 0) {
     echo json_encode(['success' => true, 'duplicate' => true]);
 } else {
     // ID disponível (não duplicado)
-    // Retornamos o próprio ID para o JS usar
+    // Retorna o próprio ID para o JS usar
     echo json_encode(['success' => true, 'duplicate' => false, 'id' => $id]);
 }
 

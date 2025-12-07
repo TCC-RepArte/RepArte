@@ -1,4 +1,3 @@
-// Endpoints das APIs - caminhos corrigidos para ambiente InfinityFree
 // Define as URLs para acessar as diferentes APIs (filmes, séries, músicas, etc.)
 const API_ENDPOINTS = {
   movies: 'php/api-endpoints.php?action=search_movies',      // Buscar filmes
@@ -378,11 +377,11 @@ async function obterDetalhesObra({ apiId, tipo }) {
         url = `${API_ENDPOINTS.trackDetails}&id=${apiId}`;
         break;
       case 'livro':
-        // Para livros, usamos a API do Google Books diretamente
+        // Para livros, usar a API do Google Books diretamente
         url = `https://www.googleapis.com/books/v1/volumes/${apiId}`;
         break;
       case 'arte':
-        // Para arte, usamos o endpoint do backend
+        // Para arte, usar o endpoint do backend
         url = `php/api-endpoints.php?action=art_details&id=${apiId}`;
         break;
       default:

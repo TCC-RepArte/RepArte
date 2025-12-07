@@ -10,12 +10,12 @@ define('SPOTIFY_CLIENT_SECRET', '4ac381f6be504327b2ab6d8ce73f69f7');
 
 $con = new mysqli("localhost", "root", '', "if0_40154094_reparte");
 
-// Composer autoload (opcional - pode não estar disponível em hospedagem gratuita)
+// Composer autoload 
 if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
     require_once __DIR__ . '/../vendor/autoload.php';
 }
 
-// Função para obter token do Spotify (versão compatível com hospedagem gratuita)
+// Função para obter token do Spotify 
 function getSpotifyToken()
 {
     $auth = base64_encode(SPOTIFY_CLIENT_ID . ':' . SPOTIFY_CLIENT_SECRET);

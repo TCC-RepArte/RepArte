@@ -2,10 +2,6 @@
 // Configuração de email para o sistema RepArte
 // Arquivo de envio de emails genérico
 
-/**
- * Envia email usando a função mail() do PHP
- * Compatível com InfinityFree e outras hospedagens gratuitas
- */
 function enviarEmail($destinatario, $assunto, $mensagem, $emailRemetente = 'noreply@reparte.com', $nomeRemetente = 'RepArte')
 {
 
@@ -150,13 +146,13 @@ function emailCodigoVerificacao($nomeUsuario, $codigo)
             }
             .codigo {
                 background: white;
-                border: 2px dashed #667eea;
+                border: 2px dashed #1a0637;
                 padding: 20px;
                 text-align: center;
                 font-size: 32px;
                 font-weight: bold;
                 letter-spacing: 8px;
-                color: #667eea;
+                color: #613b9aff;
                 margin: 20px 0;
                 border-radius: 10px;
             }

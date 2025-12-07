@@ -232,7 +232,7 @@ if (!empty($termo)) {
             width: 100%;
         }
 
-        /* Estilos gerais de lista (para outras abas) */
+        /* Estilos gerais de lista*/
         .result-item {
             background: #1a1a1a;
             padding: 15px;

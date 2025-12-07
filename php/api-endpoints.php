@@ -1,5 +1,5 @@
 <?php
-// api-endpoints.php - Versão com Bearer Token para TMDB
+// Arquivo para endpoints da API
 
 // Desativar display de erros para produção, mas logar tudo
 error_reporting(E_ALL);

@@ -681,7 +681,7 @@ header {
   cursor: pointer;
 }
 
-/* Efeito de hover para o ícone de opções (três barrinhas) */
+/* Efeito de hover para o ícone de opções */
 .post-set:hover {
   color: #ff6600 !important;
   /* Força a cor laranja */
@@ -698,7 +698,7 @@ header {
   color: #666 !important;
 }
 
-/* Efeito de hover para o ícone de expandir (fullscreen) */
+/* Efeito de hover para o ícone de expandir */
 .fullscreen-icon:hover i {
   color: #ff6600;
   transform: scale(1.1);
@@ -2613,7 +2613,7 @@ header {
   cursor: pointer;
 }
 
-/* O balãozinho (menu dropdown) */
+/* menu dropdown */
 .post-options-dropdown {
   display: none;
   /* Escondido por padrão */
@@ -2649,7 +2649,6 @@ header {
 .post-options-dropdown a:hover {
   background-color: #f1f1f1;
   color: #ff6600;
-  /* Cor laranja do tema */
 }
 
 /* Ícones dentro do menu para ficar bonitinho */
@@ -2668,11 +2667,9 @@ header {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 9998;
-  /* Um pouco abaixo do painel que costuma ser 9999 ou mais */
   backdrop-filter: blur(3px);
 }
 
-/* Ajuste específico para o painel de denúncia caso precise sobrescrever algo do painel-busca-obras */
 #painel-denuncia {
   z-index: 9999;
   position: fixed;
@@ -2681,7 +2678,6 @@ header {
   transform: translate(-50%, -50%);
   width: 90%;
   max-width: 500px;
-  /* Um pouco menor que o de obras */
   background-color: #130922;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);

@@ -4,7 +4,7 @@
 // CONFIGURAÇÕES DE EMAIL - SENDGRID
 
 
-// SendGrid SMTP (Recomendado para InfinityFree)
+// SendGrid SMTP
 define('EMAIL_HOST', 'smtp.sendgrid.net');
 define('EMAIL_PORT', 587);
 define('EMAIL_SMTP_SECURE', 'tls');

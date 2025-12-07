@@ -6,7 +6,7 @@ require_once 'config.php';
 $id_usuario_alvo = isset($_GET['id_usuario']) ? $_GET['id_usuario'] : $_SESSION['id'];
 
 // Query para buscar os posts favoritados por esse usuário
-// Fazemos JOIN com a tabela postagens e login (para pegar dados do autor do post)
+// JOIN com a tabela postagens e login (para pegar dados do autor do post)
 $sql = "SELECT p.*, l.usuario, l.caminho as foto_usuario 
         FROM favoritos f
         JOIN postagens p ON f.id_post = p.id
@@ -24,14 +24,8 @@ while ($row = $result->fetch_assoc()) {
     $favoritos[] = $row;
 }
 
-// Retorna HTML ou JSON. Se você já tem uma estrutura de abas que carrega HTML, 
-// o ideal é retornar o HTML dos cards de post.
-// Vou assumir que você quer retornar o HTML pronto para injetar na div.
-
 foreach ($favoritos as $post) {
-    // Aqui você repete a estrutura HTML do seu card de post (igual da tela inicial)
-    // Substituindo as variáveis pelos dados de $post
-    include 'template_post.php'; // Sugestão: crie um arquivo template para não repetir código
+    include 'template_post.php';
 }
 
 if (empty($favoritos)) {

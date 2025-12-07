@@ -72,13 +72,6 @@ include 'vlibras_include.php';
                     <div class="toggle" onclick="this.classList.toggle('active')"></div>
                 </div>
 
-                <div class="setting-item">
-                    <div class="setting-info">
-                        <h3>Alertas de Login</h3>
-                        <p>Receba alertas sobre logins não reconhecidos.</p>
-                    </div>
-                    <div class="toggle active" onclick="this.classList.toggle('active')"></div>
-                </div>
 
                 <div class="setting-item" style="cursor: pointer;" onclick="window.location.href='emailesqueceu.php'">
                     <div class="setting-info">
@@ -88,13 +81,6 @@ include 'vlibras_include.php';
                     <i class="bi bi-chevron-right" style="color: #888;"></i>
                 </div>
 
-                <div class="setting-item">
-                    <div class="setting-info">
-                        <h3>Sessões Ativas</h3>
-                        <p>Gerencie os dispositivos onde você está logado.</p>
-                    </div>
-                    <i class="bi bi-chevron-right" style="color: #888;"></i>
-                </div>
             </div>
         </main>
     </div>

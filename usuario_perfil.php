@@ -100,9 +100,6 @@ $comentarios = buscarComentariosUsuario($id_usuario_visualizado) ?? [];
 
               <div class="actions">
                 <button class="btn ghost" onclick="window.history.back()">Voltar</button>
-                <button class="btn accent" onclick="window.location.href='chats.php'">
-                  <i class="bi bi-chat-dots"></i>
-                </button>
               </div>
             </div>
 
