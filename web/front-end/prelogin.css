@@ -580,9 +580,11 @@ footer .line-footer {
     display: none;
   }
   .logo{
-    margin: 40px;
+    margin-top: -90px;
+     margin: 10px 0 0 20px; /* diminui a margem */
     justify-content: left;
     position: fixed;
+    z-index: 9999; /* evita sobrepor texto */
   }
   .btn-abrir-menu{
     display: block;
@@ -609,11 +611,12 @@ footer .line-footer {
     flex-wrap: wrap;
   }
   .topo-do-site h1 {
-  padding: 40px;
-  margin-left: 0px;
-  font-size: 40px;
-  justify-content: left;
-  text-align: justify;
+    font-size: 250%;
+      text-align: center;
+      width: 100%;
+      line-height: 1.2;
+      margin-top: 40%;
+  }
 }
 .sobre-nos h2{
   font-size: 40px;
@@ -639,7 +642,7 @@ footer .line-footer {
     height: 44px;
 
 }
-}
+
 
 /*Telas grandes*/
 @media (min-width: 1600px) {
