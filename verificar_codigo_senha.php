@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/login1.css">
+    <link rel="stylesheet" href="css/mensagens.css">
+    <title>RepArte - Verificar Código</title>
+</head>
 <?php
 session_start();
 
@@ -14,86 +26,36 @@ $mensagem = $_SESSION['val_recuperacao'] ?? [];
 unset($_SESSION['val_recuperacao']);
 ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/cadastro.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/mensagens.css">
-    <title>RepArte - Verificar Código</title>
-    <style>
-        .codigo-container {
-            background: #f0f0f0;
-            border: 2px dashed #667eea;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .codigo-display {
-            font-size: 36px;
-            font-weight: bold;
-            letter-spacing: 8px;
-            color: #667eea;
-            margin: 10px 0;
-        }
-
-        .codigo-input {
-            font-size: 24px;
-            letter-spacing: 8px;
-            text-align: center;
-            padding: 15px;
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto;
-        }
-
-        .info-box {
-            background: #e8f0fe;
-            border-left: 4px solid #1a73e8;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-
 <body>
     <header>
         <div class="interface">
             <div class="logo">
                 <a href="#">
-                    <img src="images/logo.png" alt="Logo">
+                    <img src="images/logo.png" alt="Logo do site">
                 </a>
             </div>
         </div>
     </header>
-
     <div class="main-login">
         <div class="right-login">
             <div class="card-login">
-                <div class="info-box">
-                    <p style="margin: 0;"><strong>Email:</strong> <?= htmlspecialchars($email) ?></p>
-                    <p style="margin: 5px 0 0 0; font-size: 13px; color: #666;">
-                        📧 Código válido por 1 hora | 5 tentativas
-                    </p>
-                </div>
-
-                <!-- Formulário -->
+                <h1>Recuperação de Senha</h1>
+                <p style="color: #ccc; margin-bottom: 20px; text-align: center;">
+                    Enviamos um código de 6 dígitos para:<br>
+                    <strong style="color: #ff6600;"><?= htmlspecialchars($email) ?></strong><br>
+                    Digite o código abaixo para continuar.
+                </p>
                 <form id="verificarForm" method="post" action="php/verificar_codigo_senha.php">
                     <input type="hidden" name="email" value="<?= htmlspecialchars($email) ?>">
 
                     <div class="textfield">
-                        <label for="codigo">Código:</label>
-                        <input type="text" id="codigo" name="codigo" class="codigo-input" placeholder="000000"
-                            maxlength="6" pattern="[0-9]{6}" required autocomplete="off">
+                        <label for="codigo"></label>
+                        <input type="text" id="codigo" name="codigo" placeholder="000000" maxlength="6"
+                            pattern="[0-9]{6}" required autocomplete="off"
+                            style="text-align: center; font-size: 24px; letter-spacing: 5px;">
                     </div>
 
-                    <!-- Área de mensagens com espaço reservado -->
+                    <!-- Área de mensagens -->
                     <div class="message-container">
                         <?php if (!empty($mensagem)): ?>
                             <div class="mensagem-sucesso">
@@ -106,24 +68,29 @@ unset($_SESSION['val_recuperacao']);
                         <div id="mensagem-js"></div>
                     </div>
 
-                    <button type="submit" class="btn-registrarse">Verificar Código</button>
-                    <button type="button" class="btn-entrar" onclick="solicitarNovoCodigo()">Reenviar Código</button>
+                    <button type="submit" class="btn-entrar">Verificar Código</button>
+                    <button type="button" class="btn-registrarse" onclick="solicitarNovoCodigo()">Reenviar
+                        Código</button>
                 </form>
 
-                <p style="text-align: center; margin-top: 15px;">
-                    <a href="login1.php" style="color: #667eea; text-decoration: none;">← Voltar ao login</a>
+                <p style="color: #888; font-size: 14px; margin-top: 20px; text-align: center;">
+                    Código válido por <strong>1 hora</strong> | <strong>5 tentativas</strong><br>
+                    <a href="login1.php" style="color: #ff6600;">← Voltar ao login</a>
                 </p>
             </div>
         </div>
     </div>
 
     <script>
-        // Formatar input para aceitar apenas números
+        // Auto-focus no campo de código
+        document.getElementById('codigo').focus();
+
+        // Permite apenas números
         document.getElementById('codigo').addEventListener('input', function (e) {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
 
-        // Função para reenviar código (chamada pelo botão)
+        // Função para reenviar código
         async function solicitarNovoCodigo() {
             const email = document.querySelector('input[name="email"]').value;
             const mensagemDiv = document.getElementById('mensagem-js');
@@ -140,8 +107,7 @@ unset($_SESSION['val_recuperacao']);
                 });
 
                 mensagemDiv.innerHTML = '<div class="mensagem-sucesso">Novo código enviado para seu email!</div>';
-                
-                // Limpar mensagem após 3 segundos
+
                 setTimeout(() => {
                     mensagemDiv.innerHTML = '';
                 }, 3000);

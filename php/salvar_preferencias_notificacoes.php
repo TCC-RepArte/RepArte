@@ -14,9 +14,9 @@ if (!isset($_SESSION['id'])) {
 $id_usuario = $_SESSION['id'];
 $input = json_decode(file_get_contents('php://input'), true);
 
-$notif_comentarios = isset($input['notif_comentarios']) ? 1 : 0;
-$notif_reacoes = isset($input['notif_reacoes']) ? 1 : 0;
-$notif_respostas = isset($input['notif_respostas']) ? 1 : 0;
+$notif_comentarios = (isset($input['notif_comentarios']) && $input['notif_comentarios']) ? 1 : 0;
+$notif_reacoes = (isset($input['notif_reacoes']) && $input['notif_reacoes']) ? 1 : 0;
+$notif_respostas = (isset($input['notif_respostas']) && $input['notif_respostas']) ? 1 : 0;
 
 // Verificar se já existe registro
 $sqlCheck = "SELECT id FROM preferencias_notificacoes WHERE id_usuario = ?";

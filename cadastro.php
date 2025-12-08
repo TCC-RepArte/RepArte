@@ -47,31 +47,9 @@ if (isset($_SESSION['erros'])) {
   </header>
 
   <div class="main-login">
-
-
     <div class="right-login">
       <div class="card-login">
         <h1>Sign up</h1>
-
-        <!-- Área de mensagens com espaço reservado -->
-        <div class="message-container">
-          <?php if (!empty($erros)): ?>
-            <div class="mensagem-erro">
-              <?php foreach ($erros as $erro): ?>
-                <p><?= htmlspecialchars($erro); ?></p>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
-
-          <?php if (isset($_SESSION['mensagem_sucesso'])): ?>
-            <div class="mensagem-sucesso">
-              <?= htmlspecialchars($_SESSION['mensagem_sucesso']); ?>
-              <?php unset($_SESSION['mensagem_sucesso']); ?>
-            </div>
-          <?php endif; ?>
-
-          <div id="mensagem-js"></div>
-        </div>
 
         <form id="signupForm" method="post" action="php/signup.php">
           <div class="textfield">
@@ -93,6 +71,26 @@ if (isset($_SESSION['erros'])) {
               <label for="confsenha">Confirme sua Senha:</label>
               <input type="password" name="confsenha" placeholder="********" required>
             </div>
+          </div>
+
+          <!-- Área de mensagens com espaço reservado -->
+          <div class="message-container">
+            <?php if (!empty($erros)): ?>
+              <div class="mensagem-erro">
+                <?php foreach ($erros as $erro): ?>
+                  <p><?= htmlspecialchars($erro); ?></p>
+                <?php endforeach; ?>
+              </div>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['mensagem_sucesso'])): ?>
+              <div class="mensagem-sucesso">
+                <?= htmlspecialchars($_SESSION['mensagem_sucesso']); ?>
+                <?php unset($_SESSION['mensagem_sucesso']); ?>
+              </div>
+            <?php endif; ?>
+
+            <div id="mensagem-js"></div>
           </div>
 
           <button class="btn-registrarse" type="submit">Registrar-se</button>
@@ -121,8 +119,15 @@ if (isset($_SESSION['erros'])) {
       // Limpar mensagens anteriores
       mensagemDiv.innerHTML = '';
 
+      // Validar nome de usuário (apenas letras e underscore, sem espaços ou números)
+      const regexUsuario = /^[a-zA-ZÀ-ÿ_]+$/;
+      if (!regexUsuario.test(usuario)) {
+        mensagemDiv.innerHTML = '<div class="mensagem-erro">O nome de usuário deve conter apenas letras e underscore (sem espaços ou números)</div>';
+        erroEncontrado = true;
+      }
+
       // Verificar se as senhas coincidem
-      if (senha !== confSenha) {
+      else if (senha !== confSenha) {
         mensagemDiv.innerHTML = '<div class="mensagem-erro">As senhas não coincidem</div>';
         erroEncontrado = true;
       }

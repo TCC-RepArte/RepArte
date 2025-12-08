@@ -133,7 +133,7 @@ function processarFormulario($dados)
         if (isset($_SESSION['codigo_verificado']) && $_SESSION['codigo_verificado'] === true && isset($_SESSION['dados_cadastro'])) {
             // Pegar dados da sessão
             $dadosCadastro = $_SESSION['dados_cadastro'];
-            $usuario = trim($dadosCadastro['usuario']);
+            $usuario = strtolower(trim($dadosCadastro['usuario'])); // Converter para minúsculas
             $email = trim($dadosCadastro['email']);
             $senha = trim($dadosCadastro['senha']);
             $id = trim($dadosCadastro['id']);

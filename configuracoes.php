@@ -300,16 +300,15 @@ include 'vlibras_include.php';
 
         function toggle2FA(element) {
             const isActive = element.classList.contains('active');
-            
+
             if (!isActive) {
-                // Ativando 2FA
                 Swal.fire({
                     title: "Ativar Autenticação de Dois Fatores?",
                     html: "A autenticação de dois fatores adiciona uma camada extra de segurança.<br><br>" +
-                          "<strong>Como funciona:</strong><br>" +
-                          "• Você receberá um código por email a cada login<br>" +
-                          "• Apenas você poderá acessar sua conta<br>" +
-                          "• Proteção contra acessos não autorizados",
+                        "<strong>Como funciona:</strong><br>" +
+                        "• Você receberá um código por email a cada login<br>" +
+                        "• Apenas você poderá acessar sua conta<br>" +
+                        "• Proteção contra acessos não autorizados",
                     icon: "info",
                     showCancelButton: true,
                     confirmButtonColor: "#ff6600",
@@ -320,19 +319,37 @@ include 'vlibras_include.php';
                     color: "#fff"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        element.classList.add('active');
-                        Swal.fire({
-                            title: "2FA Ativado!",
-                            text: "A autenticação de dois fatores foi ativada com sucesso.",
-                            icon: "success",
-                            confirmButtonColor: "#ff6600",
-                            background: "#1a1a1a",
-                            color: "#fff"
-                        });
+                        fetch('php/toggle_2fa.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ ativar: true })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    element.classList.add('active');
+                                    Swal.fire({
+                                        title: "2FA Ativado!",
+                                        text: "A autenticação de dois fatores foi ativada com sucesso.",
+                                        icon: "success",
+                                        confirmButtonColor: "#ff6600",
+                                        background: "#1a1a1a",
+                                        color: "#fff"
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: "Erro!",
+                                        text: data.message || "Erro ao ativar 2FA",
+                                        icon: "error",
+                                        confirmButtonColor: "#ff6600",
+                                        background: "#1a1a1a",
+                                        color: "#fff"
+                                    });
+                                }
+                            });
                     }
                 });
             } else {
-                // Desativando 2FA
                 Swal.fire({
                     title: "Desativar 2FA?",
                     text: "Isso tornará sua conta menos segura. Tem certeza?",
@@ -346,15 +363,34 @@ include 'vlibras_include.php';
                     color: "#fff"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        element.classList.remove('active');
-                        Swal.fire({
-                            title: "2FA Desativado",
-                            text: "A autenticação de dois fatores foi desativada.",
-                            icon: "info",
-                            confirmButtonColor: "#ff6600",
-                            background: "#1a1a1a",
-                            color: "#fff"
-                        });
+                        fetch('php/toggle_2fa.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ ativar: false })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    element.classList.remove('active');
+                                    Swal.fire({
+                                        title: "2FA Desativado",
+                                        text: "A autenticação de dois fatores foi desativada.",
+                                        icon: "info",
+                                        confirmButtonColor: "#ff6600",
+                                        background: "#1a1a1a",
+                                        color: "#fff"
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: "Erro!",
+                                        text: data.message || "Erro ao desativar 2FA",
+                                        icon: "error",
+                                        confirmButtonColor: "#ff6600",
+                                        background: "#1a1a1a",
+                                        color: "#fff"
+                                    });
+                                }
+                            });
                     }
                 });
             }
@@ -363,7 +399,7 @@ include 'vlibras_include.php';
         function toggleVLibras(element) {
             const isActive = element.classList.contains('active');
             const vlibrasWidget = document.querySelector('[vw]');
-            
+
             if (isActive) {
                 // Desativando VLibras
                 element.classList.remove('active');

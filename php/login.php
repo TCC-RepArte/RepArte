@@ -6,9 +6,11 @@ header("Pragma: no-cache");
 
 session_start();
 require 'config.php';
+require 'remember_me.php';
+require '2fa.php';
 
-// Verificar se já está logado e foi uma requisição AJAX
-if(isset($_SESSION['id'])){
+// Verificar se já está logado
+if (isset($_SESSION['id'])) {
     $_SESSION['val'] = ['Usuario já está logado!'];
     header('Location: ../telainicial.php');
     exit();
@@ -23,18 +25,19 @@ if ($con->connect_error) {
     exit();
 }
 
-if(isset($_POST['usuario']) && isset($_POST['senha'])){
+if (isset($_POST['usuario']) && isset($_POST['senha'])) {
     // Limpar os dados recebidos
     $usuario = $con->real_escape_string($_POST['usuario']);
-    $senha = $_POST['senha']; 
+    $senha = $_POST['senha'];
+    $lembrar = isset($_POST['lembrar']);
 
     // Verificar se é email ou nome de usuário
-    if(filter_var($usuario, FILTER_VALIDATE_EMAIL)) {
+    if (filter_var($usuario, FILTER_VALIDATE_EMAIL)) {
         // Se for email, busca pelo email
-        $stmt = $con->prepare("SELECT id, usuario, email, senha FROM login WHERE email = ?");
+        $stmt = $con->prepare("SELECT id, usuario, email, senha, 2fa_ativo FROM login WHERE email = ?");
     } else {
         // Se não for email, busca pelo nome de usuário (com ou sem @)
-        $stmt = $con->prepare("SELECT id, usuario, email, senha FROM login WHERE usuario = ? OR usuario = ?");
+        $stmt = $con->prepare("SELECT id, usuario, email, senha, 2fa_ativo FROM login WHERE usuario = ? OR usuario = ?");
         $usuarioComArroba = '@' . $usuario;
     }
 
@@ -45,12 +48,12 @@ if(isset($_POST['usuario']) && isset($_POST['senha'])){
     }
 
     // Bind dos parâmetros dependendo do tipo de login
-    if(filter_var($usuario, FILTER_VALIDATE_EMAIL)) {
+    if (filter_var($usuario, FILTER_VALIDATE_EMAIL)) {
         $stmt->bind_param("s", $usuario);
     } else {
         $stmt->bind_param("ss", $usuario, $usuarioComArroba);
     }
-    
+
     if (!$stmt->execute()) {
         $_SESSION['erros'] = ['Houve um erro no processo de verificação do e-mail/senha'];
         header('Location: ../login1.php');
@@ -59,33 +62,61 @@ if(isset($_POST['usuario']) && isset($_POST['senha'])){
 
     $resultado = $stmt->get_result();
 
-    if($resultado->num_rows > 0){
-        $usuario = $resultado->fetch_assoc();
-        
-        // Verificar a senha
-        if(password_verify($senha, $usuario['senha'])) {
-            // Armazenar informações na sessão
-            $_SESSION['usuario'] = $usuario['usuario'];
-            $_SESSION['email'] = $usuario['email'];
-            $_SESSION['id'] = $usuario['id'];
+    if ($resultado->num_rows > 0) {
+        $usuario_data = $resultado->fetch_assoc();
 
-            $_SESSION['val'] = ['Logado com sucesso!'];
-            header('Location: ../telainicial.php');
+        // Verificar a senha
+        if (password_verify($senha, $usuario_data['senha'])) {
+
+            // Verificar se tem 2FA ativo
+            if ($usuario_data['2fa_ativo'] == 1) {
+                // Gera e envia código 2FA
+                $codigo = salvarCodigo2FA($con, $usuario_data['id']);
+
+                if ($codigo && enviarCodigo2FAEmail($usuario_data['email'], $codigo, $usuario_data['usuario'])) {
+                    // Armazena dados temporários na sessão
+                    $_SESSION['2fa_pending_user'] = $usuario_data['id'];
+                    $_SESSION['2fa_pending_email'] = $usuario_data['email'];
+                    $_SESSION['2fa_pending_usuario'] = $usuario_data['usuario'];
+                    $_SESSION['2fa_lembrar'] = $lembrar;
+
+                    // Redireciona para página de verificação 2FA
+                    header('Location: ../verificar_2fa.php');
+                    exit();
+                } else {
+                    $_SESSION['erros'] = ['Erro ao enviar código de verificação. Tente novamente.'];
+                    header('Location: ../login1.php');
+                    exit();
+                }
+            } else {
+                // Login normal sem 2FA
+                $_SESSION['usuario'] = $usuario_data['usuario'];
+                $_SESSION['email'] = $usuario_data['email'];
+                $_SESSION['id'] = $usuario_data['id'];
+
+                // Se marcou "lembre de mim", salva o token
+                if ($lembrar) {
+                    salvarTokenLembreMim($con, $usuario_data['id']);
+                }
+
+                $_SESSION['val'] = ['Logado com sucesso!'];
+                header('Location: ../telainicial.php');
+            }
 
         } else {
             $_SESSION['erros'] = ['Senha incorreta!'];
             header('Location: ../login1.php');
             exit();
         }
-                
+
     } else {
 
         $_SESSION['erros'] = ['Usuario não encontrado!'];
         header('Location: ../login1.php');
         exit();
-        
-        }
-    
+
+    }
+
     $stmt->close();
 
 } else {
@@ -93,7 +124,7 @@ if(isset($_POST['usuario']) && isset($_POST['senha'])){
     $_SESSION['erros'] = ['Dados estão incompletos!'];
     header('Location: ../login1.php');
     exit();
-    
+
 }
 
 $con->close();
