@@ -15,7 +15,7 @@ if (!defined('SPOTIFY_CLIENT_SECRET')) {
 }
 
 if (!isset($con)) {
-    $con = new mysqli("localhost", "root", '', "if0_40154094_reparte");
+    $con = new mysqli("localhost", "root", '', "reparte");
 }
 
 // Composer autoload 
