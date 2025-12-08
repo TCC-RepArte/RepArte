@@ -65,7 +65,7 @@ if (!empty($_SERVER['REQUEST_METHOD'] === 'POST')) {
                 }
             }
 
-            header('Location: ../telainicial.php');
+            header('Location: ../telainicial.php?post_enviado=1');
         } catch (Exception $e) {
             echo "Um erro ocorreu: " . mysqli_stmt_error($stmt);
         }

@@ -33,11 +33,13 @@ if (isset($_SESSION['id'])) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <link rel="stylesheet" href="css/telainicial.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <title>Reparte</title>
 </head>
 
@@ -344,6 +346,18 @@ if (isset($_SESSION['id'])) {
   <script src="js/notificacoes.js"></script>
 
   <?php renderizarVLibras(); ?>
+
+  <?php if (isset($_GET['post_enviado'])): ?>
+<script>
+Swal.fire({
+    title: 'Postagem enviada!',
+    text: 'Sua análise foi publicada com sucesso.',
+    icon: 'success',
+    confirmButtonText: 'OK'
+});
+</script>
+<?php endif; ?>
+
 
 </body>
 
