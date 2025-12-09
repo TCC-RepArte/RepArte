@@ -48,7 +48,7 @@ $comentarios = buscarComentariosUsuario($_SESSION['id']) ?? [];
 echo "<script>console.log('ID DA SESSÃO: " . $_SESSION['id'] . "');</script>";
 echo "<script>console.log('TOTAL DE POSTAGENS: " . count($postagens) . "');</script>";
 if (!empty($postagens)) {
-    echo "<script>console.log('ID DO PRIMEIRO POST: " . $postagens[0]['id_usuario'] . "');</script>";
+  echo "<script>console.log('ID DO PRIMEIRO POST: " . $postagens[0]['id_usuario'] . "');</script>";
 }
 ?>
 
@@ -89,9 +89,10 @@ if (!empty($postagens)) {
         <div class="profile-main">
 
           <div class="avatar-wrap">
-            <div class="avatar"
-              style="background-image: url('<?= htmlspecialchars($perfil['caminho']) ?>'); background-size: cover; background-position: center;">
-              <?php if (empty($perfil['caminho']) || !file_exists($perfil['caminho'])): ?>
+            <div class="avatar">
+              <?php if (!empty($perfil['caminho']) && file_exists($perfil['caminho'])): ?>
+                <img src="<?= htmlspecialchars($perfil['caminho']) ?>" alt="Foto de perfil" class="avatar-img">
+              <?php else: ?>
                 <?= strtoupper(substr($perfil['usuario'], 0, 2)) ?>
               <?php endif; ?>
             </div>
@@ -102,7 +103,7 @@ if (!empty($postagens)) {
               <span class="display-name"><?= htmlspecialchars($perfil['nomexi'] ?? $perfil['usuario']) ?></span>
 
               <div class="actions">
-                <button class="btn ghost" onclick="window.location.href='perfil.php'">Editar Perfil</button>
+                <button class="btn ghost" onclick="window.location.href='editar_perfil.php'">Editar Perfil</button>
               </div>
             </div>
 

@@ -86,9 +86,10 @@ $comentarios = buscarComentariosUsuario($id_usuario_visualizado) ?? [];
         <div class="profile-main">
 
           <div class="avatar-wrap">
-            <div class="avatar"
-              style="background-image: url('<?= htmlspecialchars($perfil['caminho']) ?>'); background-size: cover; background-position: center; cursor: default;">
-              <?php if (empty($perfil['caminho']) || !file_exists($perfil['caminho'])): ?>
+            <div class="avatar">
+              <?php if (!empty($perfil['caminho']) && file_exists($perfil['caminho'])): ?>
+                <img src="<?= htmlspecialchars($perfil['caminho']) ?>" alt="Foto de perfil" class="avatar-img">
+              <?php else: ?>
                 <?= strtoupper(substr($perfil['usuario'], 0, 2)) ?>
               <?php endif; ?>
             </div>

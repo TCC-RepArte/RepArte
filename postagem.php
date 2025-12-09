@@ -94,9 +94,9 @@ try {
             </div>
             <a href="configuracoes.php" style="color: inherit; text-decoration: none;"><i class="fas fa-cog"></i></a>
             <?php if (isset($_SESSION['id']) && $_SESSION['id'] === 'rFRCxqU-Yze'): ?>
-                <a href="admin.php" style="color: inherit; text-decoration: none;" title="Painel Admin">
-                    <i class="fas fa-shield-alt"></i>
-                </a>
+                    <a href="admin.php" style="color: inherit; text-decoration: none;" title="Painel Admin">
+                        <i class="fas fa-shield-alt"></i>
+                    </a>
             <?php endif; ?>
         </div>
     </header>
@@ -135,10 +135,10 @@ try {
 
                                 <!-- Deletar: Só aparece se o usuário for o dono do post -->
                                 <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $post['id_usuario']): ?>
-                                    <a href="php/deletar_post.php?id=<?= $post['id'] ?>"
-                                        onclick="return confirm('Tem certeza que deseja deletar este post?')">
-                                        <i class="fas fa-trash" style="color: red;"></i> Deletar
-                                    </a>
+                                        <a href="php/deletar_post.php?id=<?= $post['id'] ?>"
+                                            onclick="return confirm('Tem certeza que deseja deletar este post?')">
+                                            <i class="fas fa-trash" style="color: red;"></i> Deletar
+                                        </a>
                                 <?php endif; ?>
 
                                 <!-- Denunciar -->

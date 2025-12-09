@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 07, 2025 at 09:41 PM
+-- Generation Time: Dec 08, 2025 at 01:31 AM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `if0_40154094_reparte`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `codigos_2fa`
+--
+
+DROP TABLE IF EXISTS `codigos_2fa`;
+CREATE TABLE IF NOT EXISTS `codigos_2fa` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `codigo` varchar(6) COLLATE utf8mb4_general_ci NOT NULL,
+  `data_criacao` datetime NOT NULL,
+  `data_expiracao` datetime NOT NULL,
+  `usado` tinyint(1) DEFAULT '0',
+  `tentativas` int DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `idx_usuario` (`id_usuario`),
+  KEY `idx_codigo` (`codigo`),
+  KEY `idx_expiracao` (`data_expiracao`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -142,10 +163,16 @@ CREATE TABLE IF NOT EXISTS `login` (
   `usuario` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `senha` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `remember_token` varchar(64) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `remember_token_expira` datetime DEFAULT NULL,
+  `2fa_ativo` tinyint(1) DEFAULT '0',
+  `2fa_secret` varchar(32) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `usuario` (`usuario`),
-  UNIQUE KEY `email` (`email`)
+  UNIQUE KEY `email` (`email`),
+  KEY `idx_remember_token` (`remember_token`),
+  KEY `idx_2fa_ativo` (`2fa_ativo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -304,6 +331,12 @@ CREATE TABLE IF NOT EXISTS `recuperacao_senha` (
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `codigos_2fa`
+--
+ALTER TABLE `codigos_2fa`
+  ADD CONSTRAINT `fk_2fa_login` FOREIGN KEY (`id_usuario`) REFERENCES `login` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `comentarios`

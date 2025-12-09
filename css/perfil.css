@@ -9,8 +9,10 @@ body {
   background-blend-mode: overlay;
   min-height: 100vh;
   font-family: 'Arial', sans-serif;
-  padding-top: 60px;
+  padding-top: 80px;
   color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .interface {
@@ -21,26 +23,26 @@ body {
 }
 
 header {
-  height: 40px;
   background: none;
   padding: 18px 4%;
-  margin: 12px 2% 0 2%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  width: 200px;
-  max-width: 96vw;
 }
 
 .logo {
   position: fixed;
-  left: 70px;
+  left: 20px;
   top: 5px;
+}
+
+.logo img {
+  max-width: 150px;
+  height: auto;
 }
 
 section {
@@ -48,70 +50,81 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3rem 1rem;
+  padding: 2rem 1rem;
+  width: 100%;
 }
 
 .box {
   background-color: #130922;
   border-radius: 20px;
   padding: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   max-width: 500px;
-  width: 500px;
-  height: 550px;
+  width: 90%;
+  min-height: auto;
   text-align: center;
-  position: relative;
-  margin-left: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; 
-  gap: 20px;
+  justify-content: center;
+  gap: 15px;
+  margin: 0 auto;
+}
+
+.adc-img {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 .adc-img button {
   background-color: #130922;
-  border: 2px #ff6600;
-  border-radius: 50px;
-  padding: 1rem;
-  font-size: 3rem;
+  border: 2px solid #ff6600;
+  border-radius: 50%;
+  padding: 0;
+  width: clamp(150px, 30vw, 300px);
+  height: clamp(150px, 30vw, 300px);
   color: #ff6600;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/*colocar o hover*/
+.adc-img button:hover {
+  border-color: #ff8833;
+  transform: scale(1.02);
+}
 
-.adc-img button > i {
+.adc-img button>i {
   color: white;
-  font-size: 100px;
+  font-size: clamp(80px, 15vw, 150px);
+  line-height: 1;
 }
 
-#envfoto{
-  position: fixed;
-  top: 50%;
-  left: 43%;
-  background:none;
-  font-family: "Hammersmith One", sans-serif;
-  border: none;
-  border-radius: 50px;
-  font-size: 14px;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 10px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.adc-img button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
+
+#envfoto {
+  display: none;
+}
+
 .texto {
-  margin-top: 30px;
+  width: 100%;
   color: white;
 }
 
 .nomeexb,
 .descricao {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  width: 100%;
 }
 
 .nomeexb input,
@@ -120,7 +133,7 @@ section {
   border-radius: 22px;
   padding: 14px 18px;
   background-color: #2b2146;
-  font-size: 16px;
+  font-size: clamp(14px, 2vw, 16px);
   outline: none;
   width: 100%;
   color: white;
@@ -143,24 +156,25 @@ input.desc:focus {
 }
 
 .botoes {
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 .btn-salvar {
-  padding: 14px;
+  padding: 14px 30px;
   background: linear-gradient(135deg, #ff6600, #ff8833);
   border: none;
   border-radius: 22px;
-  font-size: 18px;
+  font-size: clamp(16px, 2vw, 18px);
   font-weight: 600;
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-left: auto;
-  margin-right: auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 250px;
 }
 
 .btn-salvar:hover {
@@ -168,42 +182,103 @@ input.desc:focus {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(255, 102, 0, 0.4);
 }
- /*telas pequenas*/
-@media (min-width: 769px) and (max-width: 980px) {
- #envfto{
-  display: flex;
-  margin-bottom: 45px;
-  justify-items: center;
 
- }
+/* Mobile pequeno */
+@media (max-width: 480px) {
+  body {
+    padding-top: 60px;
+  }
+
+  .logo {
+    left: 10px;
+  }
+
+  .logo img {
+    max-width: 120px;
+  }
+
+  .box {
+    padding: 1.5rem;
+    gap: 12px;
+  }
+
+  .adc-img button {
+    width: 180px;
+    height: 180px;
+  }
+
+  .nomeexb input,
+  .descricao input {
+    padding: 12px 16px;
+  }
 }
 
-/*telas grandes*/
+/* Tablet */
+@media (min-width: 481px) and (max-width: 768px) {
+  .box {
+    max-width: 450px;
+  }
+
+  .adc-img button {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+/* Desktop médio */
+@media (min-width: 769px) and (max-width: 1280px) {
+  .box {
+    max-width: 500px;
+  }
+
+  .adc-img button {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+/* Desktop grande */
+@media (min-width: 1281px) and (max-width: 1919px) {
+  .box {
+    max-width: 550px;
+    padding: 2.5rem;
+  }
+
+  .adc-img button {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+/* Telas muito grandes */
 @media (min-width: 1920px) {
-  .box{
-    max-width: 800px;
-    padding: 50px;
-    margin: 5% auto;
-    gap: 80px;
-    height: 60vh ;
-    width: 70vw ;
-
+  body {
+    padding-top: 100px;
   }
-  .adc-img button i{
-    font-size: 300px;
-    justify-content: center;
-    border: none;
-  }
-  .nomeexb,
-.descricao {
-  margin-bottom: 20px;
-  font-size: 50px;
-}
-#envfto{
-  font-size: 18px;
-  position: fixed;
-  top: 49%;
-  left: 42%;
-}
 
+  .logo img {
+    max-width: 200px;
+  }
+
+  .box {
+    max-width: 700px;
+    padding: 3rem;
+    gap: 25px;
+  }
+
+  .adc-img button {
+    width: 350px;
+    height: 350px;
+  }
+
+  .nomeexb input,
+  .descricao input {
+    font-size: 18px;
+    padding: 16px 20px;
+  }
+
+  .btn-salvar {
+    font-size: 20px;
+    padding: 16px 40px;
+  }
 }
