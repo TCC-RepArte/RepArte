@@ -1449,61 +1449,75 @@ header {
   }
 }
 
-/* FORÇA MÁXIMA NO ESTILO */
-.swal2-popup.swal2-modal {
-    background: #140e20 !important; /* fundo roxo escuro */
+.custom-alert {
+    background: #25163a;            /* Roxo do site */
+    color: #ffffff;
+    border-left: 4px solid #d16a20; /* Laranja do site */
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    opacity: 1;
+    transform: translateY(0);
+    transition: all .3s ease;
+}
+
+.custom-alert.hide {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+
+/*sweet alert*/
+/* SweetAlert tema RepArte */
+.swal2-popup {
+    background: #1b1229 !important;    /* roxo bem escuro */
     border: 2px solid #ff7a00 !important;
-    border-radius: 18px !important;
-    color: #fff !important;
-    box-shadow: 0 0 25px rgba(255, 136, 0, 0.35) !important;
+    border-radius: 16px !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 20px rgba(255, 140, 50, 0.25) !important;
 }
 
 /* Título */
 .swal2-title {
-    color: #fff !important;
-    font-size: 26px !important;
+    color: #ffffff !important;
     font-weight: 600 !important;
 }
 
 /* Texto */
 .swal2-html-container {
     color: #d6d2e6 !important;
-    font-size: 17px !important;
-}
-
-/* Ícone de sucesso */
-.swal2-icon.swal2-success {
-    border-color: #ff7a00 !important;
-    color: #ff7a00 !important;
-}
-
-.swal2-icon.swal2-success .swal2-success-ring {
-    border-color: #ff7a00a0 !important;
+    font-size: 16px !important;
 }
 
 /* Botão de confirmar */
 .swal2-confirm {
     background-color: #ff7a00 !important;
-    border: none !important;
-    color: white !important;
+    color: #fff !important;
     border-radius: 12px !important;
-    padding: 10px 26px !important;
-    font-size: 16px !important;
+    padding: 10px 22px !important;
     font-weight: 600 !important;
-    box-shadow: 0 0 10px rgba(255, 136, 0, 0.4) !important;
-    transition: 0.2s !important;
+    box-shadow: 0 0 10px rgba(255, 140, 50, 0.35) !important;
+    transition: .2s !important;
 }
 
 .swal2-confirm:hover {
-    background-color: #ff8f32 !important;
-    transform: translateY(-2px);
+    background-color: #ff8c32 !important;
+    transform: translateY(-1px);
 }
 
-/* Remove cor default do botão */
-.swal2-styled {
-    box-shadow: none !important;
+/* Botão cancelar (caso use) */
+.swal2-cancel {
+    background-color: #3b2c55 !important;
+    color: #fff !important;
+    border-radius: 12px !important;
+    padding: 10px 22px !important;
 }
 
+.swal2-cancel:hover {
+    background-color: #533a78 !important;
+}
 
 
 /* Design do formulário de criação */

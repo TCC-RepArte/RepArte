@@ -465,16 +465,21 @@ try {
                         // Recarrega os comentários
                         await carregarComentarios();
                         
-                        // Mostra mensagem de sucesso
-                        const successMsg = document.createElement('div');
-                        successMsg.style.cssText = 'background: #00ff00; color: #000; padding: 10px; border-radius: 8px; margin-bottom: 10px; font-weight: 600;';
-                        successMsg.textContent = 'Comentário enviado com sucesso!';
-                        comentarioForm.parentNode.insertBefore(successMsg, comentarioForm);
-                        
-                        // Remove a mensagem após 3 segundos
-                        setTimeout(() => {
-                            successMsg.remove();
-                        }, 3000);
+        
+// Cria o alerta
+const successMsg = document.createElement('div');
+successMsg.className = 'custom-alert';
+successMsg.textContent = 'Comentário enviado com sucesso!';
+
+// Insere acima do formulário
+comentarioForm.parentNode.insertBefore(successMsg, comentarioForm);
+
+// Remove automaticamente após 4s
+setTimeout(() => {
+    successMsg.classList.add('hide');
+    setTimeout(() => successMsg.remove(), 300);
+}, 4000);
+
                     } else {
                         console.error('Erro ao enviar comentário:', result.message);
                         
