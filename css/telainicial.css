@@ -442,6 +442,14 @@ header .logo img {
   height: 120px;
   min-width: 80px;
   object-fit: cover;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.carousel img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(255, 102, 0, 0.6), 0 0 40px rgba(255, 102, 0, 0.4);
+  filter: brightness(1.1);
 }
 
 .carousel::-webkit-scrollbar {
@@ -624,7 +632,6 @@ header {
   word-wrap: break-word;
   overflow-wrap: break-word;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-
 }
 
 .post-header {
@@ -727,6 +734,14 @@ header {
   background: transparent;
   border: none;
   box-shadow: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+#img-post:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 102, 0, 0.6), 0 0 40px rgba(255, 102, 0, 0.4);
+  filter: brightness(1.1);
 }
 
 .post-content {

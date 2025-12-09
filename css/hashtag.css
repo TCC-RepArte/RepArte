@@ -117,6 +117,14 @@ body {
     aspect-ratio: 2/3;
     object-fit: cover;
     border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.mini-carousel img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(255, 102, 0, 0.6), 0 0 40px rgba(255, 102, 0, 0.4);
+    filter: brightness(1.1);
 }
 
 /* Responsivo */
@@ -129,7 +137,6 @@ body {
     .sidebar-hashtag {
         order: -1;
         position: static;
-        /* Prevent sticky behavior on mobile */
         top: auto;
     }
 }

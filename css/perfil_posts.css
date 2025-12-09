@@ -241,6 +241,29 @@
     background: transparent;
     border: none;
     box-shadow: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+#img-post:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 102, 0, 0.6), 0 0 40px rgba(255, 102, 0, 0.4);
+    filter: brightness(1.1);
+}
+
+.mini-carousel img {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.mini-carousel img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(255, 102, 0, 0.6), 0 0 40px rgba(255, 102, 0, 0.4);
+    filter: brightness(1.1);
 }
 
 .post-content {
@@ -448,12 +471,6 @@
     gap: 8px;
 }
 
-.mini-carousel img {
-    width: 100%;
-    aspect-ratio: 2/3;
-    object-fit: cover;
-    border-radius: 4px;
-}
 
 /* Estilos para a aba de Favoritos (Masonry Layout - igual busca.php) */
 .favoritos-masonry {

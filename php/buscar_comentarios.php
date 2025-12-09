@@ -15,13 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // Função para retornar erro
-function returnError($message) {
+function returnError($message)
+{
     echo json_encode(['success' => false, 'message' => $message]);
     exit;
 }
 
 // Função para retornar sucesso
-function returnSuccess($data) {
+function returnSuccess($data)
+{
     echo json_encode(['success' => true, 'comentarios' => $data]);
     exit;
 }
