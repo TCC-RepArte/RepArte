@@ -2093,7 +2093,6 @@ function abrirDenuncia(event, idItem, tipo) {
   itemDenunciaAtual = idItem;
   tipoDenunciaAtual = tipo;
 
-  // Verifica se o painel já existe, se não, cria
   let painel = document.getElementById('painel-denuncia');
   let overlay = document.querySelector('.overlay-denuncia');
 
@@ -2103,40 +2102,39 @@ function abrirDenuncia(event, idItem, tipo) {
     overlay = document.querySelector('.overlay-denuncia');
   }
 
-  // Limpa o campo de texto
   document.getElementById('motivo-denuncia').value = '';
 
-  // Mostra o painel
   painel.style.display = 'block';
   overlay.style.display = 'block';
 }
 
-// Função para criar o HTML do painel de denúncia
+// Criar painel
 function criarPainelDenuncia() {
-  // Overlay (fundo escuro)
   const overlay = document.createElement('div');
   overlay.className = 'overlay-denuncia';
-  overlay.style.display = 'none'; // Começa escondido
+  overlay.style.display = 'none';
+  overlay.style.zIndex = "9998";
   document.body.appendChild(overlay);
 
-  // Painel
   const painel = document.createElement('div');
   painel.id = 'painel-denuncia';
-  painel.className = 'painel-busca-obras'; // Reutilizando classe base para estrutura similar
-  painel.style.display = 'none'; // Começa escondido
-  painel.style.height = 'auto'; // Altura automática para ajustar ao conteúdo
+  painel.className = 'painel-busca-obras';
+  painel.style.display = 'none';
+  painel.style.height = 'auto';
   painel.style.maxHeight = '90vh';
+  painel.style.zIndex = "9999";
 
   painel.innerHTML = `
         <div class="painel-cabecalho" style="background-color: #ff6600;">
             <h3 style="color: white;"><i class="fas fa-exclamation-triangle"></i> Denunciar Conteúdo</h3>
             <button class="fechar-painel" onclick="fecharDenuncia()" style="color: white;">×</button>
         </div>
+
         <div class="painel-conteudo" style="padding: 20px;">
-            <p style="color: #ddd; margin-bottom: 15px;">Por favor, descreva o motivo da sua denúncia. Isso nos ajuda a manter a comunidade segura.</p>
+            <p style="color: #ddd; margin-bottom: 15px;">Descreva o motivo da sua denúncia. Isso nos ajuda a manter a comunidade segura.</p>
             
             <div class="form-group">
-                <textarea id="motivo-denuncia" rows="5" placeholder="Descreva o motivo da denúncia aqui..." 
+                <textarea id="motivo-denuncia" rows="5" placeholder="Descreva o motivo da denúncia aqui..."
                     style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #1a1a1a; color: white; resize: vertical;"></textarea>
             </div>
             
@@ -2149,11 +2147,10 @@ function criarPainelDenuncia() {
 
   document.body.appendChild(painel);
 
-  // Fechar ao clicar no overlay
   overlay.addEventListener('click', fecharDenuncia);
 }
 
-// Função para fechar o painel
+// Fechar painel
 function fecharDenuncia() {
   const painel = document.getElementById('painel-denuncia');
   const overlay = document.querySelector('.overlay-denuncia');
@@ -2165,39 +2162,39 @@ function fecharDenuncia() {
   tipoDenunciaAtual = null;
 }
 
-// Função para enviar a denúncia via AJAX
+// Enviar denúncia
 async function enviarDenuncia() {
   const motivo = document.getElementById('motivo-denuncia').value.trim();
 
   if (!motivo) {
-    alert('Por favor, descreva o motivo da denúncia.');
+    Swal.fire({
+      icon: 'warning',
+      title: 'Ops...',
+      text: 'Você precisa escrever um motivo.',
+      confirmButtonColor: '#ff6600',
+    });
     return;
   }
 
   if (!itemDenunciaAtual || !tipoDenunciaAtual) {
-    alert('Erro ao identificar o item denunciado.');
+    Swal.fire({
+      icon: 'error',
+      title: 'Erro',
+      text: 'Não foi possível identificar o item denunciado.',
+      confirmButtonColor: '#ff6600',
+    });
     return;
   }
 
   try {
-
-    const idGeradoObj = await criarID(15, 'php/verificar_id_denuncia.php');
-
-    if (!idGeradoObj || !idGeradoObj.success) {
-      // Fallback se der erro
-      console.warn("Usando ID local (fallback)");
-      var idDenuncia = Math.random().toString(36).substr(2, 9);
-    } else {
-      var idDenuncia = idGeradoObj.id;
-    }
+    // ID simples e funcional
+    const idDenuncia = 'DEN-' + Date.now();
 
     const response = await fetch('php/salvar_denuncia.php', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        id_denuncia: idDenuncia || 'TEMP-' + Date.now(), // Envia o ID gerado
+        id_denuncia: idDenuncia,
         id_item: itemDenunciaAtual,
         tipo: tipoDenunciaAtual,
         motivo: motivo
@@ -2207,17 +2204,39 @@ async function enviarDenuncia() {
     const data = await response.json();
 
     if (data.success) {
-      alert('Denúncia enviada com sucesso! Obrigado por colaborar.');
+
+      // FECHA O PAINEL **ANTES** DO SWEET ALERT
       fecharDenuncia();
+
+      setTimeout(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Denúncia enviada!',
+          text: 'Obrigado por nos ajudar a manter a comunidade segura.',
+          confirmButtonColor: '#ff6600'
+        });
+      }, 200);
+
     } else {
-      alert('Erro ao enviar denúncia: ' + (data.error || 'Erro desconhecido'));
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: data.error || 'Erro desconhecido.',
+        confirmButtonColor: '#ff6600',
+      });
     }
 
   } catch (error) {
-    console.error('Erro:', error);
-    alert('Erro de conexão ao enviar denúncia.');
+    Swal.fire({
+      icon: 'error',
+      title: 'Erro de conexão',
+      text: 'Não foi possível enviar sua denúncia.',
+      confirmButtonColor: '#ff6600',
+    });
   }
 }
+
+
 
 // Função para favoritar/desfavoritar
 async function toggleFavorito(event, postId) {
