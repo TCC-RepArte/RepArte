@@ -2067,20 +2067,32 @@ async function criarIDPost(tamanho) {
 
 // Função para copiar o link da postagem
 function copiarLink(event, idPost) {
-  event.preventDefault(); // Evita que a página suba pro topo
+  event.preventDefault(); // Evita comportamento padrão
 
-  // Define a base da URL 
   const baseUrl = "https://reparte.free.nf/";
-
   const link = `${baseUrl}postagem.php?id=${idPost}`;
 
-  // Copia para a área de transferência
-  navigator.clipboard.writeText(link).then(() => {
-    alert("Link copiado: " + link);
-  }).catch(err => {
-    console.error('Erro ao copiar: ', err);
-  });
+  navigator.clipboard.writeText(link)
+    .then(() => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Link copiado!',
+        html: `<p style="color: #fff; margin-top: 5px;">${link}</p>`,
+        confirmButtonColor: '#ff6600',
+        background: '#1e1e1e',
+      });
+    })
+    .catch(err => {
+      console.error('Erro ao copiar: ', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro ao copiar',
+        text: 'Não foi possível copiar o link.',
+        confirmButtonColor: '#ff6600',
+      });
+    });
 }
+
 
 // Variáveis globais para controle da denúncia
 let itemDenunciaAtual = null;

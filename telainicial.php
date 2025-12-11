@@ -359,6 +359,34 @@ Swal.fire({
 <?php endif; ?>
 
 
+// SWEET ALERT para deletar postagem
+<script>
+document.addEventListener('click', function (e) {
+    if (e.target.closest('.btn-deletar-post')) {
+        e.preventDefault();
+
+        const btn = e.target.closest('.btn-deletar-post');
+        const idPost = btn.getAttribute('data-id');
+
+        Swal.fire({
+            title: "Tem certeza?",
+            text: "Essa ação não pode ser desfeita.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#ff6600",
+            cancelButtonColor: "#444",
+            confirmButtonText: "Sim, deletar",
+            cancelButtonText: "Cancelar",
+            background: "#1e1e1e",
+            color: "#fff"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `php/deletar_post.php?id=${idPost}`;
+            }
+        });
+    }
+});
+</script>
 
 
 </body>
