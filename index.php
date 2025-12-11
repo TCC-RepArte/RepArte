@@ -110,9 +110,7 @@
                     </div>
                     <div class="btn-social">
                         <a href="#"><button><i class="bi bi-twitter-x"></i></button></a>
-                        <a href="#"><button><i class="bi bi-instagram"></i></button></a>
-                        <a href="#"><button><i class="bi bi-facebook"></i></button></a>
-                        <a href="#"><button><i class="bi bi-tiktok"></i></button></a>
+                        <a href="https://www.instagram.com/reparte_3y/?utm_source=ig_web_button_share_sheet"><button><i class="bi bi-instagram"></i></button></a>
                     </div>
                 </div>
             </div>
